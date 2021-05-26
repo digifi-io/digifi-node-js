@@ -1,1 +1,1 @@
-# digifi-sdk
+# digifi-node-js
