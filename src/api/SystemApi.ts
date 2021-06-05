@@ -2,8 +2,9 @@ import ApiClient from '../ApiClient';
 
 export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined> {
   protected basePath = '';
+  protected entityKey = '';
 
-  protected constructor(
+  constructor(
     protected apiClient: ApiClient,
   ) {}
 
@@ -19,11 +20,15 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
     return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'DELETE');
   }
 
-  public create(body: CreateParams): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}`, 'POST', body as any);
+  public create(params: CreateParams): Promise<Resource> {
+    const body = params && this.entityKey ? { [this.entityKey]: params } : undefined;
+
+    return this.apiClient.makeCall<Resource>(`/${this.basePath}`, 'POST', body);
   }
 
-  public update(id: string, body: UpdateParams): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`${this.basePath}`, 'PUT', body as any);
+  public update(id: string, params: UpdateParams): Promise<Resource> {
+    const body = params && this.entityKey ? { [this.entityKey]: params } : undefined;
+
+    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'PUT', body);
   }
 }

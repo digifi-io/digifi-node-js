@@ -33,4 +33,5 @@ export interface CreateTaskParams {
 
 export default class TasksApi extends SystemApi<Task, CreateTaskParams, Partial<CreateTaskParams>> {
   protected basePath = 'tasks';
+  protected entityKey = 'task';
 }

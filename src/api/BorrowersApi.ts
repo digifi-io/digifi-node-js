@@ -68,4 +68,5 @@ interface UpdateBorrowerParams {
 
 export default class BorrowersApi extends SystemApi<Borrower, CreateBorrowerParams, UpdateBorrowerParams> {
   protected basePath = 'borrowers';
+  protected entityKey = 'borrower';
 }

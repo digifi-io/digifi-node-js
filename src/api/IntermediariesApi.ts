@@ -34,4 +34,5 @@ interface UpdateIntermediaryParams {
 
 export default class IntermediariesApi extends SystemApi<Intermediary, CreateIntermediaryParams, UpdateIntermediaryParams> {
   protected basePath = 'intermediaries';
+  protected entityKey = 'intermediary';
 }

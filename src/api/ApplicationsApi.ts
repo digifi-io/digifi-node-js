@@ -76,4 +76,5 @@ export interface UpdateApplicationParams {
 
 export default class ApplicationsApi extends SystemApi<Application, CreateApplicationOptions, UpdateApplicationParams> {
   protected basePath = 'applications';
+  protected entityKey = 'application';
 }

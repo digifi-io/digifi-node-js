@@ -1,14 +1,22 @@
 {
-  "name": "digifi-sdk",
-  "version": "0.0.1",
+  "name": "digifi-node-js",
+  "version": "1.0.8",
   "description": "DigiFI SDK for Node JS",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib/**/*"],
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digifi-io/digifi-node-js.git"
+  },
+  "author": "DigiFi Team",
   "license": "ISC",
   "dependencies": {
+    "buffer": "^6.0.3",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.1"
   },

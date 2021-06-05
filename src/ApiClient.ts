@@ -28,7 +28,7 @@ export default class ApiClient {
     this.checkStatus = this.checkStatus.bind(this);
   }
 
-  public async makeCall<ResBody, ReqBody = RequestBody>(
+  public async makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
     url: string,
     method: HTTP_METHOD = 'GET',
     body?: ReqBody,
@@ -44,10 +44,10 @@ export default class ApiClient {
 
     const response = await fetch(
       `${this.baseUrl}/${url}`,
-      { method, headers },
+      { method, headers, body: this.stringifyBody(body) },
     );
 
-    await this.checkStatus(response);
+    await statusChecker(response);
 
     return response.json();
   }
@@ -75,5 +75,13 @@ export default class ApiClient {
     }
 
     return headers;
+  }
+
+  protected stringifyBody(body?: RequestBody) {
+    if (typeof body === 'string' || body instanceof FormData || typeof body === 'undefined') {
+      return body;
+    }
+
+    return JSON.stringify(body);
   }
 }
