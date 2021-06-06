@@ -22,8 +22,8 @@ export default class ApiClient {
 
   constructor(
     private baseUrl: string,
-    private clientId: string,
-    private clientSecret: string,
+    protected clientId: string,
+    protected clientSecret: string,
   ) {
     this.checkStatus = this.checkStatus.bind(this);
   }

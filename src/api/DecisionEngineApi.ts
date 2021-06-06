@@ -1,4 +1,4 @@
-import ApiClient from '../ApiClient';
+import DecisionEngineApiClient from '../DecisionEngineApiClient';
 
 export enum StrategyStatus {
   Active = 'active',
@@ -54,7 +54,7 @@ export default class DecisionEngineApi {
   private readonly defaultStrategyStatus: StrategyStatus;
 
   constructor(
-    private apiClient: ApiClient,
+    private apiClient: DecisionEngineApiClient,
     defaultStrategyStatus?: StrategyStatus,
   ) {
     this.defaultStrategyStatus = defaultStrategyStatus || StrategyStatus.Testing;
