@@ -1,11 +1,11 @@
-import fetch, { Response, Headers } from "node-fetch";
-import FormData from "form-data";
-import ApiRequestError from "./errors/ApiRequestError";
+import fetch, { Response, Headers } from 'node-fetch';
+import FormData from 'form-data';
+import ApiRequestError from './errors/ApiRequestError';
 
-export type HTTP_METHOD = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+export type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export type RequestBody = string | Record<string, unknown> | FormData;
-export type ContentType = "application/json" | "text/html" | null;
+export type ContentType = 'application/json' | 'text/html' | null;
 
 interface FetchResponse<T = any> extends Response {
   json<P = T>(): Promise<P>;
@@ -18,27 +18,23 @@ export interface FetchOptions {
 }
 
 export default class ApiClient {
-  protected defaultContentType: ContentType = "application/json";
+  protected defaultContentType: ContentType = 'application/json';
 
   constructor(
     private baseUrl: string,
     protected clientId: string,
-    protected clientSecret: string
+    protected clientSecret: string,
   ) {
     this.checkStatus = this.checkStatus.bind(this);
   }
 
   public async makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
     url: string,
-    method: HTTP_METHOD = "GET",
+    method: HTTP_METHOD = 'GET',
     body?: ReqBody,
-    options: Partial<FetchOptions> = {}
+    options: Partial<FetchOptions> = {},
   ): Promise<ResBody> {
-    const {
-      headers: customHeaders,
-      contentType = this.defaultContentType,
-      statusChecker = this.checkStatus,
-    } = options;
+    const { headers: customHeaders, contentType = this.defaultContentType, statusChecker = this.checkStatus } = options;
 
     const headers = this.getBasicHeaders(contentType);
 
@@ -46,11 +42,10 @@ export default class ApiClient {
       headers.set(header, value);
     });
 
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      method,
-      headers,
-      body: this.stringifyBody(body),
-    });
+    const response = await fetch(
+      `${this.baseUrl}${url}`,
+      { method, headers, body: this.stringifyBody(body) },
+    );
 
     await statusChecker(response);
 
@@ -63,11 +58,7 @@ export default class ApiClient {
     }
 
     const body = await response.json();
-    const errorMessage =
-      body.message ||
-      body.data?.error ||
-      body.error?.message ||
-      response.statusText;
+    const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
 
     throw new ApiRequestError(errorMessage, response.status);
   }
@@ -75,23 +66,19 @@ export default class ApiClient {
   protected getBasicHeaders(contentType?: ContentType) {
     const headers = new Headers();
 
-    headers.set("clientid", this.clientId);
-    headers.set("clientsecret", this.clientSecret);
+    headers.set('clientid', this.clientId);
+    headers.set('clientsecret', this.clientSecret);
 
     if (contentType) {
-      headers.set("Accept", contentType);
-      headers.set("Content-Type", contentType);
+      headers.set('Accept', contentType);
+      headers.set('Content-Type', contentType);
     }
 
     return headers;
   }
 
   protected stringifyBody(body?: RequestBody) {
-    if (
-      typeof body === "string" ||
-      body instanceof FormData ||
-      typeof body === "undefined"
-    ) {
+    if (typeof body === 'string' || body instanceof FormData || typeof body === 'undefined') {
       return body;
     }
 
