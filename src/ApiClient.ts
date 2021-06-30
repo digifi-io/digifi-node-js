@@ -53,14 +53,23 @@ export default class ApiClient {
   }
 
   protected async checkStatus(response: FetchResponse): Promise<FetchResponse> {
-    if (response.ok) {
-      return response;
+    try {
+      if (response.ok) {
+        return response;
+      }
+
+      const body = await response.json();
+      const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
+
+      throw new ApiRequestError(errorMessage, response.status);
+    } catch (err) {
+      // TODO [Ilya] Rewrite that
+      if (err instanceof ApiRequestError) {
+        throw err;
+      }
+
+      throw new ApiRequestError(response.statusText, response.status);
     }
-
-    const body = await response.json();
-    const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
-
-    throw new ApiRequestError(errorMessage, response.status);
   }
 
   protected getBasicHeaders(contentType?: ContentType) {

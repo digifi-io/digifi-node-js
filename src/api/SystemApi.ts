@@ -8,11 +8,18 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
     protected apiClient: ApiClient,
   ) {}
 
-  public getAll(): Promise<Resource[]> {
+  public find(params?: Record<string, string>): Promise<Resource[]> {
+    // TODO [Ilya] Rewrite
+    const urlSearchParams = new URLSearchParams();
+
+    Object.keys(params || {}).forEach((key) => {
+      urlSearchParams.append(key, (params || {})[key]);
+    })
+
     return this.apiClient.makeCall<Resource[]>(`/${this.basePath}`);
   }
 
-  public getById(id: string): Promise<Resource> {
+  public findById(id: string): Promise<Resource> {
     return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`);
   }
 
