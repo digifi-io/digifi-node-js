@@ -16,7 +16,7 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
       urlSearchParams.append(key, (params || {})[key]);
     })
 
-    return this.apiClient.makeCall<Resource[]>(`/${this.basePath}`);
+    return this.apiClient.makeCall<Resource[]>(`/${this.basePath}?${urlSearchParams}`);
   }
 
   public findById(id: string): Promise<Resource> {
