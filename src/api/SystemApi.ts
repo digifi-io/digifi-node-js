@@ -1,4 +1,5 @@
 import ApiClient from '../ApiClient';
+import { TableData } from '../types';
 
 export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined> {
   protected basePath = '';
@@ -8,7 +9,7 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
     protected apiClient: ApiClient,
   ) {}
 
-  public find(params?: Record<string, string>): Promise<Resource[]> {
+  public find(params?: Record<string, string>): Promise<TableData<Resource>> {
     // TODO [Ilya] Rewrite
     const urlSearchParams = new URLSearchParams();
 
@@ -16,7 +17,7 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
       urlSearchParams.append(key, (params || {})[key]);
     })
 
-    return this.apiClient.makeCall<Resource[]>(`/${this.basePath}?${urlSearchParams}`);
+    return this.apiClient.makeCall<TableData<Resource>>(`/${this.basePath}?${urlSearchParams}`);
   }
 
   public findById(id: string): Promise<Resource> {
