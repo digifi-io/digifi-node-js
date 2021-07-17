@@ -1,5 +1,5 @@
 import ApiClient from '../ApiClient';
-import * as FormData from 'form-data';
+import FormData from 'form-data';
 import { TableData, UserShortInfo } from '../types';
 
 export interface ApplicationDocument {
@@ -16,7 +16,6 @@ export interface CreateApplicationDocumentParams {
   applicationId: string;
   file: Buffer;
   fileName: string;
-  contentType: string;
 }
 
 export default class ApplicationDocumentsApi {
@@ -43,7 +42,7 @@ export default class ApplicationDocumentsApi {
     formData.append('file', params.file, params.fileName)
     formData.append('document.name', params.fileName);
 
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData);
+    return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });
   }
 }
 
