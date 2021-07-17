@@ -40,10 +40,8 @@ export default class ApplicationDocumentsApi {
     const formData = new FormData();
 
     formData.append('applicationId', params.applicationId);
-    formData.append('file', params.file, {
-      filename: params.fileName,
-      contentType: params.contentType,
-    });
+    formData.append('file', params.file, params.fileName)
+    formData.append('document.name', params.fileName);
 
     return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData);
   }
