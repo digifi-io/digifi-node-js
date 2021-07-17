@@ -1,5 +1,5 @@
 import ApiClient from '../ApiClient';
-import FormData from 'form-data';
+import * as FormData from 'form-data';
 import { TableData, UserShortInfo } from '../types';
 
 export interface ApplicationDocument {
