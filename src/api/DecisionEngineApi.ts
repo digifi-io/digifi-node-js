@@ -32,7 +32,23 @@ export interface RunStrategyResponse<OutputVariable> {
     output_variables: OutputVariable;
     data_sources: Array<ResponseDataSource>;
     case_id: string;
+    input_variables?: VariablesType;
   };
+}
+
+interface RunBatchStrategyResponse {
+  strategy_name: string;
+  strategy_status: string;
+  case_id: string;
+  passed: boolean;
+  decline_reasons: string[];
+  input_variables?: VariablesType;
+  output_variables: VariablesType;
+}
+
+export interface RunBatchStrategiesResponse {
+  batch_id: string;
+  results: Array<RunBatchStrategyResponse>;
 }
 
 export interface RunStrategyOptions {
@@ -41,6 +57,21 @@ export interface RunStrategyOptions {
   applicationId?: string;
   variables: VariablesType;
   status?: StrategyStatus;
+  returnInputVariables?: boolean;
+}
+
+interface RunBatchStrategyOptions {
+  strategyName: string;
+  strategyStatus: StrategyStatus;
+  variables: VariablesType;
+}
+
+export interface RunBatchStrategiesOptions {
+  applicationId?: string;
+  returnOnlyPasses?: boolean;
+  returnInputVariables?: boolean;
+  globalVariables: VariablesType;
+  strategies: RunBatchStrategyOptions[];
 }
 
 export type VariablesType = Record<string, boolean | number | Date | string | null>;
@@ -61,7 +92,7 @@ export default class DecisionEngineApi {
   }
 
   public async runStrategy<OutputVariable = VariablesType>(options: RunStrategyOptions) {
-    const { strategyName, applicationId, status = this.defaultStrategyStatus, variables, caseName } = options;
+    const { strategyName, applicationId, status = this.defaultStrategyStatus, variables, caseName, returnInputVariables } = options;
 
     const { results } = await this.apiClient.makeCall<RunStrategyResponse<OutputVariable>>('/ml_rules_engine', 'POST', {
       strategy_name: strategyName,
@@ -71,6 +102,7 @@ export default class DecisionEngineApi {
       return_data_sources: true,
       return_processing_detail: true,
       variables,
+      return_input_variables: returnInputVariables,
     });
 
     return {
@@ -81,7 +113,39 @@ export default class DecisionEngineApi {
       processingDetails: results.processing_detail,
       processingResults: results.processing_detail ? this.getProcessingCheckResults(results.processing_detail) : {},
       dataSources: results.data_sources ? this.getTransformedDataSources(results.data_sources) : [],
+      inputVariables: results.input_variables || {},
     };
+  }
+
+  public async runBatchStrategies(options: RunBatchStrategiesOptions) {
+    const { applicationId, strategies, returnOnlyPasses, globalVariables, returnInputVariables } = options;
+
+    const variables = strategies.map((strategyOptions) => ({
+      strategy_name: strategyOptions.strategyName,
+      strategy_status: strategyOptions.strategyStatus,
+      ...strategyOptions.variables,
+    }));
+
+    const { results, batch_id } = await this.apiClient.makeCall<RunBatchStrategiesResponse>('/rules_engine_batch', 'POST', {
+      application_id: applicationId,
+      globals_variables: globalVariables,
+      return_only_passes: returnOnlyPasses,
+      return_input_variables: returnInputVariables,
+      variables,
+    });
+
+    return {
+      batchId: batch_id,
+      results: results.map((runStrategyResults) => ({
+        caseId: runStrategyResults.case_id,
+        strategyName: runStrategyResults.strategy_name,
+        strategyStatus: runStrategyResults.strategy_status,
+        passed: runStrategyResults.passed,
+        declineReasons: runStrategyResults.decline_reasons,
+        inputVariables: runStrategyResults.input_variables || {},
+        outputVariables: runStrategyResults.output_variables,
+      })),
+    }
   }
 
   private getProcessingCheckResults(processingDetails: Array<ProcessingDetail>): Record<string, boolean> {
