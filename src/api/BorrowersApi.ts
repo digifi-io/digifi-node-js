@@ -26,9 +26,7 @@ export interface Borrower {
   id: string;
   type: BorrowerType;
   organizationId: string;
-  variables: {
-    [key: string]: VariableValue;
-  };
+  variables: Record<string, VariableValue>;
   locked: boolean;
   createdBy?: UserShortInfo | null;
   updatedBy?: UserShortInfo | null;
@@ -36,33 +34,14 @@ export interface Borrower {
   updatedAt: Date;
 }
 
-interface BaseCreateBorrowerParams {
+export interface CreateBorrowerParams {
+  type: BorrowerType;
+  variables: Record<string, VariableValue>;
   locked?: boolean;
 }
 
-interface PersonVariables extends Record<string, VariableValue> {
-  [BorrowerDefaultValue.FirstName]: string;
-  [BorrowerDefaultValue.LastName]: string;
-}
-
-interface CompanyVariables extends Record<string, VariableValue> {
-  [BorrowerDefaultValue.CompanyName]: string;
-}
-
-interface CreatePersonBorrowerParams extends BaseCreateBorrowerParams {
-  type: BorrowerType.Person;
-  variables: PersonVariables;
-}
-
-interface CreateCompanyBorrowerParams extends BaseCreateBorrowerParams {
-  type: BorrowerType.Company;
-  variables: CompanyVariables;
-}
-
-export type CreateBorrowerParams = CreatePersonBorrowerParams | CreateCompanyBorrowerParams;
-
-interface UpdateBorrowerParams {
-  variables?: Partial<PersonVariables> | Partial<CompanyVariables>;
+export interface UpdateBorrowerParams {
+  variables?: Record<string, VariableValue>;
   locked?: boolean;
 }
 

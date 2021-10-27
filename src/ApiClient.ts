@@ -4,7 +4,7 @@ import ApiRequestError from './errors/ApiRequestError';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export type RequestBody = string | Record<string, unknown> | FormData;
+export type RequestBody = string | { [key: string]: any } | FormData;
 export type ContentType = 'application/json' | 'text/html' | null;
 
 interface FetchResponse<T = any> extends Response {

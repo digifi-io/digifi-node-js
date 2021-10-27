@@ -16,6 +16,8 @@ export interface CreateApplicationDocumentParams {
   applicationId: string;
   file: Buffer;
   fileName: string;
+  parentId?: string | null;
+  anchor?: string | null;
 }
 
 export default class ApplicationDocumentsApi {
@@ -39,8 +41,15 @@ export default class ApplicationDocumentsApi {
     const formData = new FormData();
 
     formData.append('applicationId', params.applicationId);
-    formData.append('file', params.file, params.fileName)
-    formData.append('document.name', params.fileName);
+    formData.append('file', params.file, params.fileName);
+
+    if (params.parentId) {
+      formData.append('parentId', params.parentId);
+    }
+
+    if (params.anchor) {
+      formData.append('anchor', params.anchor);
+    }
 
     return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });
   }

@@ -10,14 +10,10 @@ export enum IntermediaryDefaultValue {
   CommissionRate =  'intermediary_commission_rate',
 }
 
-interface IntermediaryVariables extends Record<string, VariableValue> {
-  [IntermediaryDefaultValue.Name]: string;
-}
-
 export interface Intermediary {
   id: string;
   organizationId: string;
-  variables: IntermediaryVariables;
+  variables: Record<string, VariableValue>;
   createdAt: Date;
   updatedAt: Date;
   createdBy?: UserShortInfo | null;
@@ -25,11 +21,11 @@ export interface Intermediary {
 }
 
 export interface CreateIntermediaryParams {
-  variables: IntermediaryVariables;
+  variables: Record<string, VariableValue>;
 }
 
-interface UpdateIntermediaryParams {
-  variables?: Partial<IntermediaryVariables>;
+export interface UpdateIntermediaryParams {
+  variables?: Record<string, VariableValue>;
 }
 
 export default class IntermediariesApi extends SystemApi<Intermediary, CreateIntermediaryParams, UpdateIntermediaryParams> {

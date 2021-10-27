@@ -1,47 +1,47 @@
 import { SystemApi } from './SystemApi';
 import { BorrowerType, CreateBorrowerParams } from './BorrowersApi';
-import { UserShortInfo, VariableValue } from '../types';
+import {UserRole, UserShortInfo, VariableValue} from '../types';
 import { CreateIntermediaryParams } from './IntermediariesApi';
 
 export enum ApplicationDefaultVariable {
   LoanAmount = 'loan_amount',
 }
 
-export interface ApplicationVariables extends Record<string, VariableValue> {
-  [ApplicationDefaultVariable.LoanAmount]: number;
-}
-
 export interface Application {
   id: string;
   displayId: number;
-  variables: ApplicationVariables;
+  variables: Record<string, VariableValue>;
   status: {
     id: string;
     name: string;
+    rolesAbleToViewApplicationOnBoard: UserRole[];
+    permissionsToEditApplication: UserRole[];
+    permissionsToMoveApplicationIntoStatus: UserRole[];
   };
   borrowerId: string;
-  coborrowerId?: string;
+  coborrowerIds: string[];
   intermediaryId?: string;
   declineReasons?: string[];
-  teamMembers: {
+  organization: string;
+  teamMembers: Array<{
     id: string;
     firstName: string;
     lastName: string;
     email: string;
     avatarUrl?: string;
-  }[];
-  labels: {
+  }>;
+  labels: Array<{
     id: string;
     name: string;
     color: string;
-  }[];
+  }>;
   borrowerType: BorrowerType;
-  coborrowerType?: BorrowerType;
+  coborrowerTypes: BorrowerType[];
   product: {
     id: string;
     name: string;
     organizationId: string;
-    borrowerType: BorrowerType;
+    borrowerTypes: BorrowerType[];
   };
   createdBy?: UserShortInfo | null;
   updatedBy?: UserShortInfo | null;
@@ -49,20 +49,19 @@ export interface Application {
   updatedAt: Date;
   approvedAt?: Date;
   rejectedAt?: Date;
+  originalApplicationId?: string;
+  transitionedToStatusAt?: Date;
 }
 
-export interface CreateApplicationOptions {
+export interface CreateApplicationParams {
   product: string;
   teamMembers?: string[];
   labels?: string[];
   status?: string;
-  borrowerId?: string;
-  coborrowerId?: string;
-  intermediaryId?: string;
-  borrower?: Pick<CreateBorrowerParams, 'variables'>;
-  coborrower?: Pick<CreateBorrowerParams, 'variables'>;
-  intermediary?: Pick<CreateIntermediaryParams, 'variables'>;
-  variables: ApplicationVariables;
+  borrower: string | CreateBorrowerParams;
+  coborrowers: Array<string | CreateBorrowerParams>;
+  intermediary?: string | CreateIntermediaryParams;
+  variables: Record<string, VariableValue>;
 }
 
 export interface UpdateApplicationParams {
@@ -71,10 +70,32 @@ export interface UpdateApplicationParams {
   intermediaryId?: string;
   teamMembers?: string[];
   labels?: string[];
-  variables?: Partial<ApplicationVariables>;
+  variables?: Record<string, VariableValue>;
 }
 
-export default class ApplicationsApi extends SystemApi<Application, CreateApplicationOptions, UpdateApplicationParams> {
+export interface DeleteCoBorrowerParams {
+  coBorrowerToDelete: string;
+}
+
+export interface AddCoBorrowersParams {
+  coBorrowersToAdd: Array<string | CreateBorrowerParams>;
+}
+
+export interface UpdateApplicationIntermediaryParams {
+  intermediary: string | CreateIntermediaryParams | null;
+}
+
+export type UpdateApplicationCoBorrowersParams = DeleteCoBorrowerParams | AddCoBorrowersParams;
+
+export default class ApplicationsApi extends SystemApi<Application, CreateApplicationParams, UpdateApplicationParams> {
   protected basePath = 'applications';
   protected entityKey = 'application';
+
+  public updateCoBorrowers(applicationId: string, params: UpdateApplicationCoBorrowersParams) {
+    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/coborrowers`, 'PUT', params);
+  }
+
+  public updateIntermediary(applicationId: string, params: UpdateApplicationIntermediaryParams) {
+    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/intermediary`, 'PUT', params);
+  }
 }

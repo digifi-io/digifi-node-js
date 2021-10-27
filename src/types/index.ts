@@ -1,5 +1,11 @@
 export type VariableValue = string | boolean | number | null;
 
+export enum UserRole {
+  Owner = 'owner',
+  Admin = 'admin',
+  User = 'user',
+}
+
 export interface TableData<Item> {
   items: Item[];
   total: number;
