@@ -1,4 +1,4 @@
-import ApiClient from '../ApiClient';
+import { ApiClient } from '../ApiClient';
 import { TableData } from '../types';
 
 export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined> {

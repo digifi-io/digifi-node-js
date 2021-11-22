@@ -1,4 +1,4 @@
-import ApiClient, { FetchOptions, HTTP_METHOD, RequestBody } from './ApiClient';
+import { ApiClient, FetchOptions, HTTP_METHOD, RequestBody } from './ApiClient';
 
 const WITH_QUERY_PARAMS_METHODS: HTTP_METHOD[] = ['GET', 'DELETE'];
 const WITH_BODY_PARAMS_METHODS: HTTP_METHOD[]= ['POST', 'PUT'];

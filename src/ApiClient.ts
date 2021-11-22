@@ -17,7 +17,7 @@ export interface FetchOptions {
   statusChecker: () => void;
 }
 
-export default class ApiClient {
+export class ApiClient {
   protected defaultContentType: ContentType = 'application/json';
 
   constructor(

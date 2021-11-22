@@ -1,4 +1,4 @@
-import ApiClient from '../ApiClient';
+import { ApiClient } from '../ApiClient';
 import FormData from 'form-data';
 import { TableData, UserShortInfo } from '../types';
 
