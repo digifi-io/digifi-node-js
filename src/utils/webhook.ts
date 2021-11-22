@@ -20,7 +20,13 @@ export const verifyWebhookSignature = (
 };
 
 export const verifyWebhookTimestamp = (timestamp: string, tolerance = DEFAULT_TIMESTAMP_TOLERANCE) => {
-  const timestampAge = Date.now() - new Date(timestamp).getTime();
+  const timestampAsNumber = Number(timestamp);
+
+  if (isNaN(timestampAsNumber)) {
+    return false;
+  }
+
+  const timestampAge = Date.now() - new Date(timestampAsNumber).getTime();
 
   return timestampAge <= tolerance;
 };
