@@ -59,7 +59,7 @@ export interface CreateApplicationParams {
   labels?: string[];
   status?: string;
   borrower: string | CreateBorrowerParams;
-  coborrowers: Array<string | CreateBorrowerParams>;
+  coBorrowers: Array<string | CreateBorrowerParams>;
   intermediary?: string | CreateIntermediaryParams;
   variables: Record<string, VariableValue>;
 }
