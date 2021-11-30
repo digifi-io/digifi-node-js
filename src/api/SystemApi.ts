@@ -9,13 +9,17 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
     protected apiClient: ApiClient,
   ) {}
 
-  public find(params?: Record<string, string>): Promise<TableData<Resource>> {
+  public find(params?: Record<string, string> | Array<string[]>): Promise<TableData<Resource>> {
     // TODO [Ilya] Rewrite
-    const urlSearchParams = new URLSearchParams();
+    let urlSearchParams = new URLSearchParams();
 
-    Object.keys(params || {}).forEach((key) => {
-      urlSearchParams.append(key, (params || {})[key]);
-    })
+    if (Array.isArray(params)) {
+      urlSearchParams = new URLSearchParams(params);
+    } else {
+      Object.keys(params || {}).forEach((key) => {
+        urlSearchParams.append(key, (params || {})[key]);
+      });
+    }
 
     return this.apiClient.makeCall<TableData<Resource>>(`/${this.basePath}?${urlSearchParams}`);
   }
