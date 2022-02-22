@@ -1,6 +1,9 @@
 import fetch, { Response, Headers } from 'node-fetch';
+import { v4 as uuidv4 } from 'uuid';
+import retry from 'retry';
 import FormData from 'form-data';
 import ApiRequestError from './errors/ApiRequestError';
+import NetworkError from './errors/NetworkError';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -14,16 +17,26 @@ interface FetchResponse<T = any> extends Response {
 export interface FetchOptions {
   headers: Headers;
   contentType: ContentType;
-  statusChecker: () => void;
+}
+
+export interface ApiClientOptions {
+  enableIdempotencyHeader?: boolean;
+  maxNetworkRetries?: number;
 }
 
 export class ApiClient {
   protected defaultContentType: ContentType = 'application/json';
+  protected idempotencyKeyHeader = 'idempotency-key';
+  protected digifiShouldRetryHeader = 'digifi-should-retry';
+  protected defaultMaxNetworkRetries = 0;
+  protected defaultRetryFactor = 2;
+  protected defaultRetryMinTimeout = 1000;
 
   constructor(
     private baseUrl: string,
     protected clientId: string,
     protected clientSecret: string,
+    protected options?: ApiClientOptions,
   ) {
     this.checkStatus = this.checkStatus.bind(this);
   }
@@ -34,45 +47,79 @@ export class ApiClient {
     body?: ReqBody,
     options: Partial<FetchOptions> = {},
   ): Promise<ResBody> {
-    const { headers: customHeaders, contentType = this.defaultContentType, statusChecker = this.checkStatus } = options;
+    const { headers: customHeaders, contentType = this.defaultContentType } = options;
 
-    const headers = this.getBasicHeaders(contentType);
+    const headers = this.getBasicHeaders(method, contentType);
 
     customHeaders?.forEach((value: string, header: string) => {
       headers.set(header, value);
     });
 
-    const response = await fetch(
+    return this.makeFetchWithRetries(
       `${this.baseUrl}${url}`,
       { method, headers, body: this.stringifyBody(body) },
     );
-
-    await statusChecker(response);
-
-    return response.json();
   }
 
-  protected async checkStatus(response: FetchResponse): Promise<FetchResponse> {
+  protected makeFetchWithRetries<ResBody>(...args: Parameters<typeof fetch>) {
+    const operation = retry.operation({
+      retries: this.options?.maxNetworkRetries || this.defaultMaxNetworkRetries,
+      factor: this.defaultRetryFactor,
+      minTimeout: this.defaultRetryMinTimeout,
+      randomize: true,
+    });
+
+    return new Promise<ResBody>((resolve, reject) => {
+      operation.attempt(() => {
+        this.makeFetch(...args)
+          .then(resolve)
+          .catch((err) => {
+            const shouldRetry = this.shouldRetry(err);
+
+            if (!shouldRetry) {
+              operation.stop();
+
+              return reject(err);
+            }
+
+            if (operation.retry(err)) {
+              return;
+            }
+
+            reject(err);
+          });
+      });
+    });
+  }
+
+  protected async makeFetch(...args: Parameters<typeof fetch>) {
     try {
-      if (response.ok) {
-        return response;
-      }
+      const response = await fetch(...args);
 
-      const body = await response.json();
-      const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
+      await this.checkStatus(response);
 
-      throw new ApiRequestError(errorMessage, response.status);
+      return response.json();
     } catch (err) {
-      // TODO [Ilya] Rewrite that
       if (err instanceof ApiRequestError) {
         throw err;
       }
 
-      throw new ApiRequestError(response.statusText, response.status);
+      throw new NetworkError(err.message);
     }
   }
 
-  protected getBasicHeaders(contentType?: ContentType) {
+  protected async checkStatus(response: FetchResponse) {
+    if (response.ok) {
+      return;
+    }
+
+    const body = await this.getErrorResponseBody(response);
+    const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
+
+    throw new ApiRequestError(errorMessage, response.status, response.headers);
+  }
+
+  protected getBasicHeaders(method: HTTP_METHOD, contentType?: ContentType) {
     const headers = new Headers();
 
     headers.set('clientid', this.clientId);
@@ -81,6 +128,10 @@ export class ApiClient {
     if (contentType) {
       headers.set('Accept', contentType);
       headers.set('Content-Type', contentType);
+    }
+
+    if (method === 'POST' && this.options?.enableIdempotencyHeader && this.options?.maxNetworkRetries) {
+      headers.set(this.idempotencyKeyHeader, this.generateIdempotencyKey());
     }
 
     return headers;
@@ -92,5 +143,33 @@ export class ApiClient {
     }
 
     return JSON.stringify(body);
+  }
+
+  protected generateIdempotencyKey() {
+    return uuidv4();
+  }
+
+  private async getErrorResponseBody(response: FetchResponse) {
+    try {
+      return await response.json();
+    } catch (err) {
+      throw new ApiRequestError(response.statusText, response.status, response.headers);
+    }
+  }
+
+  private shouldRetry(error: Error) {
+    if (error instanceof NetworkError) {
+      return true;
+    }
+
+    if (!(error instanceof ApiRequestError)) {
+      return false;
+    }
+
+    const digifiShouldRetryHeaderValue = error.responseHeaders?.get(this.digifiShouldRetryHeader);
+
+    return digifiShouldRetryHeaderValue === 'true'
+      || error.responseStatus === 409
+      || error.responseStatus >= 500;
   }
 }
