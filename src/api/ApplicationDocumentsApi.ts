@@ -1,4 +1,4 @@
-import { ApiClient } from '../ApiClient';
+import { IApiClient } from '../ApiClient';
 import FormData from 'form-data';
 import { TableData, UserShortInfo } from '../types';
 
@@ -23,7 +23,7 @@ export interface CreateApplicationDocumentParams {
 export default class ApplicationDocumentsApi {
   protected basePath = 'application-documents';
 
-  constructor(protected apiClient: ApiClient) {}
+  constructor(protected apiClient: IApiClient) {}
 
   public find(): Promise<TableData<ApplicationDocument>> {
     return this.apiClient.makeCall<TableData<ApplicationDocument>>(`/${this.basePath}`);

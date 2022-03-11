@@ -24,7 +24,16 @@ export interface ApiClientOptions {
   maxNetworkRetries?: number;
 }
 
-export class ApiClient {
+export interface IApiClient {
+  makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
+    url: string,
+    method?: HTTP_METHOD,
+    body?: ReqBody,
+    options?: Partial<FetchOptions>,
+  ): Promise<ResBody>;
+}
+
+export class ApiClient implements IApiClient {
   protected defaultContentType: ContentType = 'application/json';
   protected idempotencyKeyHeader = 'idempotency-key';
   protected digifiShouldRetryHeader = 'digifi-should-retry';
@@ -32,10 +41,8 @@ export class ApiClient {
   protected defaultRetryFactor = 2;
   protected defaultRetryMinTimeout = 1000;
 
-  constructor(
+  protected constructor(
     private baseUrl: string,
-    protected clientId: string,
-    protected clientSecret: string,
     protected options?: ApiClientOptions,
   ) {
     this.checkStatus = this.checkStatus.bind(this);
@@ -121,9 +128,6 @@ export class ApiClient {
 
   protected getBasicHeaders(method: HTTP_METHOD, contentType?: ContentType) {
     const headers = new Headers();
-
-    headers.set('clientid', this.clientId);
-    headers.set('clientsecret', this.clientSecret);
 
     if (contentType) {
       headers.set('Accept', contentType);

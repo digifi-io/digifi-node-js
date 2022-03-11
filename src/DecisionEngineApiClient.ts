@@ -1,9 +1,10 @@
-import { ApiClient, FetchOptions, HTTP_METHOD, RequestBody } from './ApiClient';
+import { AuthorizedApiClient } from './AuthorizedApiClient';
+import {FetchOptions, HTTP_METHOD, IApiClient, RequestBody} from './ApiClient';
 
 const WITH_QUERY_PARAMS_METHODS: HTTP_METHOD[] = ['GET', 'DELETE'];
 const WITH_BODY_PARAMS_METHODS: HTTP_METHOD[]= ['POST', 'PUT'];
 
-export default class DecisionEngineApiClient extends ApiClient {
+export default class DecisionEngineApiClient extends AuthorizedApiClient implements IApiClient {
   constructor(
     baseUrl: string,
     clientId: string,

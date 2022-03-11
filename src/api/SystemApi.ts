@@ -1,4 +1,4 @@
-import { ApiClient } from '../ApiClient';
+import { IApiClient } from '../ApiClient';
 import { TableData } from '../types';
 
 export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined> {
@@ -6,7 +6,7 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
   protected entityKey = '';
 
   constructor(
-    protected apiClient: ApiClient,
+    protected apiClient: IApiClient,
   ) {}
 
   public find(params?: Record<string, string> | Array<string[]>): Promise<TableData<Resource>> {
