@@ -17,6 +17,7 @@ interface FetchResponse<T = any> extends Response {
 export interface FetchOptions {
   headers: Headers;
   contentType: ContentType;
+  idempotencyKey?: string;
 }
 
 export interface ApiClientOptions {
@@ -54,9 +55,9 @@ export class ApiClient implements IApiClient {
     body?: ReqBody,
     options: Partial<FetchOptions> = {},
   ): Promise<ResBody> {
-    const { headers: customHeaders, contentType = this.defaultContentType } = options;
+    const { headers: customHeaders, contentType = this.defaultContentType, idempotencyKey } = options;
 
-    const headers = this.getBasicHeaders(method, contentType);
+    const headers = this.getBasicHeaders(method, contentType, idempotencyKey);
 
     customHeaders?.forEach((value: string, header: string) => {
       headers.set(header, value);
@@ -126,7 +127,11 @@ export class ApiClient implements IApiClient {
     throw new ApiRequestError(errorMessage, response.status, response.headers);
   }
 
-  protected getBasicHeaders(method: HTTP_METHOD, contentType?: ContentType) {
+  protected getBasicHeaders(
+    method: HTTP_METHOD,
+    contentType?: ContentType,
+    idempotencyKey?: string,
+  ) {
     const headers = new Headers();
 
     if (contentType) {
@@ -134,8 +139,11 @@ export class ApiClient implements IApiClient {
       headers.set('Content-Type', contentType);
     }
 
-    if (method === 'POST' && this.options?.enableIdempotencyHeader && this.options?.maxNetworkRetries) {
-      headers.set(this.idempotencyKeyHeader, this.generateIdempotencyKey());
+    const shouldUseIdempotencyHeader = !!(this.options?.enableIdempotencyHeader && this.options?.maxNetworkRetries)
+      || !!idempotencyKey;
+
+    if (method === 'POST' && shouldUseIdempotencyHeader) {
+      headers.set(this.idempotencyKeyHeader, idempotencyKey || this.generateIdempotencyKey());
     }
 
     return headers;
