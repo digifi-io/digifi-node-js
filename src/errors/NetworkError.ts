@@ -1,1 +1,1 @@
-export default class NetworkZError extends Error {};
+export default class NetworkError extends Error {};
