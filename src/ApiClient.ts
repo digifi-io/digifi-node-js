@@ -42,7 +42,7 @@ export class ApiClient implements IApiClient {
   protected defaultRetryFactor = 2;
   protected defaultRetryMinTimeout = 1000;
 
-  protected constructor(
+  constructor(
     private baseUrl: string,
     protected options?: ApiClientOptions,
   ) {
