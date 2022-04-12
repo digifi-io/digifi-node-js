@@ -45,11 +45,11 @@ class AccountsApi {
 
   public findAccountByEmail(email: string): Promise<BaseAccountInfo> {
     return this.apiClient.makeCall(`${this.path}/${email}`);
-  };
+  }
 
   public createAccount(params: CreateAccountParams): Promise<AuthResponseParams> {
     return this.apiClient.makeCall(`${this.path}`, 'POST', params);
-  };
+  }
 
   public getCurrentUser(accountAccessToken: string): Promise<BaseAccountInfo> {
     return this.apiClient.makeCall(`${this.path}`, 'GET', undefined, {
@@ -57,7 +57,7 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public sendUpdatePhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/phone`, 'PUT', { phone }, {
@@ -66,7 +66,7 @@ class AccountsApi {
         accountPasswordValidationToken,
       }),
     });
-  };
+  }
 
   public updatePhoneNumber(code: string, accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/${code}`, 'PUT', undefined, {
@@ -74,7 +74,7 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public sendAddPhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/phone`, 'POST', { phone }, {
@@ -83,7 +83,7 @@ class AccountsApi {
         accountPasswordValidationToken,
       }),
     });
-  };
+  }
 
   public addPhoneNumber(code: string, accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/phone/${code}`, 'POST', undefined, {
@@ -91,7 +91,7 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public deletePhoneNumber(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/delete-phone`, 'PUT', { phone }, {
@@ -100,7 +100,7 @@ class AccountsApi {
         accountPasswordValidationToken,
       }),
     });
-  };
+  }
 
   public sendUpdateEmailCode(email: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/email`, 'PUT', { email }, {
@@ -109,7 +109,7 @@ class AccountsApi {
         accountPasswordValidationToken,
       }),
     });
-  };
+  }
 
   public updateEmailAddress(code: string, accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/email/${code}`, 'PUT', undefined, {
@@ -117,7 +117,7 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public createPasswordValidationToken(password: string, accountAccessToken: string): Promise<CreatePasswordValidationTokenResponseParams> {
     return this.apiClient.makeCall(`${this.path}/password-validation-token`, 'POST', { password }, {
@@ -125,7 +125,7 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public updatePassword(oldPassword: string, newPassword: string, accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/password`, 'PUT', {
@@ -136,7 +136,7 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 }
 
 export default AccountsApi;

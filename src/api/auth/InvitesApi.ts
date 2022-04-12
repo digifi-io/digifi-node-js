@@ -15,17 +15,16 @@ class InvitesApi {
     private apiClient: AuthApiClient,
   ) {}
 
-
   public acceptInvite(password: string, phone: string, token: string): Promise<AuthResponseParams> {
     return this.apiClient.makeCall(`${this.path}/${token}`, 'POST', {
       password,
       phone,
     });
-  };
+  }
 
   public getInviteInfo(token: string): Promise<GetInviteInfoResponseParams>{
     return this.apiClient.makeCall(`${this.path}/${token}`);
-  };
+  }
 }
 
 export default InvitesApi;

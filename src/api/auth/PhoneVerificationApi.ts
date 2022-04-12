@@ -16,7 +16,7 @@ class PhoneVerificationApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public verifyMfaCode(code: string, accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/${code}`, 'PUT', undefined, {
@@ -24,7 +24,7 @@ class PhoneVerificationApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 }
 
 export default PhoneVerificationApi;

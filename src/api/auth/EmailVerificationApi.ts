@@ -18,7 +18,7 @@ class EmailVerificationApi {
     });
   }
 
-  public verifyEmail(code: string, accountAccessToken: string): Promise<void>{
+  public verifyEmail(code: string, accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/${code}`, 'PUT', undefined, {
       headers: new Headers({
         accountAccessToken,

@@ -14,7 +14,7 @@ class SessionsApi {
       email,
       password,
     });
-  };
+  }
 
   public validateToken(accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}/token-status`, 'PUT', undefined, {
@@ -22,7 +22,7 @@ class SessionsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public logout(accountAccessToken: string): Promise<void> {
     return this.apiClient.makeCall(`${this.path}`, 'DELETE', undefined, {
@@ -30,7 +30,7 @@ class SessionsApi {
         accountAccessToken,
       }),
     });
-  };
+  }
 
   public resignAccessToken(accountRefreshToken: string): Promise<AuthResponseParams> {
     return this.apiClient.makeCall(`${this.path}/`, 'POST', undefined, {
@@ -38,7 +38,7 @@ class SessionsApi {
         accountRefreshToken,
       }),
     });
-  };
+  }
 }
 
 export default SessionsApi;
