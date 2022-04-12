@@ -63,4 +63,7 @@ export {
   default as ResetPasswordApi,
   GetResetPasswordTokenInfoResponseParams,
 } from './auth/ResetPasswordApi';
-
+export {
+  default as InvitesApi,
+  GetInviteInfoResponseParams,
+} from './auth/InvitesApi';
