@@ -1,5 +1,4 @@
 import AuthApiClient from '../../AuthApiClient';
-import { Headers } from 'node-fetch';
 import { AuthResponseParams } from '../../types';
 
 export type GetInviteInfoResponseParams = {
