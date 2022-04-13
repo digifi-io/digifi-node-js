@@ -67,3 +67,7 @@ export {
   default as InvitesApi,
   GetInviteInfoResponseParams,
 } from './auth/InvitesApi';
+export {
+  default as BrandingApi,
+  Branding,
+} from './dlp/BrandingApi';
