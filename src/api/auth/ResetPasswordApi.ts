@@ -20,7 +20,7 @@ class ResetPasswordApi {
   }
 
   public resetPassword(password: string, resetPasswordToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/${resetPasswordToken}`, 'POST', {
+    return this.apiClient.makeCall(`${this.path}/${resetPasswordToken}`, 'PUT', {
       password,
     });
   }

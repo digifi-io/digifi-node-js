@@ -71,3 +71,7 @@ export {
   default as BrandingApi,
   Branding,
 } from './dlp/BrandingApi';
+export {
+  default as VariablesApi,
+  Variable,
+} from './core/VariablesApi';

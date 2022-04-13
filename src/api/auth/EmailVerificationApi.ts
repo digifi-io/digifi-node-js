@@ -9,9 +9,7 @@ class EmailVerificationApi {
   ) {}
 
   public sendVerificationEmail(email: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', {
-      email,
-    }, {
+    return this.apiClient.makeCall(`${this.path}`, 'POST', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
