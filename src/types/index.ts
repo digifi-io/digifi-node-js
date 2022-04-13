@@ -17,3 +17,8 @@ export interface UserShortInfo {
   lastName: string;
   imageId?: string;
 }
+
+export interface AuthResponseParams {
+  accessToken: string;
+  refreshToken: string;
+}

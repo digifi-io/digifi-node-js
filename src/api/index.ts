@@ -42,3 +42,36 @@ export {
   VariablesType,
   StrategyStatus,
 } from './DecisionEngineApi';
+export {
+  default as AccountsApi,
+  CreateAccountParams,
+  BaseAccountInfo,
+  AccountStatus,
+  BaseAccountPhone,
+  CreatePasswordValidationTokenResponseParams,
+} from './auth/AccountsApi';
+export {
+  default as SessionsApi,
+} from './auth/SessionsApi';
+export {
+  default as EmailVerificationApi,
+} from './auth/EmailVerificationApi';
+export {
+  default as PhoneVerificationApi,
+} from './auth/PhoneVerificationApi';
+export {
+  default as ResetPasswordApi,
+  GetResetPasswordTokenInfoResponseParams,
+} from './auth/ResetPasswordApi';
+export {
+  default as InvitesApi,
+  GetInviteInfoResponseParams,
+} from './auth/InvitesApi';
+export {
+  default as BrandingApi,
+  Branding,
+} from './dlp/BrandingApi';
+export {
+  default as VariablesApi,
+  Variable,
+} from './core/VariablesApi';
