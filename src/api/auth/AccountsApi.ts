@@ -69,7 +69,7 @@ class AccountsApi {
   }
 
   public updatePhoneNumber(code: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/${code}`, 'PUT', undefined, {
+    return this.apiClient.makeCall(`${this.path}/phone/${code}`, 'PUT', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
