@@ -14,7 +14,7 @@ export interface BaseAccountPhone {
   deletedAt?: Date;
 }
 
-export interface BaseAccountInfo {
+export type BaseAccountInfo = {
   id: string;
   isEmailNotVerified: true | undefined;
   isMfaIncomplete: true | undefined;
@@ -22,6 +22,8 @@ export interface BaseAccountInfo {
   phones: BaseAccountPhone[];
   lastActiveAt: number | null;
   status: AccountStatus;
+} & {
+  [key in string]: string;
 }
 
 export type CreateAccountParams = {
