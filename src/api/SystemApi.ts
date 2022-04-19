@@ -9,15 +9,21 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
     protected apiClient: IApiClient,
   ) {}
 
-  public find(params?: Record<string, string> | Array<string[]>): Promise<TableData<Resource>> {
+  public find(params: Record<string, string | Array<string>> | Array<string[]> = {}): Promise<TableData<Resource>> {
     // TODO [Ilya] Rewrite
     let urlSearchParams = new URLSearchParams();
 
     if (Array.isArray(params)) {
       urlSearchParams = new URLSearchParams(params);
     } else {
-      Object.keys(params || {}).forEach((key) => {
-        urlSearchParams.append(key, (params || {})[key]);
+      Object.keys(params).forEach((key) => {
+        const param = params[key];
+
+        if (Array.isArray(param)) {
+          param.forEach(value => urlSearchParams.append(key, value));
+        } else {
+          urlSearchParams.append(key, param);
+        }
       });
     }
 
