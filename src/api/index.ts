@@ -19,6 +19,7 @@ export {
   default as ApplicationDocumentsApi,
   ApplicationDocument,
   CreateApplicationDocumentParams,
+  ApplicationDocumentType,
 } from './ApplicationDocumentsApi';
 export {
   default as IntermediariesApi,

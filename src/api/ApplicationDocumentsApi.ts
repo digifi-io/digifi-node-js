@@ -2,13 +2,24 @@ import { IApiClient } from '../ApiClient';
 import FormData from 'form-data';
 import { TableData, UserShortInfo } from '../types';
 
+export enum ApplicationDocumentType {
+  File = 'file',
+  Folder = 'folder',
+}
+
 export interface ApplicationDocument {
   id: string;
+  type: ApplicationDocumentType;
+  parentId: string | null;
+  organizationId: string;
+  configurationAnchor?: string | null;
   name: string;
-  extension: string;
-  size: number;
+  extension: string | null;
+  size: number | null;
   createdBy?: UserShortInfo | null;
+  updatedBy?: UserShortInfo | null;
   createdAt: Date;
+  updatedAt: Date;
   applicationId: string;
 }
 
@@ -25,8 +36,11 @@ export default class ApplicationDocumentsApi {
 
   constructor(protected apiClient: IApiClient) {}
 
-  public find(): Promise<TableData<ApplicationDocument>> {
-    return this.apiClient.makeCall<TableData<ApplicationDocument>>(`/${this.basePath}`);
+  public find(applicationId: string): Promise<TableData<ApplicationDocument>> {
+    const urlParams = new URLSearchParams();
+    urlParams.append('applicationId', applicationId);
+
+    return this.apiClient.makeCall<TableData<ApplicationDocument>>(`/${this.basePath}?${urlParams}`);
   }
 
   public findById(id: string): Promise<Buffer> {
