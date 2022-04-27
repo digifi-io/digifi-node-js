@@ -29,6 +29,7 @@ export interface CreateApplicationDocumentParams {
   fileName: string;
   parentId?: string | null;
   anchor?: string | null;
+  taskId?: string
 }
 
 export default class ApplicationDocumentsApi {
@@ -63,6 +64,10 @@ export default class ApplicationDocumentsApi {
 
     if (params.anchor) {
       formData.append('anchor', params.anchor);
+    }
+
+    if (params.taskId) {
+      formData.append('taskId', params.taskId);
     }
 
     return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });

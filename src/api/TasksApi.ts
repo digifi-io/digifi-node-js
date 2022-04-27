@@ -4,7 +4,8 @@ import { VariableValue, UserShortInfo } from '../types';
 
 export enum TaskStatus {
   Done = 'Done',
-  NotDone = 'Not Done'
+  NotDone = 'Not Done',
+  InReview = 'In Review',
 }
 
 export interface Task {
