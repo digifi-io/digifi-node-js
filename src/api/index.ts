@@ -76,3 +76,6 @@ export {
   default as VariablesApi,
   Variable,
 } from './core/VariablesApi';
+export {
+  default as ApplicationDocumentsDownloadsApi
+} from './ApplicationDocumentsDownloadsApi';

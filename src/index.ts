@@ -6,3 +6,4 @@ export * from './errors';
 export * from './DecisionEngineApiClient';
 export * from './utils/webhook';
 export * from './AuthApiClient';
+export * from './ApplicationDocumentsDownloadsApiClient';
