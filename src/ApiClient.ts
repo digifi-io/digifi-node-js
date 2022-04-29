@@ -102,9 +102,14 @@ export class ApiClient implements IApiClient {
 
   protected async makeFetch(...args: Parameters<typeof fetch>) {
     try {
+      const [, options] = args;
       const response = await fetch(...args);
 
       await this.checkStatus(response);
+
+     if((options?.headers as Headers).get('responseType') === 'arraybuffer') {
+       return response.arrayBuffer();
+     }
 
       return response.json();
     } catch (err) {
