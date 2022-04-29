@@ -108,7 +108,7 @@ export class ApiClient implements IApiClient {
       await this.checkStatus(response);
 
      if((options?.headers as Headers).get('responseType') === 'arraybuffer') {
-       return response.arrayBuffer();
+       return response;
      }
 
       return response.json();
