@@ -1,6 +1,6 @@
 {
   "name": "digifi-node-js",
-  "version": "2.4.1",
+  "version": "2.5.1",
   "description": "DigiFI SDK for Node JS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
