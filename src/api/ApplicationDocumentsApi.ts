@@ -37,11 +37,11 @@ export default class ApplicationDocumentsApi {
 
   constructor(protected apiClient: IApiClient) {}
 
-  public find(applicationId: string): Promise<TableData<ApplicationDocument>> {
+  public find(applicationId: string): Promise<ApplicationDocument[]> {
     const urlParams = new URLSearchParams();
     urlParams.append('applicationId', applicationId);
 
-    return this.apiClient.makeCall<TableData<ApplicationDocument>>(`/${this.basePath}?${urlParams}`);
+    return this.apiClient.makeCall<ApplicationDocument[]>(`/${this.basePath}?${urlParams}`);
   }
 
   public findById(id: string): Promise<Buffer> {
