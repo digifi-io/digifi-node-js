@@ -9,7 +9,7 @@ export enum ApplicationDefaultVariable {
 
 export interface Application {
   id: string;
-  displayId: number;
+  displayId: string;
   variables: Record<string, VariableValue>;
   status: {
     id: string;
