@@ -89,3 +89,11 @@ export {
   CreateProductParams,
   UpdateProductParams,
 } from './ProductsApi';
+export {
+  default as CommentsApi,
+  Comment,
+  CreateCommentParams,
+  UpdateCommentParams,
+  CommentAuthorType,
+  CommentReferenceType,
+} from './CommentsApi';
