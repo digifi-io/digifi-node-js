@@ -79,3 +79,13 @@ export {
 export {
   default as ApplicationDocumentsDownloadsApi
 } from './ApplicationDocumentsDownloadsApi';
+export {
+  default as ProductsApi,
+  Product,
+  ProductSettings,
+  ProductStatus,
+  ProductType,
+  AssigneeTeamMembersType,
+  CreateProductParams,
+  UpdateProductParams,
+} from './ProductsApi';
