@@ -22,3 +22,16 @@ export interface AuthResponseParams {
   accessToken: string;
   refreshToken: string;
 }
+
+export type NumericDataType =
+  | 'Number'
+  | 'Monetary'
+  | 'Percentage';
+
+export type StringDataType =
+  | 'List'
+  | 'Text'
+  | 'LargeText'
+  | 'PhoneNumber'
+  | 'EmailAddress'
+  | 'IdentificationNumber';

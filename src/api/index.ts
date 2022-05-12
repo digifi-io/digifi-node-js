@@ -97,3 +97,15 @@ export {
   CommentAuthorType,
   CommentReferenceType,
 } from './CommentsApi';
+export {
+  default as BorrowerProfileCardsApi,
+  BorrowerProfileCardViewModel,
+} from './BorrowerProfileCardsApi';
+export {
+  default as ApplicationDetailsCardsApi,
+  ApplicationDetailsCardViewModel,
+} from './ApplicationDetailsCardsApi';
+export {
+  default as ApplicationDocumentConfigurationApi,
+  ApplicationDocumentConfigurationViewModel,
+} from './ApplicationDocumentConfigurationApi';
