@@ -21,8 +21,14 @@ class BorrowerProfileCardsApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(): Promise<BorrowerProfileCardViewModel> {
-    return this.apiClient.makeCall(`${this.path}`);
+  public find(borrowerType?: BorrowerType): Promise<BorrowerProfileCardViewModel> {
+    const urlParams = new URLSearchParams();
+
+    if (borrowerType) {
+      urlParams.append('borrowerType', borrowerType);
+    }
+
+    return this.apiClient.makeCall(`${this.path}?${urlParams}`);
   }
 }
 
