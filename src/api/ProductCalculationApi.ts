@@ -1,4 +1,4 @@
-import { IApiClient } from '../ApiClient';
+import { AuthorizedApiClient } from '../AuthorizedApiClient';
 import { VariableType } from './core/VariablesApi';
 
 export interface ProductCalculation {
@@ -25,7 +25,7 @@ export default class ProductCalculationApi {
   protected path = '/product-calculations';
 
   constructor(
-    protected apiClient: IApiClient,
+    protected apiClient: AuthorizedApiClient,
   ) {
   }
 
@@ -37,11 +37,11 @@ export default class ProductCalculationApi {
     }
 
     if (params?.variableId) {
-      queryParams.set('productId', params.variableId);
+      queryParams.set('variableId', params.variableId);
     }
 
     if (params?.search) {
-      queryParams.set('productId', params.search);
+      queryParams.set('search', params.search);
     }
 
     return this.apiClient.makeCall<ProductCalculation[]>(`/${this.path}/?${queryParams}`);
