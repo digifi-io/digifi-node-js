@@ -5,11 +5,10 @@ class AuthApiClient extends AuthorizedApiClient {
 
   constructor(
     baseUrl: string,
-    clientId: string,
-    clientSecret: string,
+    apiKey: string,
     protected entity: 'borrowers' | 'intermediaries',
   ) {
-    super(baseUrl, clientId, clientSecret);
+    super(baseUrl, apiKey);
   }
 
   public async makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(

@@ -5,11 +5,10 @@ import { Headers } from 'node-fetch';
 export class ApplicationDocumentsDownloadsApiClient extends AuthorizedApiClient implements IApiClient {
   constructor(
     baseUrl: string,
-    protected clientId: string,
-    protected clientSecret: string,
+    protected apiKey: string,
     options?: ApiClientOptions,
   ) {
-    super(baseUrl, clientId, clientSecret, options);
+    super(baseUrl, apiKey, options);
   }
 
   protected getBasicHeaders(method: HTTP_METHOD, contentType?: ContentType) {
@@ -18,8 +17,7 @@ export class ApplicationDocumentsDownloadsApiClient extends AuthorizedApiClient 
       accept: '*/*'
     });
 
-    headers.set('clientid', this.clientId);
-    headers.set('clientsecret', this.clientSecret);
+    headers.set('api-key', this.apiKey);
 
     return headers;
   }
