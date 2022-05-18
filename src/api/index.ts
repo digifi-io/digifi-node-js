@@ -20,6 +20,7 @@ export {
   ApplicationDocument,
   CreateApplicationDocumentParams,
   ApplicationDocumentType,
+  CreateManyApplicationDocumentParams,
 } from './ApplicationDocumentsApi';
 export {
   default as IntermediariesApi,
@@ -109,3 +110,16 @@ export {
   default as ApplicationDocumentConfigurationApi,
   ApplicationDocumentConfigurationViewModel,
 } from './ApplicationDocumentConfigurationApi';
+export {
+  default as BorrowerStandardPortalLegalDocumentApi,
+  BorrowerStandardPortalLegalDocument,
+} from './dlp/BorrowerStandardPortalLegalDocumentApi';
+export {
+  default as BorrowerStandardPortalGeneralSettingsApi,
+  BorrowerStandardPortalGeneralSettings,
+} from './dlp/BorrowerStandardPortalGeneralSettingsApi';
+export {
+  default as ProductCalculationApi,
+  GetProductCalculationsParams,
+  ProductCalculation,
+} from './ProductCalculationApi';

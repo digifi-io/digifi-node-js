@@ -7,11 +7,9 @@ const WITH_BODY_PARAMS_METHODS: HTTP_METHOD[]= ['POST', 'PUT'];
 export default class DecisionEngineApiClient extends AuthorizedApiClient implements IApiClient {
   constructor(
     baseUrl: string,
-    clientId: string,
-    clientSecret: string,
-    private clientPublicKey: string,
+    apiKey: string,
   ) {
-    super(baseUrl, clientId, clientSecret);
+    super(baseUrl, apiKey);
   }
   public async makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
     url: string,
@@ -33,9 +31,7 @@ export default class DecisionEngineApiClient extends AuthorizedApiClient impleme
       return params;
     }
 
-    params.set('client_id', this.clientId);
-    params.set('client_public_key', this.clientPublicKey);
-    params.set('client_secret', this.clientSecret);
+    params.set('clientsecret', this.apiKey);
 
     return params;
   }
@@ -47,9 +43,7 @@ export default class DecisionEngineApiClient extends AuthorizedApiClient impleme
 
     return {
       ...body as Record<string, unknown>,
-      client_id: this.clientId,
-      client_public_key: this.clientPublicKey,
-      client_secret: this.clientSecret,
+      client_secret: this.apiKey,
     };
   }
 }

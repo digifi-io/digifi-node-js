@@ -3,8 +3,7 @@ import { ApiClient, ApiClientOptions, ContentType, HTTP_METHOD, IApiClient } fro
 export class AuthorizedApiClient extends ApiClient implements IApiClient {
   constructor(
     baseUrl: string,
-    protected clientId: string,
-    protected clientSecret: string,
+    protected apiKey: string,
     options?: ApiClientOptions,
   ) {
     super(baseUrl, options);
@@ -13,8 +12,7 @@ export class AuthorizedApiClient extends ApiClient implements IApiClient {
   protected getBasicHeaders(method: HTTP_METHOD, contentType?: ContentType) {
     const headers = super.getBasicHeaders(method, contentType);
 
-    headers.set('clientid', this.clientId);
-    headers.set('clientsecret', this.clientSecret);
+    headers.set('api-key', this.apiKey);
 
     return headers;
   }

@@ -32,6 +32,12 @@ export interface CreateApplicationDocumentParams {
   taskId?: string
 }
 
+export interface CreateManyApplicationDocumentParams {
+  file: File;
+  parentId?: string | null;
+  anchor?: string | null;
+}
+
 export default class ApplicationDocumentsApi {
   protected basePath = 'application-documents';
 
@@ -72,5 +78,26 @@ export default class ApplicationDocumentsApi {
 
     return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });
   }
-}
 
+  public createMany(applicationId: string, params: CreateManyApplicationDocumentParams[]): Promise<void> {
+    const formData = new FormData();
+
+    params.forEach((batchUploadDocumentParams, index) => {
+      formData.append('files', batchUploadDocumentParams.file);
+
+      if (batchUploadDocumentParams.parentId) {
+        formData.append(`options[${index}].parentId`, batchUploadDocumentParams.parentId);
+      }
+
+      if (batchUploadDocumentParams.anchor) {
+        formData.append(`options[${index}].anchor`, batchUploadDocumentParams.anchor);
+      }
+    });
+
+    formData.append('applicationId', applicationId);
+
+    return this.apiClient.makeCall(`/${this.basePath}/batch`, 'POST', formData, {
+      contentType: null,
+    });
+  }
+}

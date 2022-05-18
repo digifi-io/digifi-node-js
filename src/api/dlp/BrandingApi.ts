@@ -22,6 +22,11 @@ export interface Branding {
   logo: IImageParams | null;
   favicon: IImageParams | null;
   organizationId: string;
+  organization: {
+    name: string;
+    country?: string;
+    legalAddress?: string;
+  };
 }
 
 class BrandingApi {
