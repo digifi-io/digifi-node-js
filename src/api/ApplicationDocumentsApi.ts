@@ -33,7 +33,8 @@ export interface CreateApplicationDocumentParams {
 }
 
 export interface CreateManyApplicationDocumentParams {
-  file: File;
+  file: Buffer;
+  fileName: string;
   parentId?: string | null;
   anchor?: string | null;
 }
@@ -83,7 +84,7 @@ export default class ApplicationDocumentsApi {
     const formData = new FormData();
 
     params.forEach((batchUploadDocumentParams, index) => {
-      formData.append('files', batchUploadDocumentParams.file);
+      formData.append('files', batchUploadDocumentParams.file, batchUploadDocumentParams.fileName);
 
       if (batchUploadDocumentParams.parentId) {
         formData.append(`options[${index}].parentId`, batchUploadDocumentParams.parentId);

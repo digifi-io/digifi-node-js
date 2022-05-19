@@ -26,7 +26,7 @@ class ApplicationDocumentConfigurationApi {
       urlSearchParams.append('productId', productId);
     }
 
-    return this.apiClient.makeCall(`${this.path}`);
+    return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);
   }
 }
 
