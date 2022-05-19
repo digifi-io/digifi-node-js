@@ -33,7 +33,7 @@ export interface CreateApplicationDocumentParams {
 }
 
 export interface CreateManyApplicationDocumentParams {
-  file: File;
+  file: Buffer;
   parentId?: string | null;
   anchor?: string | null;
 }
