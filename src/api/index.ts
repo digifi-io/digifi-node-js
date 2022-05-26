@@ -123,3 +123,6 @@ export {
   GetProductCalculationsParams,
   ProductCalculation,
 } from './ProductCalculationApi';
+export {
+  default as ApplicationDocumentsPreviewApi,
+} from './ApplicationDocumentsPreviewApi';
