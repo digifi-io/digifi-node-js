@@ -28,6 +28,10 @@ export interface Borrower {
   organizationId: string;
   variables: Record<string, VariableValue>;
   locked: boolean;
+  lockStartDate?: Date;
+  lockEndDate?: Date;
+  lockedBy?: UserShortInfo | null;
+  lockReason?: string;
   createdBy?: UserShortInfo | null;
   updatedBy?: UserShortInfo | null;
   createdAt: Date;
@@ -37,12 +41,14 @@ export interface Borrower {
 export interface CreateBorrowerParams {
   type: BorrowerType;
   variables: Record<string, VariableValue>;
-  locked?: boolean;
+  lockEndDate?: string | null;
+  lockReason?: string;
 }
 
 export interface UpdateBorrowerParams {
   variables?: Record<string, VariableValue>;
-  locked?: boolean;
+  lockEndDate?: string | null;
+  lockReason?: string;
 }
 
 export default class BorrowersApi extends SystemApi<Borrower, CreateBorrowerParams, UpdateBorrowerParams> {
