@@ -9,7 +9,7 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
     protected apiClient: IApiClient,
   ) {}
 
-  public find(params: Record<string, string | Array<string>> | Array<string[]> = {}): Promise<TableData<Resource>> {
+  public find(params: Record<string, string | boolean | Array<string>> | Array<string[]> = {}): Promise<TableData<Resource>> {
     // TODO [Ilya] Rewrite
     let urlSearchParams = new URLSearchParams();
 
