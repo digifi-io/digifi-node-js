@@ -1,5 +1,6 @@
 import { IApiClient } from '../ApiClient';
 import { TableData } from '../types';
+import getSearchParams from '../utils/getSearchParams';
 
 export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined> {
   protected basePath = '';
@@ -11,21 +12,7 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
 
   public find(params: Record<string, string | Array<string>> | Array<string[]> = {}): Promise<TableData<Resource>> {
     // TODO [Ilya] Rewrite
-    let urlSearchParams = new URLSearchParams();
-
-    if (Array.isArray(params)) {
-      urlSearchParams = new URLSearchParams(params);
-    } else {
-      Object.keys(params).forEach((key) => {
-        const param = params[key];
-
-        if (Array.isArray(param)) {
-          param.forEach(value => urlSearchParams.append(key, value));
-        } else {
-          urlSearchParams.append(key, param);
-        }
-      });
-    }
+    const urlSearchParams = getSearchParams(params);
 
     return this.apiClient.makeCall<TableData<Resource>>(`/${this.basePath}?${urlSearchParams}`);
   }

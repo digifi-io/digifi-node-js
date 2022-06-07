@@ -1,6 +1,7 @@
 import AuthApiClient from '../../AuthApiClient';
 import { Headers } from 'node-fetch';
-import { AuthResponseParams } from '../../types';
+import { AuthResponseParams, TableData } from '../../types';
+import getSearchParams from '../../utils/getSearchParams';
 
 export enum AccountStatus {
   Active = 'active',
@@ -138,6 +139,12 @@ class AccountsApi {
         accountAccessToken,
       }),
     });
+  }
+
+  public find(params: Record<string, string | Array<string>> | Array<string[]> = {}): Promise<BaseAccountInfo[]> {
+    const urlSearchParams = getSearchParams(params);
+
+    return this.apiClient.makeCall(`/${this.path}/search?${urlSearchParams}`);
   }
 }
 
