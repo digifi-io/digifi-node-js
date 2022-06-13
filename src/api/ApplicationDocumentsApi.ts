@@ -51,8 +51,8 @@ export default class ApplicationDocumentsApi {
     return this.apiClient.makeCall<ApplicationDocument[]>(`/${this.basePath}?${urlParams}`);
   }
 
-  public findById(id: string): Promise<Buffer> {
-    return this.apiClient.makeCall<Buffer>(`/${this.basePath}/${id}`);
+  public findById(id: string): Promise<ApplicationDocument> {
+    return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}/${id}`);
   }
 
   public delete(id: string): Promise<ApplicationDocument> {
