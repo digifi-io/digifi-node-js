@@ -20,9 +20,22 @@ export interface FetchOptions {
   idempotencyKey?: string;
 }
 
+export interface RequestMetadata {
+  url: string;
+  method: string;
+  duration: number;
+  statusCode: number;
+}
+
+export interface ApiClientLogger {
+  info: (requestMetadata: RequestMetadata) => void;
+  error: (error: ApiRequestError, requestMetadata: RequestMetadata) => void;
+}
+
 export interface ApiClientOptions {
   enableIdempotencyHeader?: boolean;
   maxNetworkRetries?: number;
+  logger?: ApiClientLogger;
 }
 
 export interface IApiClient {
@@ -101,19 +114,35 @@ export class ApiClient implements IApiClient {
   }
 
   protected async makeFetch(...args: Parameters<typeof fetch>) {
+    const startedAt = Date.now();
+    const [url, options] = args;
+
     try {
-      const [, options] = args;
       const response = await fetch(...args);
+
+      this.options?.logger?.info({
+        url: url.toString(),
+        method: options?.method || 'GET',
+        duration: Date.now() - startedAt,
+        statusCode: response.status,
+      });
 
       await this.checkStatus(response);
 
-     if((options?.headers as Headers).get('responseType') === 'arraybuffer') {
-       return response;
-     }
+      if((options?.headers as Headers).get('responseType') === 'arraybuffer') {
+        return response;
+      }
 
       return response.json();
     } catch (err) {
       if (err instanceof ApiRequestError) {
+        this.options?.logger?.error(err, {
+          duration: Date.now() - startedAt,
+          url: url.toString(),
+          method: options?.method || 'GET',
+          statusCode: err.responseStatus,
+        });
+
         throw err;
       }
 
