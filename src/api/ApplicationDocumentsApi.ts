@@ -7,6 +7,17 @@ export enum ApplicationDocumentType {
   Folder = 'folder',
 }
 
+export enum ApplicationDocumentAccessPermissionEntityType {
+  Borrower = 'borrower',
+  Intermediary = 'intermediary',
+}
+
+export interface ApplicationDocumentAccessPermission {
+  entityId: string;
+  entityType: ApplicationDocumentAccessPermissionEntityType;
+  accessGranted: boolean;
+}
+
 export interface ApplicationDocument {
   id: string;
   type: ApplicationDocumentType;
@@ -21,6 +32,7 @@ export interface ApplicationDocument {
   createdAt: Date;
   updatedAt: Date;
   applicationId: string;
+  accessPermissions: ApplicationDocumentAccessPermission[] | null;
 }
 
 export interface CreateApplicationDocumentParams {
@@ -29,7 +41,8 @@ export interface CreateApplicationDocumentParams {
   fileName: string;
   parentId?: string | null;
   anchor?: string | null;
-  taskId?: string
+  taskId?: string;
+  accessPermissions?: ApplicationDocumentAccessPermission[];
 }
 
 export interface CreateManyApplicationDocumentParams {
@@ -75,6 +88,10 @@ export default class ApplicationDocumentsApi {
 
     if (params.taskId) {
       formData.append('taskId', params.taskId);
+    }
+
+    if (params.accessPermissions) {
+      formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
     return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });
