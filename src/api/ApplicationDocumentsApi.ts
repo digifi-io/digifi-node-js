@@ -52,14 +52,33 @@ export interface CreateManyApplicationDocumentParams {
   anchor?: string | null;
 }
 
+export interface FindApplicationDocumentsParams {
+  applicationId: string;
+  taskId?: string;
+  accessPermissionEntityType?: ApplicationDocumentAccessPermissionEntityType;
+  accessPermissionEntityId?: string;
+}
+
 export default class ApplicationDocumentsApi {
   protected basePath = 'application-documents';
 
   constructor(protected apiClient: IApiClient) {}
 
-  public find(applicationId: string): Promise<ApplicationDocument[]> {
+  public find(params: FindApplicationDocumentsParams): Promise<ApplicationDocument[]> {
     const urlParams = new URLSearchParams();
-    urlParams.append('applicationId', applicationId);
+    urlParams.append('applicationId', params.applicationId);
+
+    if (params.taskId) {
+      urlParams.append('taskId', params.taskId);
+    }
+
+    if (params.accessPermissionEntityType) {
+      urlParams.append('accessPermissionEntityType', params.accessPermissionEntityType);
+    }
+
+    if (params.accessPermissionEntityId) {
+      urlParams.append('accessPermissionEntityId', params.accessPermissionEntityId);
+    }
 
     return this.apiClient.makeCall<ApplicationDocument[]>(`/${this.basePath}?${urlParams}`);
   }
