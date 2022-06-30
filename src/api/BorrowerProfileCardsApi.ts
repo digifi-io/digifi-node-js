@@ -21,7 +21,7 @@ class BorrowerProfileCardsApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(borrowerType?: BorrowerType): Promise<BorrowerProfileCardViewModel> {
+  public find(borrowerType?: BorrowerType): Promise<BorrowerProfileCardViewModel[]> {
     const urlParams = new URLSearchParams();
 
     if (borrowerType) {

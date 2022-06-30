@@ -20,7 +20,7 @@ class ApplicationDetailsCardsApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(productId?: string): Promise<ApplicationDetailsCardViewModel> {
+  public find(productId?: string): Promise<ApplicationDetailsCardViewModel[]> {
     const urlSearchParams = new URLSearchParams();
 
     if (productId) {
