@@ -19,7 +19,7 @@ class ApplicationDocumentConfigurationApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(productId?: string): Promise<ApplicationDocumentConfigurationViewModel> {
+  public find(productId?: string): Promise<ApplicationDocumentConfigurationViewModel[]> {
     const urlSearchParams = new URLSearchParams();
 
     if (productId) {
