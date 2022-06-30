@@ -35,21 +35,22 @@ export interface ApplicationDocument {
   accessPermissions: ApplicationDocumentAccessPermission[] | null;
 }
 
-export interface CreateApplicationDocumentParams {
-  applicationId: string;
+export interface ApplicationDocumentFileUploadParams {
   file: Buffer;
   fileName: string;
   parentId?: string | null;
   anchor?: string | null;
+}
+
+export interface CreateApplicationDocumentParams extends ApplicationDocumentFileUploadParams {
+  applicationId: string;
   taskId?: string;
   accessPermissions?: ApplicationDocumentAccessPermission[];
 }
 
 export interface CreateManyApplicationDocumentParams {
-  file: Buffer;
-  fileName: string;
-  parentId?: string | null;
-  anchor?: string | null;
+  files: ApplicationDocumentFileUploadParams[];
+  accessPermissions?: ApplicationDocumentAccessPermission[];
 }
 
 export interface FindApplicationDocumentsParams {
@@ -116,10 +117,10 @@ export default class ApplicationDocumentsApi {
     return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });
   }
 
-  public createMany(applicationId: string, params: CreateManyApplicationDocumentParams[]): Promise<void> {
+  public createMany(applicationId: string, params: CreateManyApplicationDocumentParams): Promise<void> {
     const formData = new FormData();
 
-    params.forEach((batchUploadDocumentParams, index) => {
+    params.files.forEach((batchUploadDocumentParams, index) => {
       formData.append('files', batchUploadDocumentParams.file, batchUploadDocumentParams.fileName);
 
       if (batchUploadDocumentParams.parentId) {
@@ -132,6 +133,10 @@ export default class ApplicationDocumentsApi {
     });
 
     formData.append('applicationId', applicationId);
+
+    if (params.accessPermissions) {
+      formData.append('accessPermissions', params.accessPermissions);
+    }
 
     return this.apiClient.makeCall(`/${this.basePath}/batch`, 'POST', formData, {
       contentType: null,
