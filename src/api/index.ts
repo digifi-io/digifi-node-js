@@ -21,6 +21,9 @@ export {
   CreateApplicationDocumentParams,
   ApplicationDocumentType,
   CreateManyApplicationDocumentParams,
+  ApplicationDocumentFileUploadParams,
+  ApplicationDocumentAccessPermissionEntityType,
+  ApplicationDocumentAccessPermission,
 } from './ApplicationDocumentsApi';
 export {
   default as IntermediariesApi,
