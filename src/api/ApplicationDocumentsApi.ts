@@ -135,7 +135,7 @@ export default class ApplicationDocumentsApi {
     formData.append('applicationId', applicationId);
 
     if (params.accessPermissions) {
-      formData.append('accessPermissions', params.accessPermissions);
+      formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
     return this.apiClient.makeCall(`/${this.basePath}/batch`, 'POST', formData, {
