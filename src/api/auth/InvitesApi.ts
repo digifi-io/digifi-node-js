@@ -14,10 +14,11 @@ class InvitesApi {
     private apiClient: AuthApiClient,
   ) {}
 
-  public acceptInvite(password: string, phone: string, token: string): Promise<AuthResponseParams> {
+  public acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
     return this.apiClient.makeCall(`${this.path}/${token}`, 'POST', {
       password,
       phone,
+      refreshTokenExpirationTimeMinutes,
     });
   }
 
