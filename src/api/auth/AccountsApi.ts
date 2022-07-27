@@ -50,8 +50,8 @@ class AccountsApi {
     return this.apiClient.makeCall(`${this.path}/${email}`);
   }
 
-  public createAccount(params: CreateAccountParams): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', params);
+  public createAccount(params: CreateAccountParams, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
+    return this.apiClient.makeCall(`${this.path}`, 'POST', { ...params, refreshTokenExpirationTimeMinutes });
   }
 
   public getCurrentUser(accountAccessToken: string): Promise<BaseAccountInfo> {

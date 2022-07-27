@@ -9,10 +9,11 @@ class SessionsApi {
     private apiClient: AuthApiClient,
   ) {}
 
-  public createSession(email: string, password: string): Promise<AuthResponseParams> {
+  public createSession(email: string, password: string, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
     return this.apiClient.makeCall(`${this.path}`, 'POST', {
       email,
       password,
+      refreshTokenExpirationTimeMinutes,
     });
   }
 
