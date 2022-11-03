@@ -9,12 +9,30 @@ class SessionsApi {
     private apiClient: AuthApiClient,
   ) {}
 
-  public createSession(email: string, password: string, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
+  public createSession(
+    email: string,
+    password: string,
+    refreshTokenExpirationTimeMinutes?: number,
+  ): Promise<AuthResponseParams> {
     return this.apiClient.makeCall(`${this.path}`, 'POST', {
       email,
       password,
       refreshTokenExpirationTimeMinutes,
     });
+  }
+
+  public createSessionWithPhoneVerificationCode(
+    phoneVerificationCode: string,
+    refreshTokenExpirationTimeMinutes?: number,
+  ): Promise<AuthResponseParams> {
+    return this.apiClient.makeCall(`${this.path}`, 'POST', {
+      phoneVerificationCode,
+      refreshTokenExpirationTimeMinutes,
+    });
+  }
+
+  public sendPhoneVerificationCode(phone: string): Promise<AuthResponseParams> {
+    return this.apiClient.makeCall(`${this.path}/${phone}`, 'POST');
   }
 
   public validateToken(accountAccessToken: string): Promise<void> {
