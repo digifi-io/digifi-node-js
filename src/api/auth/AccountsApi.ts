@@ -1,6 +1,6 @@
 import AuthApiClient from '../../AuthApiClient';
 import { Headers } from 'node-fetch';
-import { AuthResponseParams, TableData } from '../../types';
+import { AuthResponseParams } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 
 export enum AccountStatus {
@@ -28,9 +28,9 @@ export type BaseAccountInfo = {
 }
 
 export type CreateAccountParams = {
-  password: string;
   email: string;
-  phone: string;
+  phone?: string;
+  password?: string;
 } & {
   [key in string]: string;
 };
@@ -40,7 +40,7 @@ export interface CreatePasswordValidationTokenResponseParams {
 }
 
 class AccountsApi {
-  protected path = '/accounts'
+  protected path = '/accounts';
 
   constructor(
     private apiClient: AuthApiClient,
