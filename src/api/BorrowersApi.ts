@@ -9,17 +9,13 @@ export enum BorrowerType {
 export enum BorrowerDefaultValue {
   FirstName = 'borrower_first_name',
   LastName = 'borrower_last_name',
-  PersonalIdNumber = 'borrower_personal_id_number',
-  DateOfBirth = 'borrower_date_of_birth',
   CompanyName = 'borrower_company_name',
+  PersonalIdNumber = 'borrower_personal_id_number',
   CompanyIdNumber = 'borrower_company_id_number',
-  Email = 'borrower_email',
   PhoneNumber = 'borrower_phone',
-  Street = 'borrower_street_address',
-  City = 'borrower_city',
-  State = 'borrower_state_or_province',
-  Zip = 'borrower_zip_or_postal_code',
-  Country = 'borrower_country',
+  Email = 'borrower_email',
+  DateOfBirth = 'borrower_date_of_birth',
+  HomeAddress = 'borrower_home_address',
 }
 
 export interface Borrower {
