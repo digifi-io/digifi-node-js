@@ -1,5 +1,5 @@
 {
-  "name": "digifi-node-js",
+  "name": "@digifi/digifi-node-js",
   "version": "3.1.9",
   "description": "DigiFI SDK for Node JS",
   "main": "lib/index.js",
