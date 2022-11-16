@@ -81,6 +81,17 @@ export enum DataSourceContentType {
   Xml = 'xml',
 }
 
+export interface RunStrategyResult<OutputVariable = VariablesType> {
+  caseId: string;
+  passed: boolean;
+  outputVariables: OutputVariable;
+  declineReasons: string[];
+  processingDetails: ProcessingDetail[];
+  processingResults: Record<string, boolean>;
+  dataSources: DataSource[];
+  inputVariables: VariablesType;
+}
+
 export default class DecisionEngineApi {
   private readonly defaultStrategyStatus: StrategyStatus;
 
@@ -91,7 +102,7 @@ export default class DecisionEngineApi {
     this.defaultStrategyStatus = defaultStrategyStatus || StrategyStatus.Testing;
   }
 
-  public async runStrategy<OutputVariable = VariablesType>(options: RunStrategyOptions) {
+  public async runStrategy<OutputVariable = VariablesType>(options: RunStrategyOptions): Promise<RunStrategyResult<OutputVariable>> {
     const { strategyName, applicationId, status = this.defaultStrategyStatus, variables, caseName, returnInputVariables } = options;
 
     const { results } = await this.apiClient.makeCall<RunStrategyResponse<OutputVariable>>('/ml_rules_engine', 'POST', {
