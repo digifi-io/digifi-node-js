@@ -40,11 +40,9 @@ export {
 } from './TasksApi';
 export {
   default as DecisionEngineApi,
-  RunBatchStrategiesResponse,
-  RunBatchStrategiesOptions,
-  RunStrategyOptions,
-  RunStrategyResponse,
-  VariablesType,
+  RunDecisionResult,
+  RunDecisionParams,
+  IStrategyProcessingResult,
   StrategyStatus,
 } from './DecisionEngineApi';
 export {
