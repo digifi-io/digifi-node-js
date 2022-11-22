@@ -1,10 +1,6 @@
 import { ApiClient } from '../ApiClient';
 import { VariableValue } from '../types';
-
-export enum StrategyStatus {
-  Active = 'active',
-  Testing = 'testing',
-}
+import { StrategyStatus } from '../enums';
 
 export interface RunDecisionParams {
   decisionClientId?: string;

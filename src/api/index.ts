@@ -43,7 +43,6 @@ export {
   RunDecisionResult,
   RunDecisionParams,
   IStrategyProcessingResult,
-  StrategyStatus,
 } from './DecisionEngineApi';
 export {
   default as AccountsApi,
@@ -127,3 +126,9 @@ export {
 export {
   default as ApplicationDocumentsPreviewApi,
 } from './ApplicationDocumentsPreviewApi';
+export {
+  default as ApplicationDecisionProcessingApi,
+  DecisionRunResponse,
+  FormattedResult,
+  MakeDecisionParams,
+} from './ApplicationDecisionProcessingApi';

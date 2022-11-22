@@ -1,6 +1,5 @@
-import { VariableType } from '../../enums/VariableType';
+import { VariableType, VariableAccessPermission } from '../../enums';
 import { NumericDataType, StringDataType, UserShortInfo } from '../../types';
-import { VariableAccessPermission } from '../../enums/VariableAccessPermission';
 
 export type PermissionGroupId = string;
 
