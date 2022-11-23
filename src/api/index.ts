@@ -40,11 +40,19 @@ export {
 } from './TasksApi';
 export {
   default as DecisionEngineApi,
-  RunDecisionResult,
-  RunDecisionParams,
+  RunBatchStrategiesResponse,
+  RunBatchStrategiesOptions,
+  RunStrategyOptions,
+  RunStrategyResponse,
+  VariablesType,
+} from './DecisionEngineApi';
+export {
+  default as DecisionProcessingApi,
+  DecisionProcessResult,
+  ProcessDecisionParams,
   IStrategyProcessingResult,
   StrategyStatus,
-} from './DecisionEngineApi';
+} from './DecisionProcessingApi';
 export {
   default as AccountsApi,
   CreateAccountParams,
