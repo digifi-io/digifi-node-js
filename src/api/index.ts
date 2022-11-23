@@ -140,3 +140,6 @@ export {
   FormattedResult,
   MakeDecisionParams,
 } from './ApplicationDecisionProcessingApi';
+export {
+  default as UnauthorizedBrandingApi,
+} from './dlp/UnauthorizedBrandingApi';
