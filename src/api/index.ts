@@ -47,6 +47,13 @@ export {
   VariablesType,
 } from './DecisionEngineApi';
 export {
+  default as DecisionProcessingApi,
+  DecisionProcessResult,
+  ProcessDecisionParams,
+  IStrategyProcessingResult,
+  StrategyStatus,
+} from './DecisionProcessingApi';
+export {
   default as AccountsApi,
   CreateAccountParams,
   BaseAccountInfo,
