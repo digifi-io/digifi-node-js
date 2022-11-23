@@ -1,9 +1,5 @@
 import DecisionEngineApiClient from '../DecisionEngineApiClient';
-
-export enum StrategyStatus {
-  Active = 'active',
-  Testing = 'testing',
-}
+import { StrategyStatus } from '../enums';
 
 interface ProcessingDetail {
   name: string;
