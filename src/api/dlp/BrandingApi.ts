@@ -1,33 +1,5 @@
-import { AuthorizedApiClient } from '../../AuthorizedApiClient';
-
-interface IRect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-export interface IImageParams {
-  id: string;
-  originalFileName: string;
-  cropRect: IRect;
-  imageRect: IRect;
-  canvasWidth: number;
-  canvasHeight: number;
-}
-
-export interface Branding {
-  accentColor: string;
-  brandColor: string;
-  logo: IImageParams | null;
-  favicon: IImageParams | null;
-  organizationId: string;
-  organization: {
-    name: string;
-    country?: string;
-    legalAddress?: string;
-  };
-}
+import { AuthorizedApiClient } from '../../clients';
+import { Branding } from '../../data/models';
 
 class BrandingApi {
   protected path = '/branding'

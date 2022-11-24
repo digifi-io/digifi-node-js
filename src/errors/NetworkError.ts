@@ -1,1 +1,3 @@
-export default class NetworkError extends Error {};
+class NetworkError extends Error {}
+
+export default NetworkError;

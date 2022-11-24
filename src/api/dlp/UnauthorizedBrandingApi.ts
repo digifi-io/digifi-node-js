@@ -1,4 +1,4 @@
-import { ApiClient } from '../../ApiClient';
+import { ApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
 
 const DEFAULT_HEADERS = new Headers({

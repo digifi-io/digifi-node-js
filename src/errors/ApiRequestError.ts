@@ -1,6 +1,6 @@
 import { Headers } from 'node-fetch';
 
-export default class ApiRequestError extends Error {
+class ApiRequestError extends Error {
   constructor(
     message: string,
     readonly responseStatus: number,
@@ -9,3 +9,5 @@ export default class ApiRequestError extends Error {
     super(message);
   }
 }
+
+export default ApiRequestError;

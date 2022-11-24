@@ -1,4 +1,4 @@
-import AuthApiClient from '../../AuthApiClient';
+import { AuthApiClient } from '../../clients';
 
 export type GetResetPasswordTokenInfoResponseParams = {
   accountId: string;

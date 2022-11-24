@@ -1,7 +1,8 @@
-import AuthApiClient from '../../AuthApiClient';
+import { AuthApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
 import { AuthResponseParams } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
+import { SearchParams } from '../BaseSystemApi';
 
 export enum AccountStatus {
   Active = 'active',
@@ -37,6 +38,14 @@ export type CreateAccountParams = {
 
 export interface CreatePasswordValidationTokenResponseParams {
   passwordValidationToken: string
+}
+
+export type FindAccountsParams = {
+  ids?: string[];
+  emails?: string[];
+  phones?: string[];
+} & {
+  [key in 'borrowerIds' | 'intermediaryIds']?: string[];
 }
 
 class AccountsApi {
@@ -141,8 +150,8 @@ class AccountsApi {
     });
   }
 
-  public find(params: Record<string, string | Array<string>> | Array<string[]> = {}): Promise<BaseAccountInfo[]> {
-    const urlSearchParams = getSearchParams(params);
+  public find(params: FindAccountsParams): Promise<BaseAccountInfo[]> {
+    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
     return this.apiClient.makeCall(`/${this.path}/search?${urlSearchParams}`);
   }

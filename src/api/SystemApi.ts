@@ -1,39 +1,24 @@
-import { IApiClient } from '../ApiClient';
-import { TableData } from '../types';
-import getSearchParams from '../utils/getSearchParams';
+import { IApiClient, RequestBody } from '../clients';
+import { BaseSystemApi } from './BaseSystemApi';
 
-export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined> {
-  protected basePath = '';
+export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined, FindParams = undefined> extends BaseSystemApi<Resource, FindParams> {
   protected entityKey = '';
 
   constructor(
     protected apiClient: IApiClient,
-  ) {}
-
-  public find(params: Record<string, string | Array<string>> | Array<string[]> = {}): Promise<TableData<Resource>> {
-    // TODO [Ilya] Rewrite
-    const urlSearchParams = getSearchParams(params);
-
-    return this.apiClient.makeCall<TableData<Resource>>(`/${this.basePath}?${urlSearchParams}`);
-  }
-
-  public findById(id: string): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`);
-  }
-
-  public delete(id: string): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'DELETE');
+  ) {
+    super(apiClient);
   }
 
   public create(params: CreateParams): Promise<Resource> {
     const body = params && this.entityKey ? { [this.entityKey]: params } : params;
 
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}`, 'POST', body);
+    return this.apiClient.makeCall<Resource>(`/${this.basePath}`, 'POST', body as RequestBody);
   }
 
   public update(id: string, params: UpdateParams): Promise<Resource> {
     const body = params && this.entityKey ? { [this.entityKey]: params } : params;
 
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'PUT', body);
+    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'PUT', body as RequestBody);
   }
 }

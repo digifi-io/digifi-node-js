@@ -1,5 +1,5 @@
-import { AuthorizedApiClient } from '../../AuthorizedApiClient';
-import { BorrowerType } from '../BorrowersApi';
+import { AuthorizedApiClient } from '../../clients';
+import { BorrowerType } from '../../enums';
 
 export interface BorrowerStandardPortalGeneralSettings {
   borrowerType: BorrowerType;

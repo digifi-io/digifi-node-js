@@ -1,4 +1,4 @@
-import AuthApiClient from '../../AuthApiClient';
+import { AuthApiClient } from '../../clients';
 import { AuthResponseParams } from '../../types';
 
 export type GetInviteInfoResponseParams = {
