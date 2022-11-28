@@ -1,12 +1,20 @@
 import VariableConfiguration from './VariableConfiguration';
 
-interface Card<Configuration extends VariableConfiguration = VariableConfiguration> {
+export interface RawCard {
   id: string;
   name: string;
   position: number;
   row: number;
-  organizationId: string;
-  fields: Configuration[];
+  organization: string;
+  organizationVersion: number | null,
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface Card<
+  IVariableConfiguration extends VariableConfiguration = VariableConfiguration
+  > extends RawCard {
+  fields?: IVariableConfiguration[];
 }
 
 export default Card;

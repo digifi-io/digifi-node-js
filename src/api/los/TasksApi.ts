@@ -29,6 +29,7 @@ export interface TaskAssignedIntermediary {
 export interface TaskApplication {
   id: string;
   displayId: string;
+  autoPassCondition?: FormulaCondition | null;
   borrower: {
     id: string;
     type: BorrowerType;
@@ -42,13 +43,13 @@ export interface Task {
   description: string;
   status: TaskStatus;
   application: TaskApplication;
-  organizationId: string;
+  organization: string;
   createdAt: Date;
   updatedAt: Date;
   assigneeType: TaskAssigneeType;
   assignedBorrower?: TaskAssignedBorrower | null;
   assignedIntermediary?: TaskAssignedIntermediary | null;
-  variablesIds?: string[] | null;
+  variables?: string[] | null;
   group?: string;
   autoPassCondition?: FormulaCondition | null;
   blockedStatuses?: Array<{
@@ -58,6 +59,7 @@ export interface Task {
   dueDate?: Date;
   createdBy?: UserShort | null;
   updatedBy?: UserShort | null;
+  testing?: boolean;
 }
 
 export type TaskAssignee = {
@@ -88,7 +90,7 @@ export interface UpdateTaskParams {
   status?: TaskStatus;
   assignee?: TaskAssignee;
   group?: string | null;
-  variablesIds?: string[] | null;
+  variables?: string[] | null;
   autoPassCondition?: string | null;
   blockedStatuses?: string[] | null;
   dueDate?: string | null;
@@ -103,17 +105,17 @@ export enum TaskSortField {
 }
 
 export interface FindTasksParams extends PaginationParams<TaskSortField>{
-  assignedTeamMembersIds?: string[];
-  teamMembersIds?: string[];
   statuses?: TaskStatus[];
+  nonInStatus?: TaskStatus;
   groups?: string[];
   applicationId?: string;
-  dueCreatedDateFrom?: string;
-  dueCreatedDateTo?: string;
-  dueUpdatedDateFrom?: string;
-  dueUpdatedDateTo?: string;
-  dueDateFrom?: string;
-  dueDateTo?: string;
+  assignedTeamMembersIds?: string[];
+  teamMembersIds?: string[];
+  assigneeId?: string;
+  blockedStatus?: string;
+  assigneeType?: TaskAssigneeType;
+  dueUpdatedDateFrom?: Date | string;
+  dueUpdatedDateTo?: Date | string;
 }
 
 export interface BulkCreateTasksParams {

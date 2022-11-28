@@ -5,12 +5,15 @@ import getSearchParams from '../../utils/getSearchParams';
 export interface ApplicationDocumentConfiguration {
   id: string;
   name: string;
-  productId: string;
-  organizationId: string;
+  product: string;
+  organization: string;
+  organizationVersion: number | null;
   position: number;
   required?: boolean;
-  folderId?: string | null;
+  folder?: string | null;
   conditionalDisplayRule?: FormulaCondition | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 class ApplicationDocumentConfigurationApi {
@@ -20,8 +23,8 @@ class ApplicationDocumentConfigurationApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(productId?: string): Promise<ApplicationDocumentConfiguration[]> {
-    const urlSearchParams = getSearchParams({ productId } as Record<string, string>);
+  public find(product?: string): Promise<ApplicationDocumentConfiguration[]> {
+    const urlSearchParams = getSearchParams({ product } as Record<string, string>);
 
     return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);
   }

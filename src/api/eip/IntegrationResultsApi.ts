@@ -1,8 +1,9 @@
-import { PaginationParams, PaginationResult, UserBasic, VariableValue } from '../../types';
+import { PaginationParams, PaginationResult } from '../../types';
 import { AuthorizedApiClient } from '../../clients';
 import { ExecutionSource, ExternalIntegrationResultType } from '../../enums';
 import { SearchParams } from '../BaseSystemApi';
 import getSearchParams from '../../utils/getSearchParams';
+import { CompactIntegrationResult, IntegrationResult } from '../../data/models';
 
 export enum IntegrationResultSortField {
   Name = 'integrationName',
@@ -14,32 +15,13 @@ export enum IntegrationResultSortField {
 
 export interface FindIntegrationResultParams extends PaginationParams<IntegrationResultSortField>{
   integrationId?: string;
+  application?: string;
+  applicationDisplayId?: string;
   source?: ExecutionSource;
   result?: ExternalIntegrationResultType;
-  createdByIds?: string[];
-  createdAtFrom?: string;
-  createdAtTo?: string;
-  applicationId?: string;
-}
-
-export interface IntegrationResultCompact {
-  id: string;
-  integrationId: string;
-  integrationName: string;
-  createdAt: Date;
-  updatedAt: Date;
-  source: ExecutionSource;
-  executionTime: number;
-  result: ExternalIntegrationResultType;
-  createdBy: UserBasic | null;
-}
-
-export interface DetailedIntegrationResult extends IntegrationResultCompact {
-  inputs: Record<string, VariableValue>;
-  outputs: Record<string, VariableValue>;
-  statusCode: number;
-  applicationId?: string;
-  applicationName?: string;
+  teamMemberIds?: string[];
+  createdAtFrom?: Date | string;
+  createdAtTo?: Date | string;
 }
 
 class IntegrationResultsApi {
@@ -47,15 +29,15 @@ class IntegrationResultsApi {
 
   constructor(protected apiClient: AuthorizedApiClient) {}
 
-  public find(params: FindIntegrationResultParams): Promise<PaginationResult<IntegrationResultCompact>> {
+  public find(params: FindIntegrationResultParams): Promise<PaginationResult<CompactIntegrationResult>> {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
     if (params.integrationId) {
       urlSearchParams.append('integration-id', params.integrationId);
     }
 
-    if (params.applicationId) {
-      urlSearchParams.append('application-id', params.applicationId);
+    if (params.applicationDisplayId) {
+      urlSearchParams.append('application-display-id', params.applicationDisplayId);
     }
 
     if (params.createdAtFrom) {
@@ -66,17 +48,21 @@ class IntegrationResultsApi {
       urlSearchParams.append('created-at-to', params.createdAtTo.toString());
     }
 
-    return this.apiClient.makeCall<PaginationResult<IntegrationResultCompact>>(
+    if (params.teamMemberIds) {
+      params.teamMemberIds.forEach((teamMemberId) => urlSearchParams.append('team-member-ids', teamMemberId));
+    }
+
+    return this.apiClient.makeCall<PaginationResult<CompactIntegrationResult>>(
       `${this.basePath}?${urlSearchParams}`,
     );
   }
 
-  public findById(id: string): Promise<DetailedIntegrationResult> {
-    return this.apiClient.makeCall<DetailedIntegrationResult>(`${this.basePath}/${id}`);
+  public findById(id: string): Promise<IntegrationResult> {
+    return this.apiClient.makeCall<IntegrationResult>(`${this.basePath}/${id}`);
   }
 
-  public delete(id: string): Promise<DetailedIntegrationResult> {
-    return this.apiClient.makeCall<DetailedIntegrationResult>(
+  public delete(id: string): Promise<IntegrationResult> {
+    return this.apiClient.makeCall<IntegrationResult>(
       `${this.basePath}/${id}`,
       'DELETE',
     );

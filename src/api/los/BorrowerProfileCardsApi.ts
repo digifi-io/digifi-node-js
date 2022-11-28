@@ -1,17 +1,17 @@
 import { AuthorizedApiClient } from '../../clients';
 import { BorrowerType } from '../../enums';
-import { VariableConfiguration, Card, Variable } from '../../data/models';
+import { VariableConfiguration, Card } from '../../data/models';
 import getSearchParams from '../../utils/getSearchParams';
 
-interface BorrowerVariableConfiguration<VariableConfig extends Variable = Variable>
-  extends VariableConfiguration<VariableConfig> {
+export interface BorrowerVariableConfiguration extends VariableConfiguration {
   borrowerType: BorrowerType;
 }
 
-export interface BorrowerProfileCard<VariableConfig extends Variable = Variable>
-  extends Card<BorrowerVariableConfiguration<VariableConfig>> {
+export interface BorrowerProfileCardAttributes {
   borrowerType: BorrowerType;
 }
+
+export type BorrowerProfileCard = Card<BorrowerVariableConfiguration> & BorrowerProfileCardAttributes;
 
 class BorrowerProfileCardsApi {
   protected path = '/borrower-profile-cards';

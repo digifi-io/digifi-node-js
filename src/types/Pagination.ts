@@ -1,8 +1,11 @@
 import { SortDirection } from '../enums';
 
-interface PaginationParams<SortField> {
+export interface PaginationLimitParams {
   offset?: number;
   count?: number;
+}
+
+interface PaginationParams<SortField> extends PaginationLimitParams {
   search?: string;
   sortField?: SortField;
   sortDirection?: SortDirection;

@@ -14,13 +14,12 @@ export enum BorrowerDefaultValue {
   HomeAddress = 'borrower_home_address',
 }
 
-export interface Borrower {
+export interface Borrower{
   id: string;
   type: BorrowerType;
-  organizationId: string;
-  variables: {
-    [key: string]: VariableValue;
-  };
+  organization: string;
+  variables: Record<string, VariableValue>;
+  testing?: boolean;
   locked: boolean;
   lockStartDate?: Date | null;
   lockEndDate?: Date | null;
@@ -41,6 +40,7 @@ export interface CreateBorrowerParams {
 }
 
 export interface UpdateBorrowerParams {
+  type?: BorrowerType;
   variables?: Record<string, VariableValue>;
   lockEndDate?: string | null;
   lockReason?: string;

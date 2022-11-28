@@ -1,5 +1,5 @@
 import { SystemApi } from '../SystemApi';
-import { PaginationParams, PaginationResult, UserShort } from '../../types';
+import { OrganizationMode, PaginationParams, PaginationResult, UserShortInfo } from '../../types';
 
 enum BaseApplicationEventType {
   ApplicationCreated = 'application.created',
@@ -58,11 +58,12 @@ export interface Webhook {
   events: EventType[];
   active: boolean;
   endpointSecret: string;
+  mode: OrganizationMode | null;
   description?: string;
   updatedAt: Date;
   createdAt: Date;
-  updatedBy?: UserShort | null;
-  createdBy?: UserShort | null;
+  updatedBy?: UserShortInfo | null;
+  createdBy?: UserShortInfo | null;
 }
 
 export interface CreateWebhookParams {
@@ -70,6 +71,7 @@ export interface CreateWebhookParams {
   events: string[];
   active: boolean;
   description?: string;
+  mode?: OrganizationMode | null;
 }
 
 export interface UpdateWebhookParams {
@@ -77,11 +79,13 @@ export interface UpdateWebhookParams {
   events?: string[];
   active?: boolean;
   description?: string;
+  mode?: OrganizationMode | null;
 }
 
 export enum WebhookSortingField {
   Url = 'url',
   Description = 'description',
+  DataSource = 'dataSource',
   Status = 'status',
   UpdatedAt = 'updatedAt',
 }
@@ -89,6 +93,7 @@ export enum WebhookSortingField {
 export interface FindWebhooksParams extends PaginationParams<WebhookSortingField>{
   events?: EventType[];
   active?: boolean;
+  mode?: Array<OrganizationMode | null>;
 }
 
 export default class WebhooksApi extends SystemApi<Webhook, CreateWebhookParams, UpdateWebhookParams, FindWebhooksParams> {

@@ -17,12 +17,11 @@ export enum ApplicationDefaultVariable {
 
 export interface Application {
   id: string;
-  organizationId: string;
+  organization: string;
   displayId: string;
   variables: Record<string, VariableValue>;
   status: {
     id: string;
-    systemId: string;
     name: string;
     permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
     permissionGroupsToEditApplication: ApplicationStatusPermissions;
@@ -49,9 +48,11 @@ export interface Application {
   product: {
     id: string;
     name: string;
-    organizationId: string;
+    organization: string;
+    organizationVersion: number | null;
     borrowerTypes: BorrowerType[];
   };
+  testing?: boolean;
   createdBy?: UserShort | null;
   updatedBy?: UserShort | null;
   createdAt: Date;
@@ -65,19 +66,18 @@ export interface Application {
 
 export interface CreateApplicationParams {
   product: string;
-  teamMembers?: string[];
-  labels?: string[];
   status?: string;
   borrower: string | CreateBorrowerParams;
   coBorrowers: Array<string | CreateBorrowerParams>;
   intermediary?: string | CreateIntermediaryParams;
+  teamMembers?: string[];
+  labels?: string[];
   variables: Record<string, VariableValue>;
 }
 
 export interface UpdateApplicationParams {
   status?: string;
   declineReasons?: string[];
-  intermediaryId?: string;
   teamMembers?: string[];
   labels?: string[];
   variables?: Record<string, VariableValue>;
@@ -182,7 +182,7 @@ export default class ApplicationsApi extends SystemApi<
       })
     }
 
-    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/variables?${urlSearchParams}`);
+    return this.apiClient.makeCall<Record<string, VariableValue>>(`/${this.basePath}/${applicationId}/variables?${urlSearchParams}`);
   }
 
   public runCalculations(applicationId: string, params: RunApplicationCalculationsParams) {
@@ -191,13 +191,13 @@ export default class ApplicationsApi extends SystemApi<
 
   public addLabels(applicationId: string, labelIds: string[]) {
     return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/labels`, 'POST', {
-      labelIds,
+      labels: labelIds,
     });
   }
 
   public addTeamMembers(applicationId: string, teamMemberIds: string[]) {
     return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/team-members`, 'POST', {
-      teamMemberIds,
+      teamMembers: teamMemberIds,
     });
   }
 }

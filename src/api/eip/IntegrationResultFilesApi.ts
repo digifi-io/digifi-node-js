@@ -2,14 +2,27 @@ import { UserBasic } from '../../types';
 import { AuthorizedApiClient } from '../../clients';
 import FormData from 'form-data';
 
-export interface FileCompact {
+export interface CompactIntegrationFile {
   id: string;
   name: string;
   fileType: string;
-  integrationResultId: string;
-  integrationId: string;
+  integrationResult: string;
+  testing?: boolean;
+  integration?: string;
   fileSize?: number;
-  createdBy?: UserBasic;
+  organization: string;
+  createdBy?: UserBasic | null;
+}
+
+export enum IntegrationFilePermissionSection {
+  IntegrationRequestFiles = 'integrationRequestFiles',
+  IntegrationResponseFiles = 'integrationResponseFiles',
+  IntegrationUserFiles = 'integrationUserFiles',
+}
+
+export interface IntegrationFile extends CompactIntegrationFile {
+  fileUrl: string;
+  permissionSection: IntegrationFilePermissionSection;
 }
 
 export interface IntegrationResultFileParams {
@@ -22,16 +35,16 @@ class IntegrationResultFilesApi {
 
   constructor(protected apiClient: AuthorizedApiClient) {}
 
-  public create(integrationResultId: string, files: IntegrationResultFileParams[]): Promise<FileCompact[]> {
+  public uploadMany(integrationResultId: string, files: IntegrationResultFileParams[]): Promise<IntegrationFile[]> {
     const formData = new FormData();
 
     files.forEach((batchUploadDocumentParams, index) => {
       formData.append('files', batchUploadDocumentParams.file, batchUploadDocumentParams.fileName);
     });
 
-    formData.append('integrationResultId', integrationResultId);
+    formData.append('integrationResult', integrationResultId);
 
-    return this.apiClient.makeCall<FileCompact[]>(this.basePath, 'POST', formData, {
+    return this.apiClient.makeCall<IntegrationFile[]>(this.basePath, 'POST', formData, {
       contentType: null,
     });
   }

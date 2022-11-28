@@ -29,7 +29,10 @@ class ApplicationIntegrationProcessingApi {
   ) {}
 
   public processIntegration(params: ProcessApplicationIntegrationParams): Promise<ExternalIntegrationProcessingResult> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', params);
+    return this.apiClient.makeCall(`${this.path}`, 'POST', {
+      application: params.applicationId,
+      integration: params.integrationId,
+    });
   }
 }
 

@@ -13,7 +13,8 @@ export enum IntermediaryDefaultValue {
 
 export interface Intermediary {
   id: string;
-  organizationId: string;
+  organization: string;
+  testing?: boolean;
   variables: Record<string, VariableValue>;
   createdAt: Date;
   updatedAt: Date;
@@ -51,11 +52,18 @@ export interface FindIntermediariesParams extends PaginationParams<IntermediaryS
   searchBy?: string[];
 }
 
+export enum IntermediarySuggestionsSortField {
+  Name = 'name',
+  PhoneNumber = 'phoneNumber',
+  Email = 'email',
+}
+
 export interface FindIntermediarySuggestionsParams {
   name?: string;
   phoneNumber?: string;
   email?: string;
   idNumber?: string;
+  sortField?: IntermediarySuggestionsSortField;
 }
 
 export default class IntermediariesApi extends SystemApi<
