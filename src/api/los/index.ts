@@ -90,7 +90,6 @@ export {
   default as ProductsApi,
   Product,
   ProductSettings,
-  ProductStatus,
   ProductType,
   AssigneeTeamMembersType,
   ApplicationFormPage,

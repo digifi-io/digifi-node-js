@@ -17,12 +17,6 @@ export enum ProductType {
   CommercialLoan = 'commercialLoan',
 }
 
-export enum ProductStatus {
-  Archived = 'archived',
-  Active = 'active',
-  Draft = 'draft',
-}
-
 export enum AssigneeTeamMembersType {
   OnCreate = 'onCreate',
   RoundRobin = 'roundRobin',
@@ -51,7 +45,7 @@ export interface ProductSettings {
 export interface Product {
   id: string;
   name: string;
-  status: ProductStatus;
+  isArchived?: boolean;
   type: ProductType;
   borrowerTypes: BorrowerType[];
   declineReasons: string[];
@@ -67,7 +61,6 @@ export interface Product {
 export interface FindProductsParams {
   search?: string;
   teamMemberIds?: string[];
-  statuses?: ProductStatus[];
   excludeArchived?: boolean;
   borrowerType?: BorrowerType;
   productType?: ProductType;
