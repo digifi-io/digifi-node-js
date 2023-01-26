@@ -5,5 +5,8 @@ export {
 } from './UsersApi';
 export {
   default as VariablesApi,
-  VariableShort,
+  Variable,
+  VariableVisualAttributes,
+  VariablePermissions,
+  FindVariableParams,
 } from './VariablesApi';

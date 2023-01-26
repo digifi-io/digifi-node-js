@@ -33,7 +33,7 @@ export type CreateAccountParams = {
   phone?: string;
   password?: string;
 } & {
-  [key in string]: string;
+  [key in 'borrowerId' | 'intermediaryId']: string;
 };
 
 export interface CreatePasswordValidationTokenResponseParams {

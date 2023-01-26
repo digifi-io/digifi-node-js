@@ -1,28 +1,90 @@
 import { AuthorizedApiClient } from '../../clients';
-import { VariableType } from '../../enums';
-import { StringDataType, NumericDataType, VariablePermissions } from '../../data/models';
+import { VariableAccessPermission, VariableType } from '../../enums';
+import { VisualDataType } from '../../data/models';
+import { PermissionGroupId, UserShortInfo, OrganizationWithVersion, PaginationResult } from '../../types';
+import getSearchParams from '../../utils/getSearchParams';
+import { SearchParams } from '../BaseSystemApi';
 
-export interface VariableBasicInfo {
-  id: string;
-  displayName: string;
-  systemName: string;
-  isArchived: boolean;
-  dataType: VariableType;
-  stringFormat: StringDataType | null;
-  numberFormat: NumericDataType | null;
-  optionsList: string[] | null;
+export interface FindVariableParams {
+  organization: OrganizationWithVersion;
+  onlyStandard?: boolean;
+  onlyCustom?: boolean;
+  id?: string;
+  ids?: string[];
+  systemName?: string;
+  dependsOn?: string;
+  excludeArchived?: boolean;
+  systemNames?: string[];
+  stringFormat?: StringVisualDataType;
+  numberFormat?: NumericVisualDataType;
+  dataType?: VariableType | VariableType[];
+  excludeDataTypes?: string[];
+  visualDataType?: VisualDataType;
+  dueCreatedDateFrom?: Date | string;
+  dueCreatedDateTo?: Date | string;
+  dueUpdatedDateFrom?: Date | string;
+  dueUpdatedDateTo?: Date | string;
+  teamMembers?: string[];
 }
 
-export interface VariableShort extends VariableBasicInfo {
+export enum StringVisualDataType {
+  List = 'List',
+  Text = 'Text',
+  LargeText = 'LargeText',
+  PhoneNumber = 'PhoneNumber',
+  EmailAddress = 'EmailAddress',
+  IdentificationNumber = 'IdentificationNumber',
+}
+
+export enum NumericVisualDataType {
+  Number = 'Number',
+  Monetary = 'Monetary',
+  Percentage = 'Percentage',
+}
+
+export interface BasicVariable {
+  id: string;
   name: string;
-  identificationNumberType: string | null;
-  identificationNumberDescription: string | null;
-  dateFormat: string | null;
-  currency: string | null;
-  phoneNumberFormat: string | null;
+  systemName: string;
+  organization: string;
+  organizationVersion: number | null;
+  isArchived: boolean;
+  dataType: VariableType;
+  stringFormat?: StringVisualDataType | null;
+  numberFormat?: NumericVisualDataType | null;
+}
+
+export interface VariableVisualAttributes {
+  dataType: VariableType;
+  dateFormat?: string | null;
+  numberFormat?: NumericVisualDataType | null;
+  stringFormat?: StringVisualDataType | null;
+  phoneNumberFormat?: string | null;
+  identificationNumberType?: string | null;
+  identificationNumberDescription?: string | null;
+  optionsList?: string[] | null;
+  currency?: string | null;
   maxAllowedValue?: string | null;
   minAllowedValue?: string | null;
+}
+
+export type VariablePermissions = Record<
+  PermissionGroupId,
+  VariableAccessPermission
+>;
+
+export type BasicVariableWithVisualAttributes = BasicVariable & VariableVisualAttributes & {
   permissions: VariablePermissions;
+}
+
+export interface Variable extends BasicVariableWithVisualAttributes {
+  isStandard: boolean;
+  dependsOn?: string | null;
+  description?: string;
+  createdBy?: UserShortInfo | null;
+  updatedBy?: UserShortInfo | null;
+  updatedAt: Date;
+  createdAt: Date;
 }
 
 class VariablesApi {
@@ -32,8 +94,10 @@ class VariablesApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public getVariableBySystemName(systemName: string): Promise<VariableShort> {
-    return this.apiClient.makeCall(`${this.path}/${systemName}`);
+  public find(params: FindVariableParams): Promise<PaginationResult<Variable>> {
+    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
+
+    return this.apiClient.makeCall(`${this.path}/search?${urlSearchParams}`);
   }
 }
 

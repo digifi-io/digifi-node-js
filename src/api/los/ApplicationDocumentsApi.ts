@@ -23,12 +23,13 @@ export interface ApplicationDocument {
   id: string;
   type: ApplicationDocumentType;
   parentId: string | null;
-  organizationId: string;
+  organization: string;
   configurationAnchor?: string | null;
   name: string;
   extension: string | null;
   size: number | null;
   taskId?: string;
+  testing?: boolean;
   createdBy?: UserShort | null;
   updatedBy?: UserShort | null;
   createdAt: Date;

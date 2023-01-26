@@ -1,8 +1,7 @@
 export {
   default as ApplicationDecisionProcessingApi,
-  DecisionRunResponse,
-  FormattedResult,
   MakeDecisionParams,
+  ApplicationDecision,
 } from './ApplicationDecisionProcessingApi';
 export {
   default as ApplicationDetailsCardsApi,
@@ -49,10 +48,6 @@ export {
   default as ApplicationStatusesApi,
   ApplicationStatus,
   ApplicationStatusRule,
-  MultipleRule,
-  RuleType,
-  ComparisonOperandType,
-  ComparisonOperator,
 } from './ApplicationStatusesApi';
 export {
   default as BorrowerProfileCardsApi,
@@ -95,12 +90,9 @@ export {
   default as ProductsApi,
   Product,
   ProductSettings,
-  ProductStatus,
   ProductType,
   AssigneeTeamMembersType,
   ApplicationFormPage,
-  CreateProductParams,
-  UpdateProductParams,
   FindProductsParams,
 } from './ProductsApi';
 export {

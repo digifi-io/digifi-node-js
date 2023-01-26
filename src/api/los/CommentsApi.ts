@@ -32,6 +32,7 @@ export type Comment = {
   messageEditedAt?: Date;
   deletedAt?: Date;
   createdAt: Date;
+  testing?: boolean;
 } & ({
   authorType: CommentAuthorType.Borrower;
   author: BorrowerCommentAuthor;
@@ -56,8 +57,8 @@ export interface UpdateCommentParams {
 }
 
 export interface FindCommentsParams {
-  referenceId: string;
-  referenceType: CommentReferenceType;
+  referenceId?: string;
+  referenceType?: CommentReferenceType;
   authorId?: string;
 }
 
