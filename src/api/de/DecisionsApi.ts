@@ -1,5 +1,5 @@
 import { PaginationParams, PaginationResult, UserBasic } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { BaseSystemApi, SearchParams } from '../BaseSystemApi';
 import { DecisionRunResult, ExecutionSource } from '../../enums';
 import getSearchParams from '../../utils/getSearchParams';
@@ -44,7 +44,7 @@ export interface FindDecisionsParams extends PaginationParams<DecisionsSortField
 class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
   protected path = '/decisions';
 
-  constructor(protected apiClient: AuthorizedApiClient) {
+  constructor(protected apiClient: IApiClient) {
     super(apiClient);
   }
 

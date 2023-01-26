@@ -1,5 +1,5 @@
 import { PaginationParams, PaginationResult } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { ExecutionSource, ExternalIntegrationResultType } from '../../enums';
 import { SearchParams } from '../BaseSystemApi';
 import getSearchParams from '../../utils/getSearchParams';
@@ -27,7 +27,7 @@ export interface FindIntegrationResultParams extends PaginationParams<Integratio
 class IntegrationResultsApi {
   protected path = '/integration-results';
 
-  constructor(protected apiClient: AuthorizedApiClient) {}
+  constructor(protected apiClient: IApiClient) {}
 
   public find(params: FindIntegrationResultParams): Promise<PaginationResult<CompactIntegrationResult>> {
     const urlSearchParams = getSearchParams(params as SearchParams);

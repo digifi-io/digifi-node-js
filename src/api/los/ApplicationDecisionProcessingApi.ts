@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { DecisionRunResult } from '../../enums';
 import { UserBasic, VariableValue } from '../../types';
 
@@ -47,7 +47,7 @@ class ApplicationDecisionProcessingApi {
   protected path = '/application-decision-processing';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public makeDecision(params: MakeDecisionParams): Promise<ApplicationDecision> {

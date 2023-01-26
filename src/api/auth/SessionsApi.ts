@@ -1,20 +1,21 @@
-import { AuthApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
 import { AuthResponseParams } from '../../types';
+import AuthApi, { AuthReference } from './AuthApi';
 
-class SessionsApi {
+class SessionsApi extends AuthApi {
   protected path = '/sessions'
 
-  constructor(
-    private apiClient: AuthApiClient,
-  ) {}
+  constructor(apiClient: IApiClient, reference: AuthReference) {
+    super(apiClient, reference);
+  }
 
   public createSession(
     email: string,
     password: string,
     refreshTokenExpirationTimeMinutes?: number,
   ): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', {
+    return this.makeAuthCall(`${this.path}`, 'POST', {
       email,
       password,
       refreshTokenExpirationTimeMinutes,
@@ -25,18 +26,18 @@ class SessionsApi {
     phoneVerificationCode: string,
     refreshTokenExpirationTimeMinutes?: number,
   ): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', {
+    return this.makeAuthCall(`${this.path}`, 'POST', {
       phoneVerificationCode,
       refreshTokenExpirationTimeMinutes,
     });
   }
 
   public sendPhoneVerificationCode(phone: string): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}/${phone}`, 'POST');
+    return this.makeAuthCall(`${this.path}/${phone}`, 'POST');
   }
 
   public validateToken(accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/token-status`, 'PUT', undefined, {
+    return this.makeAuthCall(`${this.path}/token-status`, 'PUT', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -44,7 +45,7 @@ class SessionsApi {
   }
 
   public logout(accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}`, 'DELETE', undefined, {
+    return this.makeAuthCall(`${this.path}`, 'DELETE', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -52,7 +53,7 @@ class SessionsApi {
   }
 
   public resignAccessToken(accountRefreshToken: string): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}/`, 'POST', undefined, {
+    return this.makeAuthCall(`${this.path}/`, 'POST', undefined, {
       headers: new Headers({
         accountRefreshToken,
       }),

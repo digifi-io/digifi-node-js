@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { BorrowerType } from '../../enums';
 
 export interface BorrowerStandardPortalGeneralSettings {
@@ -10,7 +10,7 @@ class BorrowerStandardPortalGeneralSettingsApi {
   protected path = '/borrowers/standard-portals/general-settings';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public getGeneralSettings(): Promise<BorrowerStandardPortalGeneralSettings> {

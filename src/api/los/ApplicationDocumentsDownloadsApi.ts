@@ -1,33 +1,22 @@
-import { DocumentsDownloadsApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
+import { DownloadApi, DownloadResponse } from '../base';
 
-export interface DownloadResponse {
-  file: ArrayBuffer;
-  filename: string;
-}
-
-export default class ApplicationDocumentsDownloadsApi {
-  protected fileNameFromHeadersPattern = /filename="([^"]+)"/;
+export default class ApplicationDocumentsDownloadsApi extends DownloadApi {
   protected path = 'application-documents-downloads';
 
-  constructor(protected apiClient: DocumentsDownloadsApiClient) {}
-
-  public async findById(id: string): Promise<DownloadResponse> {
-    const response = await this.apiClient.makeCall<Response>(`/${this.path}/${id}`);
-
-    const [, filename] = response.headers.get('content-disposition')?.match(this.fileNameFromHeadersPattern) || [];
-
-    return { file: await response.arrayBuffer(), filename };
+  constructor(apiClient: IApiClient) {
+    super(apiClient);
   }
 
-  public async find(applicationId: string): Promise<DownloadResponse> {
+  public async downloadById(id: string): Promise<DownloadResponse> {
+    return this.download(`/${this.path}/${id}`);
+  }
+
+  public async downloadAll(applicationId: string): Promise<DownloadResponse> {
     const params = new URLSearchParams();
 
     params.append('applicationId', applicationId);
 
-    const response = await this.apiClient.makeCall<Response>(`/${this.path}?${params}`);
-
-    const [, filename] = response.headers.get('content-disposition')?.match(this.fileNameFromHeadersPattern) || [];
-
-    return { file: await response.arrayBuffer(), filename };
+    return this.download(`/${this.path}?${params}`)
   }
 }

@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { UserShort } from '../../types';
 
 export interface BorrowerStandardPortalLegalDocument {
@@ -15,7 +15,7 @@ class BorrowerStandardPortalLegalDocumentApi {
   protected path = '/borrowers/standard-portals/legal-documents';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public getLegalDocuments(): Promise<BorrowerStandardPortalLegalDocument[]> {

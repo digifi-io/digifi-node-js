@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { PaginationParams, PaginationResult, PermissionGroupId } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 import { UserSortField } from '../../enums';
@@ -34,7 +34,7 @@ class UsersApi {
   protected path = '/users'
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(params: FindUserParams): Promise<PaginationResult<User>> {

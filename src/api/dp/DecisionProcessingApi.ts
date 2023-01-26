@@ -1,6 +1,6 @@
 import { UserBasic, VariableValue } from '../../types';
 import { DecisionRunResult } from '../../enums';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 
 export interface ProcessDecisionsParams {
   decisionName?: string;
@@ -106,7 +106,7 @@ class DecisionProcessingApi {
   protected path = '/decision-processing';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public async runDecisions(options: ProcessDecisionsParams): Promise<RunDecisionsResponse> {

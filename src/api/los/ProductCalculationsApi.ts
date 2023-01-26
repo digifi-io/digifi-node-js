@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import getSearchParams from '../../utils/getSearchParams';
 import { VariableType } from '../../enums';
 import { SearchParams } from '../BaseSystemApi';
@@ -30,7 +30,7 @@ export default class ProductCalculationsApi {
   protected path = '/product-calculations';
 
   constructor(
-    protected apiClient: AuthorizedApiClient,
+    protected apiClient: IApiClient,
   ) {}
 
   public getProductCalculations(params?: GetProductCalculationsParams): Promise<ProductCalculation[]> {

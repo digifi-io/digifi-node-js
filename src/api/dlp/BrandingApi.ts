@@ -1,5 +1,5 @@
 import { Headers } from 'node-fetch';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { Branding } from '../../data/models';
 
 class BrandingApi {
@@ -11,7 +11,7 @@ class BrandingApi {
   protected path = '/branding'
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public getBranding(): Promise<Branding> {

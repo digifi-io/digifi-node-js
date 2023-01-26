@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { VariableAccessPermission, VariableType } from '../../enums';
 import { VisualDataType } from '../../data/models';
 import { PermissionGroupId, UserShortInfo, PaginationResult } from '../../types';
@@ -90,7 +90,7 @@ class VariablesApi {
   protected path = '/variables'
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(params: FindVariableParams): Promise<PaginationResult<Variable>> {

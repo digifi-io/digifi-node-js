@@ -1,5 +1,5 @@
 import { ApplicationStatusPermissions } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import getSearchParams from '../../utils/getSearchParams';
 import { FormulaCondition } from '../../data/models';
 
@@ -33,7 +33,7 @@ export default class ApplicationStatusesApi {
   protected path = '/application-statuses';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(productId: string): Promise<ApplicationStatus[]> {
