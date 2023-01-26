@@ -9,13 +9,13 @@ export interface Decision {
   name: string;
   source: ExecutionSource;
   strategyNames: string[];
-  strategies: string[];
+  strategiesIds: string[];
   resultsCount: number;
   applicationId: string | null;
   applicationDisplayId: string | null;
   applicationName: string | null;
   executionTime: number;
-  organization: string;
+  organizationId: string;
   testing?: boolean;
   resultStatuses: Partial<Record<DecisionRunResult, number>>;
   createdAt: Date;
@@ -33,8 +33,8 @@ export enum DecisionsSortField {
 
 export interface FindDecisionsParams extends PaginationParams<DecisionsSortField>{
   source?: ExecutionSource;
-  teamMemberIds?: string[];
-  strategy?: string;
+  teamMembersIds?: string[];
+  strategyId?: string;
   resultStatuses?: DecisionRunResult[];
   createdAtFrom?: string;
   createdAtTo?: string;
@@ -42,7 +42,7 @@ export interface FindDecisionsParams extends PaginationParams<DecisionsSortField
 }
 
 class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
-  protected basePath = '/decisions';
+  protected path = '/decisions';
 
   constructor(protected apiClient: AuthorizedApiClient) {
     super(apiClient);
@@ -51,28 +51,28 @@ class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
   public find(params: FindDecisionsParams): Promise<PaginationResult<Decision>> {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
-    if (params.teamMemberIds) {
-      params.teamMemberIds.forEach((teamMemberId) => urlSearchParams.append('team-member-ids', teamMemberId));
+    if (params.teamMembersIds) {
+      params.teamMembersIds.forEach((teamMemberId) => urlSearchParams.append('teamMembersIds', teamMemberId));
     }
 
     if (params.resultStatuses) {
-      params.resultStatuses.forEach((resultStatus) => urlSearchParams.append('result-statuses', resultStatus));
+      params.resultStatuses.forEach((resultStatus) => urlSearchParams.append('resultStatuses', resultStatus));
     }
 
     if (params.applicationId) {
-      urlSearchParams.append('application-id', params.applicationId);
+      urlSearchParams.append('applicationId', params.applicationId);
     }
 
     if (params.createdAtFrom) {
-      urlSearchParams.append('created-at-from', params.createdAtFrom.toString());
+      urlSearchParams.append('createdAtFrom', params.createdAtFrom.toString());
     }
 
     if (params.createdAtTo) {
-      urlSearchParams.append('created-at-to', params.createdAtTo.toString());
+      urlSearchParams.append('createdAtTo', params.createdAtTo.toString());
     }
 
     return this.apiClient.makeCall<PaginationResult<Decision>>(
-      `${this.basePath}?${urlSearchParams}`,
+      `${this.path}?${urlSearchParams}`,
     );
   }
 }

@@ -5,15 +5,13 @@ export interface RawCard {
   name: string;
   position: number;
   row: number;
-  organization: string;
+  organizationId: string;
   organizationVersion: number | null,
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export interface Card<
-  IVariableConfiguration extends VariableConfiguration = VariableConfiguration
-  > extends RawCard {
+export interface Card<IVariableConfiguration extends VariableConfiguration = VariableConfiguration> extends RawCard {
   fields?: IVariableConfiguration[];
 }
 

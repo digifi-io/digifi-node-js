@@ -13,7 +13,7 @@ export enum IntermediaryDefaultValue {
 
 export interface Intermediary {
   id: string;
-  organization: string;
+  organizationId: string;
   testing?: boolean;
   variables: Record<string, VariableValue>;
   createdAt: Date;
@@ -72,8 +72,7 @@ export default class IntermediariesApi extends SystemApi<
   UpdateIntermediaryParams,
   FindIntermediariesParams
 > {
-  protected basePath = 'intermediaries';
-  protected entityKey = 'intermediary';
+  protected path = 'intermediaries';
 
   public async find(params: FindIntermediariesParams): Promise<PaginationResult<Intermediary>> {
     const intermediaries = await super.find(params);
@@ -84,19 +83,12 @@ export default class IntermediariesApi extends SystemApi<
   public getSuggestions(params: FindIntermediarySuggestionsParams): Promise<Intermediary[]> {
     const queryParams = getSearchParams(params as SearchParams);
 
-    return this.apiClient.makeCall<Intermediary[]>(`/${this.basePath}/suggestions?${queryParams}`);
+    return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/suggestions?${queryParams}`);
   }
 
   public bulkUpload(intermediariesToUpload: CreateIntermediaryParams[]): Promise<Intermediary[]> {
-
-    return this.apiClient.makeCall<Intermediary[]>(`/${this.basePath}/bulk`, 'POST', {
-      'intermediaries': [
-        ...intermediariesToUpload.map((intermediary) => (
-          {
-            'intermediary': intermediary,
-          }
-        )),
-      ],
+    return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/bulk`, 'POST', {
+      intermediaries: intermediariesToUpload,
     });
   }
 }

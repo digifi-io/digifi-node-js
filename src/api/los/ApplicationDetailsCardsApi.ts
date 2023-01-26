@@ -3,14 +3,10 @@ import { Card, VariableConfiguration } from '../../data/models';
 import getSearchParams from '../../utils/getSearchParams';
 
 export interface ApplicationVariableConfiguration extends VariableConfiguration {
-  product: string;
+  productId: string;
 }
 
-export interface ApplicationDetailsCardAttributes {
-  product: string;
-}
-
-export type ApplicationDetailsCard = Card<ApplicationVariableConfiguration> & ApplicationDetailsCardAttributes;
+export type ApplicationDetailsCard = Card<ApplicationVariableConfiguration>;
 
 class ApplicationDetailsCardsApi {
   protected path = '/application-details-cards';
@@ -19,8 +15,8 @@ class ApplicationDetailsCardsApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(product?: string): Promise<ApplicationDetailsCard[]> {
-    const urlSearchParams = getSearchParams({ product } as Record<string, string>);
+  public find(productId?: string): Promise<ApplicationDetailsCard[]> {
+    const urlSearchParams = getSearchParams({ productId } as Record<string, string>);
 
     return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);
   }

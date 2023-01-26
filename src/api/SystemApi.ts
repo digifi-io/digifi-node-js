@@ -1,9 +1,12 @@
 import { IApiClient, RequestBody } from '../clients';
 import { BaseSystemApi } from './BaseSystemApi';
 
-export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams = undefined, FindParams = undefined> extends BaseSystemApi<Resource, FindParams> {
-  protected entityKey = '';
-
+export abstract class SystemApi<
+  Resource,
+  CreateParams = undefined,
+  UpdateParams = undefined,
+  FindParams = undefined
+> extends BaseSystemApi<Resource, FindParams> {
   constructor(
     protected apiClient: IApiClient,
   ) {
@@ -11,14 +14,10 @@ export abstract class SystemApi<Resource, CreateParams = undefined, UpdateParams
   }
 
   public create(params: CreateParams): Promise<Resource> {
-    const body = params && this.entityKey ? { [this.entityKey]: params } : params;
-
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}`, 'POST', body as RequestBody);
+    return this.apiClient.makeCall<Resource>(`/${this.path}`, 'POST', params as RequestBody);
   }
 
   public update(id: string, params: UpdateParams): Promise<Resource> {
-    const body = params && this.entityKey ? { [this.entityKey]: params } : params;
-
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'PUT', body as RequestBody);
+    return this.apiClient.makeCall<Resource>(`/${this.path}/${id}`, 'PUT', params as RequestBody);
   }
 }

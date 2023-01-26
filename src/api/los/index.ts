@@ -2,6 +2,7 @@ export {
   default as ApplicationDecisionProcessingApi,
   MakeDecisionParams,
   ApplicationDecision,
+  ApplicationDecisionResult,
 } from './ApplicationDecisionProcessingApi';
 export {
   default as ApplicationDetailsCardsApi,
@@ -92,7 +93,7 @@ export {
   ProductSettings,
   ProductType,
   AssigneeTeamMembersType,
-  ApplicationFormPage,
+  ApplicationFormPages,
   FindProductsParams,
 } from './ProductsApi';
 export {

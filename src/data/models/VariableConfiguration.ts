@@ -5,8 +5,8 @@ export interface VariableConfiguration {
   variable: string;
   position: number;
   column: number;
-  card: string;
-  organization: string;
+  cardId: string;
+  organizationId: string;
   organizationVersion: number | null;
   required?: boolean;
   default?: boolean;
@@ -14,6 +14,5 @@ export interface VariableConfiguration {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
 
 export default VariableConfiguration;

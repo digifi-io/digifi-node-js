@@ -8,23 +8,23 @@ type SearchValue = SearchPrimitiveValue | Array<string>;
 export type SearchParams = Record<string, SearchValue> | Array<string[]>;
 
 export abstract class BaseSystemApi<Resource, FindParams = undefined> {
-  protected basePath = '';
+  protected path = '';
 
-  constructor(
+  protected constructor(
     protected apiClient: IApiClient,
   ) {}
 
   public find(params: FindParams): Promise<PaginationResult<Resource> | Resource[]> {
-    const urlSearchParams = getSearchParams(params as SearchParams);
+    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.apiClient.makeCall<PaginationResult<Resource>>(`/${this.basePath}?${urlSearchParams}`);
+    return this.apiClient.makeCall<PaginationResult<Resource>>(`/${this.path}?${urlSearchParams}`);
   }
 
   public findById(id: string): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`);
+    return this.apiClient.makeCall<Resource>(`/${this.path}/${id}`);
   }
 
   public delete(id: string): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.basePath}/${id}`, 'DELETE');
+    return this.apiClient.makeCall<Resource>(`/${this.path}/${id}`, 'DELETE');
   }
 }

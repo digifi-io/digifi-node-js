@@ -10,13 +10,13 @@ export interface ProcessIntegrationParams {
 }
 
 class IntegrationProcessingApi {
-  protected basePath = '/integration-processing';
+  protected path = '/integration-processing';
 
   constructor(protected apiClient: AuthorizedApiClient) {}
 
   public processIntegration(params: ProcessIntegrationParams): Promise<IntegrationResult> {
     return this.apiClient.makeCall<IntegrationResult>(
-      `${this.basePath}`,
+      `${this.path}`,
       'POST',
       params,
     );

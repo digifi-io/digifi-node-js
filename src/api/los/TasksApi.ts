@@ -43,7 +43,7 @@ export interface Task {
   description: string;
   status: TaskStatus;
   application: TaskApplication;
-  organization: string;
+  organizationId: string;
   createdAt: Date;
   updatedAt: Date;
   assigneeType: TaskAssigneeType;
@@ -52,10 +52,7 @@ export interface Task {
   variables?: string[] | null;
   group?: string;
   autoPassCondition?: FormulaCondition | null;
-  blockedStatuses?: Array<{
-    id: string;
-    name: string;
-  }>;
+  blockedStatuses?: Array<{ id: string; name: string }>;
   dueDate?: Date;
   createdBy?: UserShort | null;
   updatedBy?: UserShort | null;
@@ -73,12 +70,12 @@ export type TaskAssignee = {
 }
 
 export interface CreateTaskParams {
-  application: string;
+  applicationId: string;
   description: string;
   assignee: TaskAssignee;
   status?: TaskStatus;
   group?: string | null;
-  blockedStatuses?: string[];
+  blockedStatusesIds?: string[];
   variables?: string[] | null;
   autoPassCondition?: string | null;
   dueDate?: string | null;
@@ -92,7 +89,7 @@ export interface UpdateTaskParams {
   group?: string | null;
   variables?: string[] | null;
   autoPassCondition?: string | null;
-  blockedStatuses?: string[] | null;
+  blockedStatusesIds?: string[] | null;
   dueDate?: string | null;
 }
 
@@ -112,15 +109,14 @@ export interface FindTasksParams extends PaginationParams<TaskSortField>{
   assignedTeamMembersIds?: string[];
   teamMembersIds?: string[];
   assigneeId?: string;
-  blockedStatus?: string;
   assigneeType?: TaskAssigneeType;
   dueUpdatedDateFrom?: Date | string;
   dueUpdatedDateTo?: Date | string;
 }
 
 export interface BulkCreateTasksParams {
-  application: string;
-  batch: Array<Omit<CreateTaskParams, 'application'>>;
+  applicationId: string;
+  batch: Array<Omit<CreateTaskParams, 'applicationId'>>;
 }
 
 export interface BulkCreateTasksResponse {
@@ -134,8 +130,7 @@ export default class TasksApi extends SystemApi<
   UpdateTaskParams,
   FindTasksParams
 > {
-  protected basePath = 'tasks';
-  protected entityKey = 'task';
+  protected path = 'tasks';
 
   public async find(params: FindTasksParams): Promise<PaginationResult<Task>> {
     const tasks = await super.find(params);
@@ -144,6 +139,6 @@ export default class TasksApi extends SystemApi<
   }
 
   public bulkCreate(params: BulkCreateTasksParams) {
-    return this.apiClient.makeCall<BulkCreateTasksResponse>(`/${this.basePath}/batch`, 'POST', params);
+    return this.apiClient.makeCall<BulkCreateTasksResponse>(`/${this.path}/batch`, 'POST', params);
   }
 }

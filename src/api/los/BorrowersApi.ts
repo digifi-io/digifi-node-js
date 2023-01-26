@@ -14,10 +14,10 @@ export enum BorrowerDefaultValue {
   HomeAddress = 'borrower_home_address',
 }
 
-export interface Borrower{
+export interface Borrower {
   id: string;
   type: BorrowerType;
-  organization: string;
+  organizationId: string;
   variables: Record<string, VariableValue>;
   testing?: boolean;
   locked: boolean;
@@ -76,8 +76,7 @@ export default class BorrowersApi extends SystemApi<
   UpdateBorrowerParams,
   FindBorrowersParams
 > {
-  protected basePath = 'borrowers';
-  protected entityKey = 'borrower';
+  protected path = 'borrowers';
 
   public async find(params: FindBorrowersParams): Promise<PaginationResult<Borrower>> {
     const borrowers = await super.find(params);

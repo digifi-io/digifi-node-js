@@ -1,9 +1,9 @@
 export {
   default as DecisionProcessingApi,
-  ProcessDecisionParams,
+  ProcessDecisionsParams,
   StrategyModuleType,
   DecisionResult,
-  RunDecisionResponse,
+  RunDecisionsResponse,
   RequirementsModuleProcessingResult,
   FormulaModuleProcessingResult,
   ScoreModuleProcessingResult,

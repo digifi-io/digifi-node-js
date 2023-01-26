@@ -1,12 +1,11 @@
 import { AuthorizedApiClient } from '../../clients';
 import { VariableAccessPermission, VariableType } from '../../enums';
 import { VisualDataType } from '../../data/models';
-import { PermissionGroupId, UserShortInfo, OrganizationWithVersion, PaginationResult } from '../../types';
+import { PermissionGroupId, UserShortInfo, PaginationResult } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 import { SearchParams } from '../BaseSystemApi';
 
 export interface FindVariableParams {
-  organization: OrganizationWithVersion;
   onlyStandard?: boolean;
   onlyCustom?: boolean;
   id?: string;
@@ -24,7 +23,7 @@ export interface FindVariableParams {
   dueCreatedDateTo?: Date | string;
   dueUpdatedDateFrom?: Date | string;
   dueUpdatedDateTo?: Date | string;
-  teamMembers?: string[];
+  teamMembersIds?: string[];
 }
 
 export enum StringVisualDataType {
@@ -46,7 +45,7 @@ export interface BasicVariable {
   id: string;
   name: string;
   systemName: string;
-  organization: string;
+  organizationId: string;
   organizationVersion: number | null;
   isArchived: boolean;
   dataType: VariableType;

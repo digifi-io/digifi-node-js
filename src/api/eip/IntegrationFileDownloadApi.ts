@@ -1,20 +1,23 @@
 import { DocumentsDownloadsApiClient } from '../../clients';
 
-const FILENAME_FROM_HEADER_PATTERN = /filename="([^"]+)"/;
-
 export interface IntegrationDocumentDownloadResponse {
   file: ArrayBuffer;
   filename: string;
 }
 
 class IntegrationFileDownloadApi {
-  protected basePath = '/integration-file-download';
+  private fileNameFromHeadersPattern = /filename="([^"]+)"/;
 
-  constructor(protected apiClient: DocumentsDownloadsApiClient) {}
+  protected path = '/integration-file-download';
+
+  constructor(
+    protected apiClient: DocumentsDownloadsApiClient,
+  ) {}
 
   public async findById(id: string): Promise<IntegrationDocumentDownloadResponse> {
-    const response = await this.apiClient.makeCall<Response>(`/${this.basePath}/${id}`);
-    const [, filename] = response.headers.get('content-disposition')?.match(FILENAME_FROM_HEADER_PATTERN) || [];
+    const response = await this.apiClient.makeCall<Response>(`/${this.path}/${id}`);
+
+    const [, filename] = response.headers.get('content-disposition')?.match(this.fileNameFromHeadersPattern) || [];
 
     return { file: await response.arrayBuffer(), filename };
   }
