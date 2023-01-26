@@ -27,4 +27,11 @@ export interface UserShort extends UserBasic {
   notificationBlacklist: AccountNotificationType[];
 }
 
+export interface UserShortInfo {
+  firstName: string;
+  lastName: string;
+  avatarId?: string;
+  id: string;
+}
+
 export default UserShort;

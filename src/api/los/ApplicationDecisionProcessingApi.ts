@@ -1,43 +1,23 @@
 import { AuthorizedApiClient } from '../../clients';
-import { StrategyStatus } from '../../enums';
+import { DecisionRunResult } from '../../enums';
 import { VariableValue } from '../../types';
 
-export interface FormattedResult {
-  strategyName: string;
-  strategyDisplayName: string;
-  strategyVersion: number;
-  strategyStatus: StrategyStatus;
-  passed: boolean;
-  errors: string[];
-  declineReasons: string[];
-  inputVariables: Record<string, VariableValue>;
-  outputVariables: Record<string, VariableValue>;
-}
-
-export interface DecisionRunResponse {
-  decisionId: string;
-  decisionName: string;
-  resultsCount: number;
-  clientId: string;
-  statusCode: number;
-  statusMessage: string;
-  requestDate: string;
-  responseDate: string;
-  executionTime: number;
-  decisionClientId: string | null;
-  strategyName: string;
-  strategyVersion: number;
-  strategyStatus: StrategyStatus;
-  applicationId: string | null;
-  results: FormattedResult[];
-}
-
 export interface MakeDecisionParams {
-  strategyName: string;
+  strategy: string;
   applicationId: string;
   decisionName?: string;
-  successStatusId?: string;
-  failureStatusId?: string;
+  successStatus?: string;
+  failureStatus?: string;
+}
+
+export interface ApplicationDecision {
+  id: string;
+  name: string;
+  applicationId: string;
+  strategyDisplayName: string;
+  result: DecisionRunResult;
+  outputs: Record<string, VariableValue>;
+  userId?: string;
 }
 
 class ApplicationDecisionProcessingApi {
@@ -47,7 +27,7 @@ class ApplicationDecisionProcessingApi {
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public makeDecision(params: MakeDecisionParams): Promise<DecisionRunResponse> {
+  public makeDecision(params: MakeDecisionParams): Promise<ApplicationDecision> {
     return this.apiClient.makeCall(`${this.path}`, 'POST', params);
   }
 }

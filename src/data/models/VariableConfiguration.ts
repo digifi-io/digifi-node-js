@@ -1,15 +1,19 @@
-import { Variable } from './Variable';
 import FormulaCondition from './FormulaCondition';
 
-interface VariableConfiguration<IVariable extends Variable = Variable> {
+export interface VariableConfiguration {
   id: string;
-  variable: IVariable;
+  variable: string;
   position: number;
   column: number;
-  cardId: string;
+  card: string;
+  organization: string;
+  organizationVersion: number | null;
   required?: boolean;
   default?: boolean;
   conditionalDisplayRule?: FormulaCondition | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
+
 
 export default VariableConfiguration;

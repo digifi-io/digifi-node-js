@@ -1,6 +1,12 @@
 export {
   default as DecisionProcessingApi,
-  DecisionProcessResult,
   ProcessDecisionParams,
-  IStrategyProcessingResult,
+  StrategyModuleType,
+  DecisionResult,
+  RunDecisionResponse,
+  RequirementsModuleProcessingResult,
+  FormulaModuleProcessingResult,
+  ScoreModuleProcessingResult,
+  DataIntegrationModuleProcessingResult,
+  DecisionModuleProcessingResult,
 } from './DecisionProcessingApi';

@@ -1,6 +1,6 @@
 import { VariableValue } from '../../types';
 import { AuthorizedApiClient } from '../../clients';
-import { ExternalIntegrationResultType } from '../../enums';
+import { IntegrationResult } from '../../data/models';
 
 export interface ProcessIntegrationParams {
   integrationId: string;
@@ -9,26 +9,13 @@ export interface ProcessIntegrationParams {
   returnRawResponse?: boolean;
 }
 
-export interface ProcessIntegrationResult {
-  resultId: string;
-  result: ExternalIntegrationResultType;
-  integrationId: string;
-  integrationName: string;
-  applicationId?: string;
-  applicationName?: string;
-  error?: string;
-  statusCode: number;
-  outputs: Record<string, VariableValue>;
-  rawResponse?: string;
-}
-
 class IntegrationProcessingApi {
   protected basePath = '/integration-processing';
 
   constructor(protected apiClient: AuthorizedApiClient) {}
 
-  public processIntegration(params: ProcessIntegrationParams): Promise<ProcessIntegrationResult> {
-    return this.apiClient.makeCall<ProcessIntegrationResult>(
+  public processIntegration(params: ProcessIntegrationParams): Promise<IntegrationResult> {
+    return this.apiClient.makeCall<IntegrationResult>(
       `${this.basePath}`,
       'POST',
       params,

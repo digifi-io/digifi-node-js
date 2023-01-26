@@ -6,20 +6,23 @@ import { SearchParams } from '../BaseSystemApi';
 export interface ProductCalculation {
   id: string;
   code: string;
-  productId: string;
-  organizationId: string;
+  product: string;
+  organization: string;
+  organizationVersion: number | null;
+  requiredVariables: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
   variable: {
     id: string;
     dataType: VariableType;
     systemName: string;
-    displayName: string;
+    name: string;
   };
-  requiredVariables: string[];
 }
 
 export interface GetProductCalculationsParams {
-  productId?: string;
-  variableId?: string;
+  product?: string;
+  variable?: string;
   search?: string;
 }
 

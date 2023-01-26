@@ -1,31 +1,25 @@
-import { PaginationParams, PaginationResult, UserBasic, VariableValue } from '../../types';
+import { PaginationParams, PaginationResult, UserBasic } from '../../types';
 import { AuthorizedApiClient } from '../../clients';
-import { SearchParams } from '../BaseSystemApi';
-import { ExecutionSource, StrategyStatus } from '../../enums';
+import { BaseSystemApi, SearchParams } from '../BaseSystemApi';
+import { DecisionRunResult, ExecutionSource } from '../../enums';
 import getSearchParams from '../../utils/getSearchParams';
-
-export interface DecisionList {
-  id: string;
-  name: string;
-  createdBy: UserBasic | null;
-  createdAt: Date;
-  source: string;
-  strategyNames: string[];
-  resultsCount: number;
-  executionTime: number;
-  resultStatuses: DecisionRunResult[];
-}
 
 export interface Decision {
   id: string;
   name: string;
-  createdBy: UserBasic | null;
-  createdAt: Date;
-  source: string;
+  source: ExecutionSource;
+  strategyNames: string[];
+  strategies: string[];
+  resultsCount: number;
   applicationId: string | null;
   applicationDisplayId: string | null;
   applicationName: string | null;
+  executionTime: number;
   organization: string;
+  testing?: boolean;
+  resultStatuses: Partial<Record<DecisionRunResult, number>>;
+  createdAt: Date;
+  createdBy?: UserBasic | null;
 }
 
 export enum DecisionsSortField {
@@ -37,50 +31,24 @@ export enum DecisionsSortField {
   Result = 'passed',
 }
 
-export enum DecisionRunResult {
-  Passed = 'passed',
-  Failed = 'failed',
-  Error = 'error',
-}
-
 export interface FindDecisionsParams extends PaginationParams<DecisionsSortField>{
   source?: ExecutionSource;
   teamMemberIds?: string[];
-  strategyName?: string;
+  strategy?: string;
   resultStatuses?: DecisionRunResult[];
-  strategyStatus?: StrategyStatus;
   createdAtFrom?: string;
   createdAtTo?: string;
   applicationId?: string;
 }
 
-export interface DecisionResult {
-  id: string;
-  name: string;
-  resultType: DecisionRunResult;
-  strategyId: string;
-  strategyName: string;
-  organization: string;
-  strategyStatus?: StrategyStatus | string;
-  strategyVersion?: number;
-  inputs: Record<string, VariableValue>;
-  outputs: Record<string, VariableValue>;
-  passed: boolean;
-  errorMessages: string[];
-  declineReasons: string[];
-  createdAt: Date;
-}
-
-export interface DecisionWithResults extends Decision {
-  results: DecisionResult[];
-}
-
-class DecisionsApi {
+class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
   protected basePath = '/decisions';
 
-  constructor(protected apiClient: AuthorizedApiClient) {}
+  constructor(protected apiClient: AuthorizedApiClient) {
+    super(apiClient);
+  }
 
-  public find(params: FindDecisionsParams): Promise<PaginationResult<DecisionList>> {
+  public find(params: FindDecisionsParams): Promise<PaginationResult<Decision>> {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
     if (params.teamMemberIds) {
@@ -89,14 +57,6 @@ class DecisionsApi {
 
     if (params.resultStatuses) {
       params.resultStatuses.forEach((resultStatus) => urlSearchParams.append('result-statuses', resultStatus));
-    }
-
-    if (params.strategyName) {
-      urlSearchParams.append('strategy-name', params.strategyName);
-    }
-
-    if (params.strategyStatus) {
-      urlSearchParams.append('strategy-status', params.strategyStatus);
     }
 
     if (params.applicationId) {
@@ -111,22 +71,8 @@ class DecisionsApi {
       urlSearchParams.append('created-at-to', params.createdAtTo.toString());
     }
 
-
-    return this.apiClient.makeCall<PaginationResult<DecisionList>>(
+    return this.apiClient.makeCall<PaginationResult<Decision>>(
       `${this.basePath}?${urlSearchParams}`,
-    );
-  }
-
-  public findById(id: string): Promise<DecisionWithResults> {
-    return this.apiClient.makeCall<DecisionWithResults>(
-      `${this.basePath}/${id}`,
-    );
-  }
-
-  public delete(id: string): Promise<Decision> {
-    return this.apiClient.makeCall<Decision>(
-      `${this.basePath}/${id}`,
-      'DELETE',
     );
   }
 }

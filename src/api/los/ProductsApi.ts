@@ -1,6 +1,8 @@
-import { SystemApi } from '../SystemApi';
 import { BorrowerType } from '../../enums';
 import { UserShort } from '../../types';
+import getSearchParams from '../../utils/getSearchParams';
+import { SearchParams } from '../BaseSystemApi';
+import { AuthorizedApiClient } from '../../clients';
 
 export enum ProductType {
   Custom = 'custom',
@@ -13,12 +15,6 @@ export enum ProductType {
   PointOfSaleFinancing = 'pointOfSaleFinancing',
   SmallBusinessLoan = 'smallBusinessLoan',
   CommercialLoan = 'commercialLoan',
-}
-
-export enum ProductStatus {
-  Archived = 'archived',
-  Active = 'active',
-  Draft = 'draft',
 }
 
 export enum AssigneeTeamMembersType {
@@ -34,7 +30,7 @@ export enum ApplicationFormPage {
   CoBorrower3 = 'coBorrower_3',
   Intermediary = 'intermediary',
   ApplicationDetails = 'applicationDetails',
-  DocumentUpload = 'documentUpload'
+  DocumentUpload = 'documentUpload',
 }
 
 export interface ProductSettings {
@@ -49,59 +45,49 @@ export interface ProductSettings {
 export interface Product {
   id: string;
   name: string;
-  status: ProductStatus;
+  isArchived?: boolean;
   type: ProductType;
   borrowerTypes: BorrowerType[];
   declineReasons: string[];
   createdAt: Date;
   updatedAt: Date;
+  organization: string;
+  organizationVersion: number | null;
+  settings: ProductSettings;
   updatedBy?: UserShort | null;
   createdBy?: UserShort | null;
-  organization: string;
-  settings: ProductSettings;
-}
-
-export interface CreateProductParams {
-  name: string;
-  borrowerTypes: BorrowerType[];
-  type: ProductType;
-  status: ProductStatus;
-}
-
-export interface UpdateProductParams {
-  name?: string;
-  borrowerTypes?: BorrowerType[];
-  type?: ProductType;
-  status?: ProductStatus;
-  settings?: Partial<ProductSettings>;
-  declineReasons?: string[];
 }
 
 export interface FindProductsParams {
   search?: string;
   teamMemberIds?: string[];
-  statuses?: ProductStatus[];
-  showArchived?: boolean;
+  excludeArchived?: boolean;
   borrowerType?: BorrowerType;
   productType?: ProductType;
   dueCreatedDateRangeFrom?: string;
   dueCreatedDateRangeTo?: string;
   dueUpdatedDateRangeFrom?: string;
   dueUpdatedDateRangeTo?: string;
+  autoRejectionSet?: boolean;
+  offset?: number;
+  count?: number;
 }
 
-export default class ProductsApi extends SystemApi<
-  Product,
-  CreateProductParams,
-  UpdateProductParams,
-  FindProductsParams
-> {
+export default class ProductsApi {
   protected basePath = 'products';
-  protected entityKey = 'product';
+
+  constructor(
+    private apiClient: AuthorizedApiClient,
+  ) {}
 
   public async find(params: FindProductsParams): Promise<Product[]> {
-    const products = await super.find(params);
+    const urlSearchParams = getSearchParams(params as SearchParams);
+    const products = await this.apiClient.makeCall<Product[]>(`/${this.basePath}?${urlSearchParams}`);
 
     return products as Product[];
+  }
+
+  public findById(id: string): Promise<Product> {
+    return this.apiClient.makeCall<Product>(`/${this.basePath}/${id}`);
   }
 }

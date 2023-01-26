@@ -1,17 +1,29 @@
 import Branding, { ImageParams } from './Branding';
 import Card from './Card';
 import FormulaCondition from './FormulaCondition';
-import Variable, { StringDataType, NumericDataType, VariablePermissions } from './Variable';
+import {
+  StringVisualDataType,
+  NumericVisualDataType,
+  BooleanVisualDataType,
+  DateVisualDataType,
+  VisualDataType,
+  AddressVisualDataType,
+} from './Variable';
 import VariableConfiguration from './VariableConfiguration';
+import IntegrationResult, { CompactIntegrationResult } from './Integration';
 
 export {
   Branding,
   ImageParams,
   Card,
   FormulaCondition,
-  Variable,
   VariableConfiguration,
-  StringDataType,
-  NumericDataType,
-  VariablePermissions,
+  StringVisualDataType,
+  NumericVisualDataType,
+  BooleanVisualDataType,
+  DateVisualDataType,
+  VisualDataType,
+  AddressVisualDataType,
+  IntegrationResult,
+  CompactIntegrationResult,
 };
