@@ -5,10 +5,10 @@ import { FormulaCondition } from '../../data/models';
 
 export interface ApplicationStatusRule {
   id: string;
-  status: string;
-  organization: string;
+  statusId: string;
+  organizationId: string;
   organizationVersion: number | null;
-  product: string;
+  productId: string;
   condition: FormulaCondition;
   createdAt?: Date;
   updatedAt?: Date;
@@ -16,8 +16,8 @@ export interface ApplicationStatusRule {
 
 export interface ApplicationStatus {
   id: string;
-  product: string;
-  organization: string;
+  productId: string;
+  organizationId: string;
   organizationVersion: number | null;
   position: number;
   name: string;
@@ -30,15 +30,15 @@ export interface ApplicationStatus {
 }
 
 export default class ApplicationStatusesApi {
-  protected basePath = '/application-statuses';
+  protected path = '/application-statuses';
 
   constructor(
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public find(product: string): Promise<ApplicationStatus[]> {
-    const urlSearchParams = getSearchParams({ product });
+  public find(productId: string): Promise<ApplicationStatus[]> {
+    const urlSearchParams = getSearchParams({ productId });
 
-    return this.apiClient.makeCall<ApplicationStatus[]>(`/${this.basePath}?${urlSearchParams}`);
+    return this.apiClient.makeCall<ApplicationStatus[]>(`/${this.path}?${urlSearchParams}`);
   }
 }

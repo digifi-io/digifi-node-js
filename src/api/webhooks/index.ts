@@ -1,6 +1,5 @@
 export {
   default as WebhooksApi,
-  EventType,
   CreateWebhookParams,
   UpdateWebhookParams,
   FindWebhooksParams,

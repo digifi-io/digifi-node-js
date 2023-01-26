@@ -6,11 +6,11 @@ export interface CompactIntegrationFile {
   id: string;
   name: string;
   fileType: string;
-  integrationResult: string;
+  integrationResultId: string;
   testing?: boolean;
-  integration?: string;
+  integrationId?: string;
   fileSize?: number;
-  organization: string;
+  organizationId: string;
   createdBy?: UserBasic | null;
 }
 
@@ -31,7 +31,7 @@ export interface IntegrationResultFileParams {
 }
 
 class IntegrationResultFilesApi {
-  protected basePath = '/integration-result-files';
+  protected path = '/integration-result-files';
 
   constructor(protected apiClient: AuthorizedApiClient) {}
 
@@ -42,9 +42,9 @@ class IntegrationResultFilesApi {
       formData.append('files', batchUploadDocumentParams.file, batchUploadDocumentParams.fileName);
     });
 
-    formData.append('integrationResult', integrationResultId);
+    formData.append('integrationResultId', integrationResultId);
 
-    return this.apiClient.makeCall<IntegrationFile[]>(this.basePath, 'POST', formData, {
+    return this.apiClient.makeCall<IntegrationFile[]>(this.path, 'POST', formData, {
       contentType: null,
     });
   }

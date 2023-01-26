@@ -6,8 +6,8 @@ import { SearchParams } from '../BaseSystemApi';
 export interface ProductCalculation {
   id: string;
   code: string;
-  product: string;
-  organization: string;
+  productId: string;
+  organizationId: string;
   organizationVersion: number | null;
   requiredVariables: string[];
   createdAt?: Date;
@@ -21,7 +21,7 @@ export interface ProductCalculation {
 }
 
 export interface GetProductCalculationsParams {
-  product?: string;
+  productId?: string;
   variable?: string;
   search?: string;
 }
@@ -31,8 +31,7 @@ export default class ProductCalculationsApi {
 
   constructor(
     protected apiClient: AuthorizedApiClient,
-  ) {
-  }
+  ) {}
 
   public getProductCalculations(params?: GetProductCalculationsParams): Promise<ProductCalculation[]> {
     const queryParams = getSearchParams((params || {}) as SearchParams);

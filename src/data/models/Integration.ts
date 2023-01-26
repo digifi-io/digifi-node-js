@@ -3,8 +3,8 @@ import { UserBasic, VariableValue } from '../../types';
 
 export interface CompactIntegrationResult {
   id: string;
-  organization: string;
-  integration: string;
+  organizationId: string;
+  integrationId: string;
   integrationName: string;
   createdAt: Date;
   updatedAt: Date;
@@ -20,7 +20,7 @@ export interface IntegrationResult extends CompactIntegrationResult {
   outputs: Record<string, VariableValue>;
   statusCode: number;
   error?: string | null;
-  application?: string;
+  applicationId?: string;
   applicationDisplayId?: string;
   applicationName?: string | null;
 }

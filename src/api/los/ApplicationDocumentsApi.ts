@@ -23,7 +23,7 @@ export interface ApplicationDocument {
   id: string;
   type: ApplicationDocumentType;
   parentId: string | null;
-  organization: string;
+  organizationId: string;
   configurationAnchor?: string | null;
   name: string;
   extension: string | null;
@@ -77,7 +77,7 @@ export interface CreateApplicationDocumentFolderParams {
 }
 
 export default class ApplicationDocumentsApi extends BaseSystemApi<ApplicationDocument, FindApplicationDocumentsParams > {
-  protected basePath = 'application-documents';
+  protected path = 'application-documents';
 
   constructor(protected apiClient: AuthorizedApiClient) {
     super(apiClient);
@@ -111,7 +111,7 @@ export default class ApplicationDocumentsApi extends BaseSystemApi<ApplicationDo
       formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}`, 'POST', formData, { contentType: null });
+    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}`, 'POST', formData, { contentType: null });
   }
 
   public createMany(applicationId: string, params: CreateManyApplicationDocumentParams): Promise<void> {
@@ -135,25 +135,19 @@ export default class ApplicationDocumentsApi extends BaseSystemApi<ApplicationDo
       formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
-    return this.apiClient.makeCall(`/${this.basePath}/batch`, 'POST', formData, {
+    return this.apiClient.makeCall(`/${this.path}/batch`, 'POST', formData, {
       contentType: null,
     });
   }
 
   public update(id: string, params: UpdateApplicationDocumentParams): Promise<ApplicationDocument> {
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}/${id}`, 'PUT', {
-      'document': {
-        ...params,
-      },
-    });
+    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}/${id}`, 'PUT', params);
   }
 
   public createFolder(params: CreateApplicationDocumentFolderParams): Promise<ApplicationDocument> {
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.basePath}/document-folders`, 'POST', {
-      'document': {
-        ...params,
-        parentId: params.parentId || null,
-      }
+    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}/document-folders`, 'POST', {
+      ...params,
+      parentId: params.parentId || null,
     });
   }
 }

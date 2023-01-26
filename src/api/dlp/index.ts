@@ -9,6 +9,3 @@ export {
 export {
   default as BrandingApi,
 } from './BrandingApi';
-export {
-  default as UnauthorizedBrandingApi,
-} from './UnauthorizedBrandingApi';

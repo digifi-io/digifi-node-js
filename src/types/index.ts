@@ -4,7 +4,6 @@ import UserShort, { UserBasic, UserShortInfo } from './User';
 import SearchHighlight from './SearchHighlight';
 import { VariableValue, AddressValue, AddressValueKey } from './Variable';
 import { ApplicationStatusPermissions, PermissionGroupId } from './Permissions';
-import OrganizationWithVersion from './Organization';
 import OrganizationMode from './OrganizationMode';
 
 export {
@@ -21,6 +20,5 @@ export {
   ApplicationStatusPermissions,
   PermissionGroupId,
   UserShortInfo,
-  OrganizationWithVersion,
   OrganizationMode,
 };

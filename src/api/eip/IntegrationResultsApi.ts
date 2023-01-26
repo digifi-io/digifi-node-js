@@ -15,17 +15,17 @@ export enum IntegrationResultSortField {
 
 export interface FindIntegrationResultParams extends PaginationParams<IntegrationResultSortField>{
   integrationId?: string;
-  application?: string;
+  applicationId?: string;
   applicationDisplayId?: string;
   source?: ExecutionSource;
   result?: ExternalIntegrationResultType;
-  teamMemberIds?: string[];
+  teamMembersIds?: string[];
   createdAtFrom?: Date | string;
   createdAtTo?: Date | string;
 }
 
 class IntegrationResultsApi {
-  protected basePath = '/integration-results';
+  protected path = '/integration-results';
 
   constructor(protected apiClient: AuthorizedApiClient) {}
 
@@ -33,37 +33,37 @@ class IntegrationResultsApi {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
     if (params.integrationId) {
-      urlSearchParams.append('integration-id', params.integrationId);
+      urlSearchParams.append('integrationId', params.integrationId);
     }
 
     if (params.applicationDisplayId) {
-      urlSearchParams.append('application-display-id', params.applicationDisplayId);
+      urlSearchParams.append('applicationDisplayId', params.applicationDisplayId);
     }
 
     if (params.createdAtFrom) {
-      urlSearchParams.append('created-at-from', params.createdAtFrom.toString());
+      urlSearchParams.append('createdAtFrom', params.createdAtFrom.toString());
     }
 
     if (params.createdAtTo) {
-      urlSearchParams.append('created-at-to', params.createdAtTo.toString());
+      urlSearchParams.append('createdAtTo', params.createdAtTo.toString());
     }
 
-    if (params.teamMemberIds) {
-      params.teamMemberIds.forEach((teamMemberId) => urlSearchParams.append('team-member-ids', teamMemberId));
+    if (params.teamMembersIds) {
+      params.teamMembersIds.forEach((teamMemberId) => urlSearchParams.append('teamMembersIds', teamMemberId));
     }
 
     return this.apiClient.makeCall<PaginationResult<CompactIntegrationResult>>(
-      `${this.basePath}?${urlSearchParams}`,
+      `${this.path}?${urlSearchParams}`,
     );
   }
 
   public findById(id: string): Promise<IntegrationResult> {
-    return this.apiClient.makeCall<IntegrationResult>(`${this.basePath}/${id}`);
+    return this.apiClient.makeCall<IntegrationResult>(`${this.path}/${id}`);
   }
 
   public delete(id: string): Promise<IntegrationResult> {
     return this.apiClient.makeCall<IntegrationResult>(
-      `${this.basePath}/${id}`,
+      `${this.path}/${id}`,
       'DELETE',
     );
   }

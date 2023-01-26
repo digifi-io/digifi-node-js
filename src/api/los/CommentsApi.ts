@@ -46,9 +46,9 @@ export type Comment = {
 
 export interface CreateCommentParams {
   message: string;
-  reference: string;
+  referenceI: string;
   referenceType: CommentReferenceType;
-  author: string;
+  authorId: string;
   authorType: CommentAuthorType.Borrower | CommentAuthorType.Intermediary;
 }
 
@@ -68,7 +68,7 @@ export default class CommentsApi extends SystemApi<
   UpdateCommentParams,
   FindCommentsParams
 > {
-  protected basePath = 'comments';
+  protected path = 'comments';
 
   public async find(params: FindCommentsParams): Promise<Comment[]> {
     const comments = await super.find(params);

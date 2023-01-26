@@ -2,7 +2,7 @@ import { UserBasic, VariableValue } from '../../types';
 import { DecisionRunResult } from '../../enums';
 import { AuthorizedApiClient } from '../../clients';
 
-export interface ProcessDecisionParams {
+export interface ProcessDecisionsParams {
   decisionName?: string;
   applicationId?: string;
   decisionClientId?: string;
@@ -10,7 +10,7 @@ export interface ProcessDecisionParams {
   returnOnlyPassed?: boolean;
   commonInputs?: Record<string, VariableValue>;
   decisions: Array<{
-    strategy: string;
+    strategyId: string;
     inputs: Record<string, VariableValue>;
   }>;
   strict?: boolean;
@@ -51,8 +51,8 @@ export interface ScoreModuleProcessingResult extends BaseModuleProcessingResult 
 
 export interface DataIntegrationModuleProcessingResult extends BaseModuleProcessingResult {
   type: StrategyModuleType.DataIntegration;
-  integration?: string;
-  integrationProcessingResult?: string;
+  integrationId?: string;
+  integrationProcessingResultId?: string;
   status?: string;
 }
 
@@ -72,10 +72,10 @@ export interface DecisionResult {
   id: string;
   name: string;
   resultType: DecisionRunResult;
-  strategy: string;
+  strategyId: string;
   decision: string;
   strategyName: string;
-  organization: string;
+  organizationId: string;
   modules: DecisionResultCompiledModuleInfo[];
   modulesProcessingResults: StrategyModuleProcessingResult[];
   inputs: Record<string, VariableValue>;
@@ -89,28 +89,29 @@ export interface DecisionResult {
   createdBy?: UserBasic | null;
 }
 
-export interface RunDecisionResponse {
+export interface RunDecisionsResponse {
   decisionId: string;
   decisionName: string;
   resultsCount: number;
   statusCode: number;
   statusMessage: string;
   decisionClientId?: string;
-  application?: string;
+  applicationId?: string;
   requestDate: Date;
   responseDate: Date;
   results?: DecisionResult[];
 }
+
 class DecisionProcessingApi {
-  protected basePath = '/decision-processing';
+  protected path = '/decision-processing';
 
   constructor(
     private apiClient: AuthorizedApiClient,
   ) {}
 
-  public async runDecision(options: ProcessDecisionParams): Promise<RunDecisionResponse> {
-    return this.apiClient.makeCall<RunDecisionResponse>(
-      this.basePath,
+  public async runDecisions(options: ProcessDecisionsParams): Promise<RunDecisionsResponse> {
+    return this.apiClient.makeCall<RunDecisionsResponse>(
+      this.path,
       'POST',
       options,
     );

@@ -17,7 +17,7 @@ export enum ApplicationDefaultVariable {
 
 export interface Application {
   id: string;
-  organization: string;
+  organizationId: string;
   displayId: string;
   variables: Record<string, VariableValue>;
   status: {
@@ -26,6 +26,7 @@ export interface Application {
     permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
     permissionGroupsToEditApplication: ApplicationStatusPermissions;
     permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
+    archivedAt?: Date;
   };
   borrowerId: string;
   coborrowerIds: string[];
@@ -48,7 +49,7 @@ export interface Application {
   product: {
     id: string;
     name: string;
-    organization: string;
+    organizationId: string;
     organizationVersion: number | null;
     borrowerTypes: BorrowerType[];
   };
@@ -65,21 +66,21 @@ export interface Application {
 }
 
 export interface CreateApplicationParams {
-  product: string;
-  status?: string;
+  productId: string;
+  statusId?: string;
   borrower: string | CreateBorrowerParams;
   coBorrowers: Array<string | CreateBorrowerParams>;
   intermediary?: string | CreateIntermediaryParams;
   teamMembers?: string[];
-  labels?: string[];
+  labelsIds?: string[];
   variables: Record<string, VariableValue>;
 }
 
 export interface UpdateApplicationParams {
-  status?: string;
+  statusId?: string;
   declineReasons?: string[];
   teamMembers?: string[];
-  labels?: string[];
+  labelsIds?: string[];
   variables?: Record<string, VariableValue>;
 }
 
@@ -133,7 +134,7 @@ export interface FindApplicationsParams extends PaginationParams<ApplicationSort
 }
 
 interface DeleteCoBorrowerParams {
-  coBorrowerToDelete: string;
+  coBorrowerIdToDelete: string;
 }
 
 interface AddCoBorrowersParams {
@@ -156,8 +157,7 @@ export default class ApplicationsApi extends SystemApi<
   UpdateApplicationParams,
   FindApplicationsParams
 > {
-  protected basePath = 'applications';
-  protected entityKey = 'application';
+  protected path = 'applications';
 
   public async find(params: FindApplicationsParams): Promise<PaginationResult<Application>> {
     const applications = await super.find(params);
@@ -166,11 +166,11 @@ export default class ApplicationsApi extends SystemApi<
   }
 
   public updateCoBorrowers(applicationId: string, params: UpdateApplicationCoBorrowersParams) {
-    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/coborrowers`, 'PUT', params);
+    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/coborrowers`, 'PUT', params);
   }
 
   public updateIntermediary(applicationId: string, params: UpdateApplicationIntermediaryParams) {
-    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/intermediary`, 'PUT', params);
+    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/intermediary`, 'PUT', params);
   }
 
   public getVariables(applicationId: string, variablesToInclude?: string[]) {
@@ -182,22 +182,22 @@ export default class ApplicationsApi extends SystemApi<
       })
     }
 
-    return this.apiClient.makeCall<Record<string, VariableValue>>(`/${this.basePath}/${applicationId}/variables?${urlSearchParams}`);
+    return this.apiClient.makeCall<Record<string, VariableValue>>(`/${this.path}/${applicationId}/variables?${urlSearchParams}`);
   }
 
   public runCalculations(applicationId: string, params: RunApplicationCalculationsParams) {
-    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/run-calculations`, 'POST', params);
+    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/run-calculations`, 'POST', params);
   }
 
-  public addLabels(applicationId: string, labelIds: string[]) {
-    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/labels`, 'POST', {
-      labels: labelIds,
+  public addLabels(applicationId: string, labelsIds: string[]) {
+    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/labels`, 'POST', {
+      labelsIds,
     });
   }
 
-  public addTeamMembers(applicationId: string, teamMemberIds: string[]) {
-    return this.apiClient.makeCall<Application>(`/${this.basePath}/${applicationId}/team-members`, 'POST', {
-      teamMembers: teamMemberIds,
+  public addTeamMembers(applicationId: string, teamMembersIds: string[]) {
+    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/team-members`, 'POST', {
+      teamMembersIds,
     });
   }
 }

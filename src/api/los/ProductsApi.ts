@@ -23,18 +23,26 @@ export enum AssigneeTeamMembersType {
   SpecificTeamMembers = 'specificTeamMembers',
 }
 
-export enum ApplicationFormPage {
+export enum ApplicationFormPageType {
   Borrower = 'borrower',
   CoBorrower = 'coBorrower',
   CoBorrower2 = 'coBorrower_2',
   CoBorrower3 = 'coBorrower_3',
   Intermediary = 'intermediary',
   ApplicationDetails = 'applicationDetails',
-  DocumentUpload = 'documentUpload',
+  DocumentUpload = 'documentUpload'
 }
 
+
+export enum ApplicationFormPageBehavior {
+  Required = 'required',
+  Optional = 'optional',
+}
+
+export type ApplicationFormPages = Partial<Record<ApplicationFormPageType, ApplicationFormPageBehavior>>;
+
 export interface ProductSettings {
-  applicationFormPages: ApplicationFormPage[];
+  applicationFormPages: ApplicationFormPages;
   assigneeTeamMembersType?: AssigneeTeamMembersType | null;
   teamMembersToAssign: string[];
   teamMembersToRoundRobin: string[];
@@ -51,7 +59,7 @@ export interface Product {
   declineReasons: string[];
   createdAt: Date;
   updatedAt: Date;
-  organization: string;
+  organizationId: string;
   organizationVersion: number | null;
   settings: ProductSettings;
   updatedBy?: UserShort | null;
@@ -74,7 +82,7 @@ export interface FindProductsParams {
 }
 
 export default class ProductsApi {
-  protected basePath = 'products';
+  protected path = 'products';
 
   constructor(
     private apiClient: AuthorizedApiClient,
@@ -82,12 +90,13 @@ export default class ProductsApi {
 
   public async find(params: FindProductsParams): Promise<Product[]> {
     const urlSearchParams = getSearchParams(params as SearchParams);
-    const products = await this.apiClient.makeCall<Product[]>(`/${this.basePath}?${urlSearchParams}`);
+
+    const products = await this.apiClient.makeCall<Product[]>(`/${this.path}?${urlSearchParams}`);
 
     return products as Product[];
   }
 
   public findById(id: string): Promise<Product> {
-    return this.apiClient.makeCall<Product>(`/${this.basePath}/${id}`);
+    return this.apiClient.makeCall<Product>(`/${this.path}/${id}`);
   }
 }
