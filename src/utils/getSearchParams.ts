@@ -1,4 +1,6 @@
-const getSearchParams = (params: Record<string, string | Array<string>> | Array<string[]> = {}) => {
+import { SearchParams } from '../api/BaseSystemApi';
+
+const getSearchParams = (params: SearchParams = {}) => {
   let urlSearchParams = new URLSearchParams();
 
   if (Array.isArray(params)) {
@@ -10,7 +12,9 @@ const getSearchParams = (params: Record<string, string | Array<string>> | Array<
       if (Array.isArray(param)) {
         param.forEach(value => urlSearchParams.append(key, value));
       } else {
-        urlSearchParams.append(key, param);
+        if (param !== undefined) {
+          urlSearchParams.append(key, param.toString());
+        }
       }
     });
   }

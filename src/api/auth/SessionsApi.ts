@@ -1,4 +1,4 @@
-import AuthApiClient from '../../AuthApiClient';
+import { AuthApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
 import { AuthResponseParams } from '../../types';
 

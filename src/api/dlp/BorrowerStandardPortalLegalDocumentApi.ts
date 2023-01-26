@@ -1,5 +1,5 @@
-import { AuthorizedApiClient } from '../../AuthorizedApiClient';
-import { UserShortInfo } from '../../types';
+import { AuthorizedApiClient } from '../../clients';
+import { UserShort } from '../../types';
 
 export interface BorrowerStandardPortalLegalDocument {
   id: string;
@@ -8,7 +8,7 @@ export interface BorrowerStandardPortalLegalDocument {
   showInFooter: boolean;
   showOnSubmitApplication: boolean;
   updatedAt: Date;
-  updatedBy?: UserShortInfo | null;
+  updatedBy?: UserShort | null;
 }
 
 class BorrowerStandardPortalLegalDocumentApi {
