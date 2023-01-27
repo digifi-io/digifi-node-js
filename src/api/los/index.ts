@@ -84,7 +84,6 @@ export {
 } from './IntermediariesApi';
 export {
   default as ProductCalculationsApi,
-  GetProductCalculationsParams,
   ProductCalculation,
 } from './ProductCalculationsApi';
 export {
