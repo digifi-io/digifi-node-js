@@ -23,7 +23,7 @@ class ApplicationDocumentConfigurationApi {
     private apiClient: IApiClient,
   ) {}
 
-  public find(productId?: string): Promise<ApplicationDocumentConfiguration[]> {
+  public find(productId: string): Promise<ApplicationDocumentConfiguration[]> {
     const urlSearchParams = getSearchParams({ productId } as Record<string, string>);
 
     return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);

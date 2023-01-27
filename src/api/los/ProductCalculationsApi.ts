@@ -20,12 +20,6 @@ export interface ProductCalculation {
   };
 }
 
-export interface GetProductCalculationsParams {
-  productId?: string;
-  variable?: string;
-  search?: string;
-}
-
 export default class ProductCalculationsApi {
   protected path = '/product-calculations';
 
@@ -33,8 +27,8 @@ export default class ProductCalculationsApi {
     protected apiClient: IApiClient,
   ) {}
 
-  public getProductCalculations(params?: GetProductCalculationsParams): Promise<ProductCalculation[]> {
-    const queryParams = getSearchParams((params || {}) as SearchParams);
+  public find(productId: string): Promise<ProductCalculation[]> {
+    const queryParams = getSearchParams({ productId } as Record<string, string>);
 
     return this.apiClient.makeCall<ProductCalculation[]>(`/${this.path}/?${queryParams}`);
   }
