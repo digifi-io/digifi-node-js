@@ -29,13 +29,21 @@ export type BaseAccountInfo = {
   [key in string]: string;
 }
 
-export type CreateAccountParams = {
+interface BaseCreateAccountParams {
   email: string;
   phone?: string;
   password?: string;
-} & {
-  [key in 'borrowerId' | 'intermediaryId']: string;
-};
+}
+
+export interface CreateBorrowerAccountParams extends BaseCreateAccountParams {
+  borrowerId: string;
+}
+
+export interface CreateIntermediaryAccountParams extends BaseCreateAccountParams {
+  intermediaryId: string;
+}
+
+export type CreateAccountParams = CreateBorrowerAccountParams | CreateIntermediaryAccountParams;
 
 export interface CreatePasswordValidationTokenResponseParams {
   passwordValidationToken: string
