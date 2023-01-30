@@ -12,7 +12,7 @@ export default class AuthApi {
     const [path, ...restArgs] = args;
 
     return this.apiClient.makeCall<Response>(
-      `/${this.reference}/${path}`,
+      `/${this.reference}${path}`,
       ...restArgs,
     );
   }

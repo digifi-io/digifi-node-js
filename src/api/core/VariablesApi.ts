@@ -12,7 +12,7 @@ export interface FindVariableParams {
   ids?: string[];
   systemName?: string;
   dependsOn?: string;
-  excludeArchived?: boolean;
+  includeArchived?: boolean;
   systemNames?: string[];
   stringFormat?: StringVisualDataType;
   numberFormat?: NumericVisualDataType;
@@ -94,9 +94,7 @@ class VariablesApi {
   ) {}
 
   public find(params: FindVariableParams): Promise<PaginationResult<Variable>> {
-    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
-
-    return this.apiClient.makeCall(`${this.path}/search?${urlSearchParams}`);
+    return this.apiClient.makeCall(`${this.path}/search`, 'PUT', params);
   }
 }
 
