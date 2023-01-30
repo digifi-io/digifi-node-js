@@ -49,6 +49,7 @@ export {
   default as ApplicationStatusesApi,
   ApplicationStatus,
   ApplicationStatusRule,
+  ApplicationStatusType,
 } from './ApplicationStatusesApi';
 export {
   default as BorrowerProfileCardsApi,
