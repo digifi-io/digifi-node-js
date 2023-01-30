@@ -5,11 +5,11 @@ import { SearchParams } from '../BaseSystemApi';
 
 export interface ProductCalculation {
   id: string;
-  code: string;
+  formula: string;
   productId: string;
   organizationId: string;
   organizationVersion: number | null;
-  requiredVariables: string[];
+  formulaRequiredVariables: string[];
   createdAt?: Date;
   updatedAt?: Date;
   variable: {
