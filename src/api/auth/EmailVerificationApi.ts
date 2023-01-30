@@ -1,11 +1,11 @@
-import { ApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
 import AuthApi, { AuthReference } from './AuthApi';
 
 class EmailVerificationApi extends AuthApi {
   protected path = '/email-verification'
 
-  constructor(apiClient: ApiClient, reference: AuthReference) {
+  constructor(apiClient: IApiClient, reference: AuthReference) {
     super(apiClient, reference);
   }
 
