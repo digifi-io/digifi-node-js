@@ -30,6 +30,6 @@ export default class ProductCalculationsApi {
   public find(productId: string): Promise<ProductCalculation[]> {
     const queryParams = getSearchParams({ productId } as Record<string, string>);
 
-    return this.apiClient.makeCall<ProductCalculation[]>(`/${this.path}/?${queryParams}`);
+    return this.apiClient.makeCall<ProductCalculation[]>(`${this.path}/?${queryParams}`);
   }
 }
