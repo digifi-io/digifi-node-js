@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "form-data": "^4.0.0",
-    "node-fetch": "^3.3.0",
+    "node-fetch": "^2.6.8",
     "retry": "^0.13.1",
     "uuid": "^9.0.0"
   },
