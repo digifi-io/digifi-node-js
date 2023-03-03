@@ -2,10 +2,7 @@ import { IApiClient } from '../clients';
 import { PaginationResult } from '../types';
 import getSearchParams from '../utils/getSearchParams';
 
-type SearchPrimitiveValue = string | boolean | number | undefined;
-type SearchValue = SearchPrimitiveValue | Array<string>;
-
-export type SearchParams = Record<string, SearchValue> | Array<string[]>;
+export type SearchParams = Record<string, unknown> | Array<string[]>;
 
 export abstract class BaseSystemApi<Resource, FindParams = undefined> {
   protected path = '';

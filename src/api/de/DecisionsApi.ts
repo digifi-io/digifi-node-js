@@ -51,26 +51,6 @@ class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
   public find(params: FindDecisionsParams): Promise<PaginationResult<Decision>> {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
-    if (params.teamMembersIds) {
-      params.teamMembersIds.forEach((teamMemberId) => urlSearchParams.append('teamMembersIds', teamMemberId));
-    }
-
-    if (params.resultStatuses) {
-      params.resultStatuses.forEach((resultStatus) => urlSearchParams.append('resultStatuses', resultStatus));
-    }
-
-    if (params.applicationId) {
-      urlSearchParams.append('applicationId', params.applicationId);
-    }
-
-    if (params.createdAtFrom) {
-      urlSearchParams.append('createdAtFrom', params.createdAtFrom.toString());
-    }
-
-    if (params.createdAtTo) {
-      urlSearchParams.append('createdAtTo', params.createdAtTo.toString());
-    }
-
     return this.apiClient.makeCall<PaginationResult<Decision>>(
       `${this.path}?${urlSearchParams}`,
     );

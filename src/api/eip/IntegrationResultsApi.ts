@@ -32,26 +32,6 @@ class IntegrationResultsApi {
   public find(params: FindIntegrationResultParams): Promise<PaginationResult<CompactIntegrationResult>> {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
-    if (params.integrationId) {
-      urlSearchParams.append('integrationId', params.integrationId);
-    }
-
-    if (params.applicationDisplayId) {
-      urlSearchParams.append('applicationDisplayId', params.applicationDisplayId);
-    }
-
-    if (params.createdAtFrom) {
-      urlSearchParams.append('createdAtFrom', params.createdAtFrom.toString());
-    }
-
-    if (params.createdAtTo) {
-      urlSearchParams.append('createdAtTo', params.createdAtTo.toString());
-    }
-
-    if (params.teamMembersIds) {
-      params.teamMembersIds.forEach((teamMemberId) => urlSearchParams.append('teamMembersIds', teamMemberId));
-    }
-
     return this.apiClient.makeCall<PaginationResult<CompactIntegrationResult>>(
       `${this.path}?${urlSearchParams}`,
     );
