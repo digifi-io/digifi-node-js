@@ -17,6 +17,10 @@ export interface ApplicationDecisionResult {
   strategyId: string;
   decisionId: string;
   strategyName: string;
+  /**
+   * @deprecated Available only for legacy strategies. (use strategyName for new ones)
+   */
+  strategyDisplayName?: string;
   organizationId: string;
   inputs: Record<string, VariableValue>;
   outputs: Record<string, VariableValue>;

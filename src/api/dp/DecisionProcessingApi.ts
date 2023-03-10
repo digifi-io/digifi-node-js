@@ -6,7 +6,10 @@ export interface ProcessDecisionsParams {
   decisionName?: string;
   applicationId?: string;
   decisionClientId?: string;
-  ignoreUndefined?: boolean;
+  /**
+   * This field is replacement for ignoreUndefined field
+   */
+  filterAndPopulateStrategyInputs?: boolean;
   returnOnlyPassed?: boolean;
   commonInputs?: Record<string, VariableValue>;
   decisions: Array<{
@@ -75,6 +78,10 @@ export interface DecisionResult {
   strategyId: string;
   decision: string;
   strategyName: string;
+  /**
+   * @deprecated Available only for legacy strategies. (use strategyName for new ones)
+   */
+  strategyDisplayName?: string;
   organizationId: string;
   modules: DecisionResultCompiledModuleInfo[];
   modulesProcessingResults: StrategyModuleProcessingResult[];
