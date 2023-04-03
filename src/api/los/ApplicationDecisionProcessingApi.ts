@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { DecisionRunResult } from '../../enums';
 import { UserBasic, VariableValue } from '../../types';
 
@@ -17,6 +17,10 @@ export interface ApplicationDecisionResult {
   strategyId: string;
   decisionId: string;
   strategyName: string;
+  /**
+   * @deprecated Available only for legacy strategies. (use strategyName for new ones)
+   */
+  strategyDisplayName?: string;
   organizationId: string;
   inputs: Record<string, VariableValue>;
   outputs: Record<string, VariableValue>;
@@ -47,7 +51,7 @@ class ApplicationDecisionProcessingApi {
   protected path = '/application-decision-processing';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public makeDecision(params: MakeDecisionParams): Promise<ApplicationDecision> {

@@ -1,12 +1,15 @@
 import { UserBasic, VariableValue } from '../../types';
 import { DecisionRunResult } from '../../enums';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 
 export interface ProcessDecisionsParams {
   decisionName?: string;
   applicationId?: string;
   decisionClientId?: string;
-  ignoreUndefined?: boolean;
+  /**
+   * This field is replacement for ignoreUndefined field
+   */
+  filterAndPopulateStrategyInputs?: boolean;
   returnOnlyPassed?: boolean;
   commonInputs?: Record<string, VariableValue>;
   decisions: Array<{
@@ -75,6 +78,10 @@ export interface DecisionResult {
   strategyId: string;
   decision: string;
   strategyName: string;
+  /**
+   * @deprecated Available only for legacy strategies. (use strategyName for new ones)
+   */
+  strategyDisplayName?: string;
   organizationId: string;
   modules: DecisionResultCompiledModuleInfo[];
   modulesProcessingResults: StrategyModuleProcessingResult[];
@@ -106,7 +113,7 @@ class DecisionProcessingApi {
   protected path = '/decision-processing';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public async runDecisions(options: ProcessDecisionsParams): Promise<RunDecisionsResponse> {

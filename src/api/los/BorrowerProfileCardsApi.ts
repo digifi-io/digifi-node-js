@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { BorrowerType } from '../../enums';
 import { VariableConfiguration, Card } from '../../data/models';
 import getSearchParams from '../../utils/getSearchParams';
@@ -17,7 +17,7 @@ class BorrowerProfileCardsApi {
   protected path = '/borrower-profile-cards';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(borrowerType?: BorrowerType): Promise<BorrowerProfileCard[]> {

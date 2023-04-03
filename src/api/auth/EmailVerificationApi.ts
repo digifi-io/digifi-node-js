@@ -1,15 +1,16 @@
-import { AuthApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
+import AuthApi, { AuthReference } from './AuthApi';
 
-class EmailVerificationApi {
+class EmailVerificationApi extends AuthApi {
   protected path = '/email-verification'
 
-  constructor(
-    private apiClient: AuthApiClient,
-  ) {}
+  constructor(apiClient: IApiClient, reference: AuthReference) {
+    super(apiClient, reference);
+  }
 
   public sendVerificationEmail(accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', undefined, {
+    return this.makeAuthCall(`${this.path}`, 'POST', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -17,7 +18,7 @@ class EmailVerificationApi {
   }
 
   public verifyEmail(code: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/${code}`, 'PUT', undefined, {
+    return this.makeAuthCall(`${this.path}/${code}`, 'PUT', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),

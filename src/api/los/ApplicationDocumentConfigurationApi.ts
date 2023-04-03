@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { FormulaCondition } from '../../data/models';
 import getSearchParams from '../../utils/getSearchParams';
 
@@ -20,10 +20,10 @@ class ApplicationDocumentConfigurationApi {
   protected path = '/application-document-configurations';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
-  public find(productId?: string): Promise<ApplicationDocumentConfiguration[]> {
+  public find(productId: string): Promise<ApplicationDocumentConfiguration[]> {
     const urlSearchParams = getSearchParams({ productId } as Record<string, string>);
 
     return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);

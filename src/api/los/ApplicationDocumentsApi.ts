@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import FormData from 'form-data';
 import { UserShort } from '../../types';
 import { BaseSystemApi } from '../BaseSystemApi';
@@ -79,7 +79,7 @@ export interface CreateApplicationDocumentFolderParams {
 export default class ApplicationDocumentsApi extends BaseSystemApi<ApplicationDocument, FindApplicationDocumentsParams > {
   protected path = 'application-documents';
 
-  constructor(protected apiClient: AuthorizedApiClient) {
+  constructor(protected apiClient: IApiClient) {
     super(apiClient);
   }
 

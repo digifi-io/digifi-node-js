@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { Card, VariableConfiguration } from '../../data/models';
 import getSearchParams from '../../utils/getSearchParams';
 
@@ -12,7 +12,7 @@ class ApplicationDetailsCardsApi {
   protected path = '/application-details-cards';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(productId?: string): Promise<ApplicationDetailsCard[]> {

@@ -86,9 +86,9 @@ export default class IntermediariesApi extends SystemApi<
     return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/suggestions?${queryParams}`);
   }
 
-  public bulkUpload(intermediariesToUpload: CreateIntermediaryParams[]): Promise<Intermediary[]> {
+  public createMany(intermediaries: CreateIntermediaryParams[]): Promise<Intermediary[]> {
     return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/bulk`, 'POST', {
-      intermediaries: intermediariesToUpload,
+      intermediaries: intermediaries,
     });
   }
 }

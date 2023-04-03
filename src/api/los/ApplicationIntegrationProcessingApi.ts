@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { VariableValue } from '../../types';
 import { ExternalIntegrationResultType } from '../../enums';
 
@@ -25,7 +25,7 @@ class ApplicationIntegrationProcessingApi {
   protected path = '/application-integration-processing';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public processIntegration(params: ProcessApplicationIntegrationParams): Promise<ExternalIntegrationProcessingResult> {

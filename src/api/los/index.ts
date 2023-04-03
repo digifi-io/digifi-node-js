@@ -49,6 +49,7 @@ export {
   default as ApplicationStatusesApi,
   ApplicationStatus,
   ApplicationStatusRule,
+  ApplicationStatusType,
 } from './ApplicationStatusesApi';
 export {
   default as BorrowerProfileCardsApi,
@@ -84,7 +85,6 @@ export {
 } from './IntermediariesApi';
 export {
   default as ProductCalculationsApi,
-  GetProductCalculationsParams,
   ProductCalculation,
 } from './ProductCalculationsApi';
 export {

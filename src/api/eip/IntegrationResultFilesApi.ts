@@ -1,5 +1,5 @@
 import { UserBasic } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import FormData from 'form-data';
 
 export interface CompactIntegrationFile {
@@ -33,7 +33,7 @@ export interface IntegrationResultFileParams {
 class IntegrationResultFilesApi {
   protected path = '/integration-result-files';
 
-  constructor(protected apiClient: AuthorizedApiClient) {}
+  constructor(protected apiClient: IApiClient) {}
 
   public uploadMany(integrationResultId: string, files: IntegrationResultFileParams[]): Promise<IntegrationFile[]> {
     const formData = new FormData();

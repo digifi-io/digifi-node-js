@@ -1,4 +1,4 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { VariableAccessPermission, VariableType } from '../../enums';
 import { VisualDataType } from '../../data/models';
 import { PermissionGroupId, UserShortInfo, PaginationResult } from '../../types';
@@ -12,7 +12,7 @@ export interface FindVariableParams {
   ids?: string[];
   systemName?: string;
   dependsOn?: string;
-  excludeArchived?: boolean;
+  includeArchived?: boolean;
   systemNames?: string[];
   stringFormat?: StringVisualDataType;
   numberFormat?: NumericVisualDataType;
@@ -90,13 +90,11 @@ class VariablesApi {
   protected path = '/variables'
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(params: FindVariableParams): Promise<PaginationResult<Variable>> {
-    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
-
-    return this.apiClient.makeCall(`${this.path}/search?${urlSearchParams}`);
+    return this.apiClient.makeCall(`${this.path}/search`, 'PUT', params);
   }
 }
 

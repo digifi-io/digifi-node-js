@@ -46,7 +46,7 @@ export type Comment = {
 
 export interface CreateCommentParams {
   message: string;
-  referenceI: string;
+  referenceId: string;
   referenceType: CommentReferenceType;
   authorId: string;
   authorType: CommentAuthorType.Borrower | CommentAuthorType.Intermediary;

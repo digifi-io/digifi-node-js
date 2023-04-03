@@ -10,6 +10,7 @@ import {
 } from '../../types';
 import { CreateIntermediaryParams } from './IntermediariesApi';
 import { BorrowerType, SortDirection } from '../../enums';
+import { ApplicationStatusType } from './ApplicationStatusesApi';
 
 export enum ApplicationDefaultVariable {
   LoanAmount = 'loan_amount',
@@ -26,6 +27,7 @@ export interface Application {
     permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
     permissionGroupsToEditApplication: ApplicationStatusPermissions;
     permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
+    type: ApplicationStatusType;
     archivedAt?: Date;
   };
   borrowerId: string;

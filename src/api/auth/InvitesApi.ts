@@ -1,5 +1,6 @@
-import { AuthApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { AuthResponseParams } from '../../types';
+import AuthApi, { AuthReference } from './AuthApi';
 
 export type GetInviteInfoResponseParams = {
   accountId: string;
@@ -7,15 +8,15 @@ export type GetInviteInfoResponseParams = {
   [key in 'borrowerId' | 'intermediaryId']: string;
 };
 
-class InvitesApi {
+class InvitesApi extends AuthApi {
   protected path = '/invites'
 
-  constructor(
-    private apiClient: AuthApiClient,
-  ) {}
+  constructor(apiClient: IApiClient, reference: AuthReference) {
+    super(apiClient, reference);
+  }
 
   public acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}/${token}`, 'POST', {
+    return this.makeAuthCall(`${this.path}/${token}`, 'POST', {
       password,
       phone,
       refreshTokenExpirationTimeMinutes,
@@ -23,7 +24,7 @@ class InvitesApi {
   }
 
   public getInviteInfo(token: string): Promise<GetInviteInfoResponseParams>{
-    return this.apiClient.makeCall(`${this.path}/${token}`);
+    return this.makeAuthCall(`${this.path}/${token}`);
   }
 }
 

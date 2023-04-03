@@ -1,8 +1,9 @@
-import { AuthApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { Headers } from 'node-fetch';
 import { AuthResponseParams } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 import { SearchParams } from '../BaseSystemApi';
+import AuthApi, { AuthReference } from './AuthApi';
 
 export enum AccountStatus {
   Active = 'active',
@@ -28,13 +29,21 @@ export type BaseAccountInfo = {
   [key in string]: string;
 }
 
-export type CreateAccountParams = {
+interface BaseCreateAccountParams {
   email: string;
   phone?: string;
   password?: string;
-} & {
-  [key in 'borrowerId' | 'intermediaryId']: string;
-};
+}
+
+export interface CreateBorrowerAccountParams extends BaseCreateAccountParams {
+  borrowerId: string;
+}
+
+export interface CreateIntermediaryAccountParams extends BaseCreateAccountParams {
+  intermediaryId: string;
+}
+
+export type CreateAccountParams = CreateBorrowerAccountParams | CreateIntermediaryAccountParams;
 
 export interface CreatePasswordValidationTokenResponseParams {
   passwordValidationToken: string
@@ -48,23 +57,23 @@ export type FindAccountsParams = {
   [key in 'borrowerIds' | 'intermediaryIds']?: string[];
 }
 
-class AccountsApi {
+class AccountsApi extends AuthApi {
   protected path = '/accounts';
 
-  constructor(
-    private apiClient: AuthApiClient,
-  ) {}
+  constructor(apiClient: IApiClient, reference: AuthReference) {
+    super(apiClient, reference);
+  }
 
   public findAccountByEmail(email: string): Promise<BaseAccountInfo> {
-    return this.apiClient.makeCall(`${this.path}/${email}`);
+    return this.makeAuthCall(`${this.path}/${email}`);
   }
 
   public createAccount(params: CreateAccountParams, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
-    return this.apiClient.makeCall(`${this.path}`, 'POST', { ...params, refreshTokenExpirationTimeMinutes });
+    return this.makeAuthCall(`${this.path}`, 'POST', { ...params, refreshTokenExpirationTimeMinutes });
   }
 
   public getCurrentUser(accountAccessToken: string): Promise<BaseAccountInfo> {
-    return this.apiClient.makeCall(`${this.path}`, 'GET', undefined, {
+    return this.makeAuthCall(`${this.path}`, 'GET', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -72,7 +81,7 @@ class AccountsApi {
   }
 
   public sendUpdatePhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/phone`, 'PUT', { phone }, {
+    return this.makeAuthCall(`${this.path}/phone`, 'PUT', { phone }, {
       headers: new Headers({
         accountAccessToken,
         accountPasswordValidationToken,
@@ -81,7 +90,7 @@ class AccountsApi {
   }
 
   public updatePhoneNumber(code: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/phone/${code}`, 'PUT', undefined, {
+    return this.makeAuthCall(`${this.path}/phone/${code}`, 'PUT', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -89,7 +98,7 @@ class AccountsApi {
   }
 
   public sendAddPhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/phone`, 'POST', { phone }, {
+    return this.makeAuthCall(`${this.path}/phone`, 'POST', { phone }, {
       headers: new Headers({
         accountAccessToken,
         accountPasswordValidationToken,
@@ -98,7 +107,7 @@ class AccountsApi {
   }
 
   public addPhoneNumber(code: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/phone/${code}`, 'POST', undefined, {
+    return this.makeAuthCall(`${this.path}/phone/${code}`, 'POST', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -106,7 +115,7 @@ class AccountsApi {
   }
 
   public deletePhoneNumber(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/delete-phone`, 'PUT', { phone }, {
+    return this.makeAuthCall(`${this.path}/delete-phone`, 'PUT', { phone }, {
       headers: new Headers({
         accountAccessToken,
         accountPasswordValidationToken,
@@ -115,7 +124,7 @@ class AccountsApi {
   }
 
   public sendUpdateEmailCode(email: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/email`, 'PUT', { email }, {
+    return this.makeAuthCall(`${this.path}/email`, 'PUT', { email }, {
       headers: new Headers({
         accountAccessToken,
         accountPasswordValidationToken,
@@ -124,7 +133,7 @@ class AccountsApi {
   }
 
   public updateEmailAddress(code: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/email/${code}`, 'PUT', undefined, {
+    return this.makeAuthCall(`${this.path}/email/${code}`, 'PUT', undefined, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -132,7 +141,7 @@ class AccountsApi {
   }
 
   public createPasswordValidationToken(password: string, accountAccessToken: string): Promise<CreatePasswordValidationTokenResponseParams> {
-    return this.apiClient.makeCall(`${this.path}/password-validation-token`, 'POST', { password }, {
+    return this.makeAuthCall(`${this.path}/password-validation-token`, 'POST', { password }, {
       headers: new Headers({
         accountAccessToken,
       }),
@@ -140,7 +149,7 @@ class AccountsApi {
   }
 
   public updatePassword(oldPassword: string, newPassword: string, accountAccessToken: string): Promise<void> {
-    return this.apiClient.makeCall(`${this.path}/password`, 'PUT', {
+    return this.makeAuthCall(`${this.path}/password`, 'PUT', {
       oldPassword,
       newPassword,
     }, {
@@ -153,7 +162,7 @@ class AccountsApi {
   public find(params: FindAccountsParams): Promise<BaseAccountInfo[]> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.apiClient.makeCall(`/${this.path}/search?${urlSearchParams}`);
+    return this.makeAuthCall(`/${this.path}/search?${urlSearchParams}`);
   }
 }
 

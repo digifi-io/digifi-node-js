@@ -1,25 +1,15 @@
-import { DocumentsDownloadsApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
+import { DownloadApi, DownloadResponse } from '../base';
 
-export interface IntegrationDocumentDownloadResponse {
-  file: ArrayBuffer;
-  filename: string;
-}
-
-class IntegrationFileDownloadApi {
-  private fileNameFromHeadersPattern = /filename="([^"]+)"/;
-
+class IntegrationFileDownloadApi extends DownloadApi {
   protected path = '/integration-file-download';
 
-  constructor(
-    protected apiClient: DocumentsDownloadsApiClient,
-  ) {}
+  constructor(apiClient: IApiClient) {
+    super(apiClient);
+  }
 
-  public async findById(id: string): Promise<IntegrationDocumentDownloadResponse> {
-    const response = await this.apiClient.makeCall<Response>(`/${this.path}/${id}`);
-
-    const [, filename] = response.headers.get('content-disposition')?.match(this.fileNameFromHeadersPattern) || [];
-
-    return { file: await response.arrayBuffer(), filename };
+  public async downloadById(id: string): Promise<DownloadResponse> {
+    return this.downloadById(`/${this.path}/${id}`);
   }
 }
 

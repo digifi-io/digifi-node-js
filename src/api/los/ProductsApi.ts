@@ -2,7 +2,7 @@ import { BorrowerType } from '../../enums';
 import { UserShort } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 import { SearchParams } from '../BaseSystemApi';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 
 export enum ProductType {
   Custom = 'custom',
@@ -85,7 +85,7 @@ export default class ProductsApi {
   protected path = 'products';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public async find(params: FindProductsParams): Promise<Product[]> {

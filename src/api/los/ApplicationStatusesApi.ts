@@ -1,7 +1,14 @@
 import { ApplicationStatusPermissions } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import getSearchParams from '../../utils/getSearchParams';
 import { FormulaCondition } from '../../data/models';
+
+export enum ApplicationStatusType {
+  Custom = 'custom',
+  Initial = 'initial',
+  Approve = 'approve',
+  Reject = 'reject',
+}
 
 export interface ApplicationStatusRule {
   id: string;
@@ -21,11 +28,13 @@ export interface ApplicationStatus {
   organizationVersion: number | null;
   position: number;
   name: string;
+  type: ApplicationStatusType;
   permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
   permissionGroupsToEditApplication: ApplicationStatusPermissions;
   permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
   createdAt?: Date;
   updatedAt?: Date;
+  archivedAt?: Date;
   rules: ApplicationStatusRule[];
 }
 
@@ -33,7 +42,7 @@ export default class ApplicationStatusesApi {
   protected path = '/application-statuses';
 
   constructor(
-    private apiClient: AuthorizedApiClient,
+    private apiClient: IApiClient,
   ) {}
 
   public find(productId: string): Promise<ApplicationStatus[]> {

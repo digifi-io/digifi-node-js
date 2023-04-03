@@ -1,5 +1,5 @@
 import { VariableValue } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { IntegrationResult } from '../../data/models';
 
 export interface ProcessIntegrationParams {
@@ -12,7 +12,7 @@ export interface ProcessIntegrationParams {
 class IntegrationProcessingApi {
   protected path = '/integration-processing';
 
-  constructor(protected apiClient: AuthorizedApiClient) {}
+  constructor(protected apiClient: IApiClient) {}
 
   public processIntegration(params: ProcessIntegrationParams): Promise<IntegrationResult> {
     return this.apiClient.makeCall<IntegrationResult>(

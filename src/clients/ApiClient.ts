@@ -39,7 +39,7 @@ export interface ApiClientOptions {
 
 export interface IApiClient {
   makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
-    url: string,
+    path: string,
     method?: HTTP_METHOD,
     body?: ReqBody,
     options?: Partial<FetchOptions>,
@@ -62,7 +62,7 @@ class ApiClient implements IApiClient {
   }
 
   public async makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
-    url: string,
+    path: string,
     method: HTTP_METHOD = 'GET',
     body?: ReqBody,
     options: Partial<FetchOptions> = {},
@@ -76,7 +76,7 @@ class ApiClient implements IApiClient {
     });
 
     return this.makeFetchWithRetries(
-      `${this.baseUrl}${url}`,
+      `${this.baseUrl}${path}`,
       { method, headers, body: this.stringifyBody(body) },
     );
   }

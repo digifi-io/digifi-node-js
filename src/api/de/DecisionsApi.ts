@@ -1,5 +1,5 @@
 import { PaginationParams, PaginationResult, UserBasic } from '../../types';
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import { BaseSystemApi, SearchParams } from '../BaseSystemApi';
 import { DecisionRunResult, ExecutionSource } from '../../enums';
 import getSearchParams from '../../utils/getSearchParams';
@@ -44,32 +44,12 @@ export interface FindDecisionsParams extends PaginationParams<DecisionsSortField
 class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
   protected path = '/decisions';
 
-  constructor(protected apiClient: AuthorizedApiClient) {
+  constructor(protected apiClient: IApiClient) {
     super(apiClient);
   }
 
   public find(params: FindDecisionsParams): Promise<PaginationResult<Decision>> {
     const urlSearchParams = getSearchParams(params as SearchParams);
-
-    if (params.teamMembersIds) {
-      params.teamMembersIds.forEach((teamMemberId) => urlSearchParams.append('teamMembersIds', teamMemberId));
-    }
-
-    if (params.resultStatuses) {
-      params.resultStatuses.forEach((resultStatus) => urlSearchParams.append('resultStatuses', resultStatus));
-    }
-
-    if (params.applicationId) {
-      urlSearchParams.append('applicationId', params.applicationId);
-    }
-
-    if (params.createdAtFrom) {
-      urlSearchParams.append('createdAtFrom', params.createdAtFrom.toString());
-    }
-
-    if (params.createdAtTo) {
-      urlSearchParams.append('createdAtTo', params.createdAtTo.toString());
-    }
 
     return this.apiClient.makeCall<PaginationResult<Decision>>(
       `${this.path}?${urlSearchParams}`,

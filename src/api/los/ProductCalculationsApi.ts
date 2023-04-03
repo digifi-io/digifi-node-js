@@ -1,15 +1,15 @@
-import { AuthorizedApiClient } from '../../clients';
+import { IApiClient } from '../../clients';
 import getSearchParams from '../../utils/getSearchParams';
 import { VariableType } from '../../enums';
 import { SearchParams } from '../BaseSystemApi';
 
 export interface ProductCalculation {
   id: string;
-  code: string;
+  formula: string;
   productId: string;
   organizationId: string;
   organizationVersion: number | null;
-  requiredVariables: string[];
+  formulaRequiredVariables: string[];
   createdAt?: Date;
   updatedAt?: Date;
   variable: {
@@ -20,22 +20,16 @@ export interface ProductCalculation {
   };
 }
 
-export interface GetProductCalculationsParams {
-  productId?: string;
-  variable?: string;
-  search?: string;
-}
-
 export default class ProductCalculationsApi {
   protected path = '/product-calculations';
 
   constructor(
-    protected apiClient: AuthorizedApiClient,
+    protected apiClient: IApiClient,
   ) {}
 
-  public getProductCalculations(params?: GetProductCalculationsParams): Promise<ProductCalculation[]> {
-    const queryParams = getSearchParams((params || {}) as SearchParams);
+  public find(productId: string): Promise<ProductCalculation[]> {
+    const queryParams = getSearchParams({ productId } as Record<string, string>);
 
-    return this.apiClient.makeCall<ProductCalculation[]>(`/${this.path}/?${queryParams}`);
+    return this.apiClient.makeCall<ProductCalculation[]>(`${this.path}/?${queryParams}`);
   }
 }
