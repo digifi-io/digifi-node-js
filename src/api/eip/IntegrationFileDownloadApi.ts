@@ -9,7 +9,7 @@ class IntegrationFileDownloadApi extends DownloadApi {
   }
 
   public async downloadById(id: string): Promise<DownloadResponse> {
-    return this.downloadById(`/${this.path}/${id}`);
+    return this.download(`/${this.path}/${id}`);
   }
 }
 
