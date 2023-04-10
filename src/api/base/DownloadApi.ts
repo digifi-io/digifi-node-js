@@ -1,4 +1,5 @@
 import { IApiClient } from '../../clients';
+import { Headers } from 'node-fetch';
 
 export interface DownloadResponse {
   file: ArrayBuffer;
@@ -13,7 +14,11 @@ export default abstract class DownloadApi {
   ) {}
 
   protected async download(path: string): Promise<DownloadResponse> {
-    const response = await this.apiClient.makeCall<Response>(path);
+    const headers = new Headers();
+
+    headers.set('responseType', 'arraybuffer');
+
+    const response = await this.apiClient.makeCall<Response>(path, 'GET', undefined, { headers });
 
     const [, filename] = response.headers.get('content-disposition')?.match(this.fileNameFromHeadersPattern) || [];
 
