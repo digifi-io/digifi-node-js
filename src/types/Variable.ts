@@ -1,6 +1,7 @@
 export enum AddressValueKey {
   StreetName = 'street_name',
   StreetNumber = 'street_number',
+  UnitNumber = 'unit_number',
   Sublocality = 'sublocality',
   City = 'city',
   StateOrProvince = 'state_or_province',
@@ -11,6 +12,7 @@ export enum AddressValueKey {
 export interface AddressValue {
   [AddressValueKey.StreetNumber]?: string;
   [AddressValueKey.StreetName]?: string;
+  [AddressValueKey.UnitNumber]?: string;
   [AddressValueKey.Sublocality]?: string;
   [AddressValueKey.City]?: string;
   [AddressValueKey.StateOrProvince]?: string;

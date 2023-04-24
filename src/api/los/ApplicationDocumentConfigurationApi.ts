@@ -7,7 +7,7 @@ export interface ApplicationDocumentConfiguration {
   name: string;
   productId: string;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   position: number;
   required?: boolean;
   folderId?: string | null;

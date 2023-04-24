@@ -60,7 +60,7 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   settings: ProductSettings;
   updatedBy?: UserShort | null;
   createdBy?: UserShort | null;

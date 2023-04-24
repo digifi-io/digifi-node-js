@@ -2,8 +2,6 @@ import { IApiClient } from '../../clients';
 import { VariableAccessPermission, VariableType } from '../../enums';
 import { VisualDataType } from '../../data/models';
 import { PermissionGroupId, UserShortInfo, PaginationResult } from '../../types';
-import getSearchParams from '../../utils/getSearchParams';
-import { SearchParams } from '../BaseSystemApi';
 
 export interface FindVariableParams {
   onlyStandard?: boolean;
@@ -46,23 +44,19 @@ export interface BasicVariable {
   name: string;
   systemName: string;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   isArchived: boolean;
   dataType: VariableType;
-  stringFormat?: StringVisualDataType | null;
-  numberFormat?: NumericVisualDataType | null;
+  visualDataType: VisualDataType;
 }
 
 export interface VariableVisualAttributes {
-  dataType: VariableType;
-  dateFormat?: string | null;
-  numberFormat?: NumericVisualDataType | null;
-  stringFormat?: StringVisualDataType | null;
-  phoneNumberFormat?: string | null;
-  identificationNumberType?: string | null;
+  dateFormat?: string;
+  currency?: string;
+  phoneNumberFormat?: string;
+  optionsList?: string[];
+  identificationNumberType?: string;
   identificationNumberDescription?: string | null;
-  optionsList?: string[] | null;
-  currency?: string | null;
   maxAllowedValue?: string | null;
   minAllowedValue?: string | null;
 }
@@ -72,8 +66,9 @@ export type VariablePermissions = Record<
   VariableAccessPermission
 >;
 
-export type BasicVariableWithVisualAttributes = BasicVariable & VariableVisualAttributes & {
+export type BasicVariableWithVisualAttributes = BasicVariable & {
   permissions: VariablePermissions;
+  visualAttributes: VariableVisualAttributes;
 }
 
 export interface Variable extends BasicVariableWithVisualAttributes {

@@ -6,7 +6,7 @@ export interface RawCard {
   position: number;
   row: number;
   organizationId: string;
-  organizationVersion: number | null,
+  organizationVersion: number,
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -7,7 +7,7 @@ export interface VariableConfiguration {
   column: number;
   cardId: string;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   required?: boolean;
   default?: boolean;
   conditionalDisplayRule?: FormulaCondition | null;
