@@ -14,7 +14,7 @@ export interface ApplicationStatusRule {
   id: string;
   statusId: string;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   productId: string;
   condition: FormulaCondition;
   createdAt?: Date;
@@ -25,7 +25,7 @@ export interface ApplicationStatus {
   id: string;
   productId: string;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   position: number;
   name: string;
   type: ApplicationStatusType;

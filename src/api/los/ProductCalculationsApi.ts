@@ -6,9 +6,12 @@ import { SearchParams } from '../BaseSystemApi';
 export interface ProductCalculation {
   id: string;
   formula: string;
+  formulaCompilation?: string;
+  formulaCompilationVersion?: number;
+  compressionApplied?: boolean;
   productId: string;
   organizationId: string;
-  organizationVersion: number | null;
+  organizationVersion: number;
   formulaRequiredVariables: string[];
   createdAt?: Date;
   updatedAt?: Date;

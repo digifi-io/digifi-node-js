@@ -52,7 +52,7 @@ export interface Application {
     id: string;
     name: string;
     organizationId: string;
-    organizationVersion: number | null;
+    organizationVersion: number;
     borrowerTypes: BorrowerType[];
   };
   testing?: boolean;
