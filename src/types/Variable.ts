@@ -20,5 +20,9 @@ export interface AddressValue {
   [AddressValueKey.Country]?: string;
 }
 
+export type TableRowValue = Record<string, BasicVariableValue>;
+export type TableValue = TableRowValue[];
 
-export type VariableValue = number | string | boolean | AddressValue | null | undefined;
+export type BasicVariableValue = number | string | boolean | AddressValue | null | undefined;
+export type ComplexVariableValue = TableValue;
+export type VariableValue = BasicVariableValue | ComplexVariableValue;

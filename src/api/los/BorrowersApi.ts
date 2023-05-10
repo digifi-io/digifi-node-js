@@ -2,7 +2,7 @@ import { SystemApi } from '../SystemApi';
 import { VariableValue, UserShort, SearchHighlight, PaginationResult, PaginationParams } from '../../types';
 import { BorrowerType } from '../../enums';
 
-export enum BorrowerDefaultValue {
+export enum BorrowerDefaultVariable {
   FirstName = 'borrower_first_name',
   LastName = 'borrower_last_name',
   CompanyName = 'borrower_company_name',

@@ -1,6 +1,6 @@
 import { IApiClient } from '../../clients';
 import { DecisionRunResult } from '../../enums';
-import { UserBasic, VariableValue } from '../../types';
+import { UserBasic, VariableValue, BasicVariableValue } from '../../types';
 
 export interface MakeDecisionParams {
   strategyId: string;
@@ -23,7 +23,7 @@ export interface ApplicationDecisionResult {
   strategyDisplayName?: string;
   organizationId: string;
   inputs: Record<string, VariableValue>;
-  outputs: Record<string, VariableValue>;
+  outputs: Record<string, BasicVariableValue>;
   passed: boolean;
   errorMessages: string[];
   declineReasons: string[];

@@ -1,6 +1,6 @@
 import { SystemApi } from '../SystemApi';
 import { BorrowerType } from '../../enums';
-import { VariableValue, UserShort } from '../../types';
+import { BasicVariableValue, UserShort } from '../../types';
 
 export enum CommentReferenceType {
   Task = 'task',
@@ -15,12 +15,12 @@ export enum CommentAuthorType {
 interface BorrowerCommentAuthor {
   id: string;
   type: BorrowerType;
-  variables: Record<string, VariableValue>;
+  variables: Record<string, BasicVariableValue>;
 }
 
 interface IntermediaryCommentAuthor {
   id: string;
-  variables: Record<string, VariableValue>;
+  variables: Record<string, BasicVariableValue>;
 }
 
 export type Comment = {

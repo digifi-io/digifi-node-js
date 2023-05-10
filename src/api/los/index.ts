@@ -58,7 +58,7 @@ export {
 export {
   default as BorrowersApi,
   Borrower,
-  BorrowerDefaultValue,
+  BorrowerDefaultVariable,
   CreateBorrowerParams,
   UpdateBorrowerParams,
   FindBorrowersParams,
