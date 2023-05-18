@@ -214,7 +214,7 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `delete(id: string)` - [deletes application document](https://docs.digifi.io/reference/delete-application-document) by `id`.
 - `new ApplicationDocumentsDownloadsApi(apiClient: ApiClient)` - api service for application documents download.
   - `downloadById(id: string)` - [downloads application document](https://docs.digifi.io/reference/download-application-document) by id.
-  - `downloadAll(applicationId: string)` - [downloads all application documents](https://docs.digifi.io/reference/download-all-application-documents). 
+  - `downloadAll(applicationId: string, accessPermission?: ApplicationDocumentAccessPermission)` - [downloads all application documents](https://docs.digifi.io/reference/download-all-application-documents). 
 - `new ApplicationDocumentsPreviewApi(apiClient: ApiClient)` - api service for document preview management.
   - `createToken(documentId: string)` - [creates preview token for document](https://docs.digifi.io/reference/application-documents-preview) by `documentId`. 
 - `new ApplicationIntegrationProcessingApi(apiClient: ApiClient)` - api service for processing application integrations.
