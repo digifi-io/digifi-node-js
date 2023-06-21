@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import retry from 'retry';
 import FormData from 'form-data';
 import { ApiRequestError, NetworkError } from '../errors';
+import { ResponseHeader } from '../enums/ResponseHeader';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
@@ -24,6 +25,7 @@ export interface RequestMetadata {
   method: string;
   duration: number;
   statusCode: number;
+  requestId: string | null;
 }
 
 export interface ApiClientLogger {
@@ -35,6 +37,12 @@ export interface ApiClientOptions {
   enableIdempotencyHeader?: boolean;
   maxNetworkRetries?: number;
   logger?: ApiClientLogger;
+}
+
+interface MakeFetchOptions {
+  method: string;
+  headers: Headers;
+  body: string | FormData | undefined;
 }
 
 export interface IApiClient {
@@ -81,7 +89,7 @@ class ApiClient implements IApiClient {
     );
   }
 
-  protected makeFetchWithRetries<ResBody>(...args: Parameters<typeof fetch>) {
+  protected makeFetchWithRetries<ResBody>(url: string, options: MakeFetchOptions): Promise<ResBody> {
     const operation = retry.operation({
       retries: this.options?.maxNetworkRetries || this.defaultMaxNetworkRetries,
       factor: this.defaultRetryFactor,
@@ -91,7 +99,7 @@ class ApiClient implements IApiClient {
 
     return new Promise<ResBody>((resolve, reject) => {
       operation.attempt(() => {
-        this.makeFetch(...args)
+        this.makeFetch(url, options)
           .then(resolve as (value: unknown) => void)
           .catch((err) => {
             const shouldRetry = this.shouldRetry(err);
@@ -112,40 +120,41 @@ class ApiClient implements IApiClient {
     });
   }
 
-  protected async makeFetch(...args: Parameters<typeof fetch>) {
+  protected async makeFetch(url: string, options: MakeFetchOptions) {
     const startedAt = Date.now();
-    const [url, options] = args;
 
     try {
-      const response = await fetch(...args);
+      const response = await fetch(url, options);
+
+      await this.checkStatus(response as FetchResponse);
 
       this.options?.logger?.info({
         url: url.toString(),
         method: options?.method || 'GET',
         duration: Date.now() - startedAt,
         statusCode: response.status,
+        requestId: response.headers.get(ResponseHeader.RequestId),
       });
 
-      await this.checkStatus(response as FetchResponse);
-
-      if((options?.headers as Headers).get('responseType') === 'arraybuffer') {
+      if (options.headers.get('responseType') === 'arraybuffer') {
         return response;
       }
 
       return response.json();
-    } catch (err) {
-      if (err instanceof ApiRequestError) {
-        this.options?.logger?.error(err, {
+    } catch (error) {
+      if (error instanceof ApiRequestError) {
+        this.options?.logger?.error(error, {
           duration: Date.now() - startedAt,
           url: url.toString(),
           method: options?.method || 'GET',
-          statusCode: err.responseStatus,
+          statusCode: error.responseStatus,
+          requestId: error.requestId,
         });
 
-        throw err;
+        throw error;
       }
 
-      throw new NetworkError((err as NetworkError).message);
+      throw new NetworkError((error as NetworkError).message);
     }
   }
 
