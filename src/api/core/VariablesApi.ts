@@ -50,6 +50,16 @@ export interface BasicVariable {
   visualDataType: VisualDataType;
 }
 
+export interface TableColumn {
+  id: string;
+  name: string;
+  systemName: string;
+  dataType: VariableType;
+  visualDataType: VisualDataType;
+  visualAttributes: VariableVisualAttributes;
+  required?: boolean;
+}
+
 export interface VariableVisualAttributes {
   dateFormat?: string;
   currency?: string;
@@ -59,6 +69,7 @@ export interface VariableVisualAttributes {
   identificationNumberDescription?: string | null;
   maxAllowedValue?: string | null;
   minAllowedValue?: string | null;
+  columns?: TableColumn[];
 }
 
 export type VariablePermissions = Record<

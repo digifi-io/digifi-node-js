@@ -1,4 +1,4 @@
-import { UserBasic, VariableValue, BasicVariableValue } from '../../types';
+import { UserBasic, VariableValue } from '../../types';
 import { DecisionRunResult } from '../../enums';
 import { IApiClient } from '../../clients';
 
@@ -86,7 +86,7 @@ export interface DecisionResult {
   modules: DecisionResultCompiledModuleInfo[];
   modulesProcessingResults: StrategyModuleProcessingResult[];
   inputs: Record<string, VariableValue>;
-  outputs: Record<string, BasicVariableValue>;
+  outputs: Record<string, VariableValue>;
   passed: boolean;
   errorMessages: string[];
   declineReasons: string[];
