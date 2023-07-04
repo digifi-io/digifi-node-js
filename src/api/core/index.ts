@@ -9,4 +9,5 @@ export {
   VariableVisualAttributes,
   VariablePermissions,
   FindVariableParams,
+  TableColumn,
 } from './VariablesApi';

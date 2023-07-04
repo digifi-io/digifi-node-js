@@ -8,6 +8,7 @@ import {
   DateVisualDataType,
   VisualDataType,
   AddressVisualDataType,
+  TableVisualDataType,
 } from './Variable';
 import VariableConfiguration from './VariableConfiguration';
 import IntegrationResult, { CompactIntegrationResult } from './Integration';
@@ -24,6 +25,7 @@ export {
   DateVisualDataType,
   VisualDataType,
   AddressVisualDataType,
+  TableVisualDataType,
   IntegrationResult,
   CompactIntegrationResult,
 };

@@ -25,9 +25,14 @@ export enum AddressVisualDataType {
   Address = 'Address',
 }
 
+export enum TableVisualDataType {
+  Table = 'Table',
+}
+
 export type VisualDataType =
   | NumericVisualDataType
   | StringVisualDataType
   | BooleanVisualDataType
   | DateVisualDataType
-  | AddressVisualDataType;
+  | AddressVisualDataType
+  | TableVisualDataType;
