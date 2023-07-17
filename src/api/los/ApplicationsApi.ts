@@ -110,6 +110,8 @@ type VariableSimpleFilterValue = string | string[];
 export type VariableFilterValueQueryParam = VariableSimpleFilterValue | RangeQueryParam;
 export type VariableFilterParams = { [name: string]: VariableFilterValueQueryParam };
 
+export type BorrowerIdTarget = 'borrower' | 'coborrowers';
+
 export interface FindApplicationsParams extends PaginationParams<ApplicationSortField>{
   displayId?: string;
   statusIds?: string[];
@@ -133,6 +135,7 @@ export interface FindApplicationsParams extends PaginationParams<ApplicationSort
   sortByFields?: { [name: string]: SortDirection };
   sortByVariables?: { [name: string]: SortDirection };
   onlyInFinalStatus?: boolean;
+  borrowerIdTargets?: BorrowerIdTarget[];
 }
 
 interface DeleteCoBorrowerParams {
