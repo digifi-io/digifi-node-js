@@ -56,6 +56,7 @@ export interface DataIntegrationModuleProcessingResult extends BaseModuleProcess
   type: StrategyModuleType.DataIntegration;
   integrationId?: string;
   integrationProcessingResultId?: string;
+  rawResponse?: string;
   status?: string;
 }
 
