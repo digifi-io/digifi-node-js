@@ -9,4 +9,6 @@ export {
   ScoreModuleProcessingResult,
   DataIntegrationModuleProcessingResult,
   DecisionModuleProcessingResult,
+  DecisionResultCompiledModuleInfo,
+  StrategyModuleProcessingResult,
 } from './DecisionProcessingApi';
