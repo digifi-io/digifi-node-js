@@ -44,6 +44,7 @@ export {
   UpdateApplicationIntermediaryParams,
   UpdateApplicationCoBorrowersParams,
   RunApplicationCalculationsParams,
+  BorrowerIdTarget,
 } from './ApplicationsApi';
 export {
   default as ApplicationStatusesApi,
