@@ -5,6 +5,7 @@ import { ExternalIntegrationResultType } from '../../enums';
 export interface ProcessApplicationIntegrationParams {
   applicationId: string;
   integrationId: string;
+  returnRawResponse?: boolean;
 }
 
 export interface ExternalIntegrationProcessingResult {
