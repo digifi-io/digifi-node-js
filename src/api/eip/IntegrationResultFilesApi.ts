@@ -1,6 +1,20 @@
-import { UserBasic } from '../../types';
-import { IApiClient } from '../../clients';
 import FormData from 'form-data';
+import {PaginationParams, PaginationResult, UserBasic} from '../../types';
+import { IApiClient } from '../../clients';
+import getSearchParams from '../../utils/getSearchParams';
+import { SearchParams } from '../BaseSystemApi';
+
+export enum IntegrationFilePermissionSection {
+  IntegrationRequestFiles = 'integrationRequestFiles',
+  IntegrationResponseFiles = 'integrationResponseFiles',
+  IntegrationUserFiles = 'integrationUserFiles',
+}
+
+export enum IntegrationResultFileSortField {
+  Name = 'name',
+  FileType = 'fileType',
+  FileSize = 'fileSize',
+}
 
 export interface CompactIntegrationFile {
   id: string;
@@ -14,12 +28,6 @@ export interface CompactIntegrationFile {
   createdBy?: UserBasic | null;
 }
 
-export enum IntegrationFilePermissionSection {
-  IntegrationRequestFiles = 'integrationRequestFiles',
-  IntegrationResponseFiles = 'integrationResponseFiles',
-  IntegrationUserFiles = 'integrationUserFiles',
-}
-
 export interface IntegrationFile extends CompactIntegrationFile {
   fileUrl: string;
   permissionSection: IntegrationFilePermissionSection;
@@ -30,10 +38,20 @@ export interface IntegrationResultFileParams {
   file: Buffer;
 }
 
-class IntegrationResultFilesApi {
+export interface FindIntegrationResultFilesParams extends PaginationParams<IntegrationResultFileSortField>{
+  integrationResultId?: string;
+}
+
+export default class IntegrationResultFilesApi {
   protected path = '/integration-result-files';
 
   constructor(protected apiClient: IApiClient) {}
+
+  public async find(params: FindIntegrationResultFilesParams) {
+    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
+
+    return this.apiClient.makeCall<PaginationResult<IntegrationFile>>(`/${this.path}?${urlSearchParams}`);
+  }
 
   public uploadMany(integrationResultId: string, files: IntegrationResultFileParams[]): Promise<IntegrationFile[]> {
     const formData = new FormData();
@@ -49,5 +67,3 @@ class IntegrationResultFilesApi {
     });
   }
 }
-
-export default IntegrationResultFilesApi;
