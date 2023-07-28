@@ -1,6 +1,5 @@
 import { IApiClient } from '../../clients';
-import { DecisionRunResult } from '../../enums';
-import { UserBasic, VariableValue } from '../../types';
+import { DecisionResult } from '../dp';
 
 export interface MakeDecisionParams {
   strategyId: string;
@@ -10,28 +9,10 @@ export interface MakeDecisionParams {
   failureStatusId?: string;
 }
 
-export interface ApplicationDecisionResult {
-  id: string;
-  name: string;
-  resultType: DecisionRunResult;
-  strategyId: string;
-  decisionId: string;
-  strategyName: string;
-  /**
-   * @deprecated Available only for legacy strategies. (use strategyName for new ones)
-   */
-  strategyDisplayName?: string;
-  organizationId: string;
-  inputs: Record<string, VariableValue>;
-  outputs: Record<string, VariableValue>;
-  passed: boolean;
-  errorMessages: string[];
-  declineReasons: string[];
-  executionTime: number;
-  testing?: boolean;
-  createdAt: Date;
-  createdBy?: UserBasic | null;
-}
+/**
+ * @deprecated Use DecisionResult interface instead.
+ */
+export type ApplicationDecisionResult = DecisionResult;
 
 export interface ApplicationDecision {
   decisionId: string;
