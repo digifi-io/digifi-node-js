@@ -105,4 +105,11 @@ export {
   UpdateTaskParams,
   FindTasksParams,
   TaskSortField,
+  TaskAssigneeType,
+  TaskAssignedBorrower,
+  TaskAssignedIntermediary,
+  TaskApplication,
+  TaskAssignee,
+  BulkCreateTasksParams,
+  BulkCreateTasksResponse,
 } from './TasksApi';
