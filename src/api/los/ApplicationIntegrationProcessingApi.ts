@@ -8,16 +8,16 @@ export interface ProcessApplicationIntegrationParams {
 }
 
 export interface ExternalIntegrationProcessingResult {
-  id: string;
+  resultId: string;
   integrationId: string;
   integrationName: string;
   outputs: Record<string, VariableValue>;
   result: ExternalIntegrationResultType;
-  status: number;
-  userId?: string;
+  statusCode: number;
   applicationId?: string;
+  applicationDisplayId?: string;
   applicationName?: string;
-  raw?: string;
+  rawResponse?: string;
   error?: string;
 }
 
