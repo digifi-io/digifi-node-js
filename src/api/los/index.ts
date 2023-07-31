@@ -22,6 +22,9 @@ export {
   ApplicationDocumentFileUploadParams,
   ApplicationDocumentAccessPermissionEntityType,
   ApplicationDocumentAccessPermission,
+  FindApplicationDocumentsParams,
+  UpdateApplicationDocumentParams,
+  CreateApplicationDocumentFolderParams,
 } from './ApplicationDocumentsApi';
 export {
   default as ApplicationDocumentsDownloadsApi
@@ -45,6 +48,9 @@ export {
   UpdateApplicationCoBorrowersParams,
   RunApplicationCalculationsParams,
   BorrowerIdTarget,
+  ApplicationSortField,
+  VariableFilterParams,
+  VariableFilterValueQueryParam,
 } from './ApplicationsApi';
 export {
   default as ApplicationStatusesApi,
@@ -83,6 +89,7 @@ export {
   FindIntermediariesParams,
   IntermediarySortField,
   FindIntermediarySuggestionsParams,
+  IntermediarySuggestionsSortField,
 } from './IntermediariesApi';
 export {
   default as ProductCalculationsApi,
@@ -96,6 +103,8 @@ export {
   AssigneeTeamMembersType,
   ApplicationFormPages,
   FindProductsParams,
+  ApplicationFormPageType,
+  ApplicationFormPageBehavior,
 } from './ProductsApi';
 export {
   default as TasksApi,

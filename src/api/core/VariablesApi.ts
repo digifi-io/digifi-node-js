@@ -10,7 +10,7 @@ export interface FindVariableParams {
   ids?: string[];
   systemName?: string;
   dependsOn?: string;
-  includeArchived?: boolean;
+  excludeArchived?: boolean;
   systemNames?: string[];
   stringFormat?: StringVisualDataType;
   numberFormat?: NumericVisualDataType;
@@ -39,7 +39,7 @@ export enum NumericVisualDataType {
   Percentage = 'Percentage',
 }
 
-export interface BasicVariable {
+interface BasicVariable {
   id: string;
   name: string;
   systemName: string;
@@ -77,7 +77,7 @@ export type VariablePermissions = Record<
   VariableAccessPermission
 >;
 
-export type BasicVariableWithVisualAttributes = BasicVariable & {
+type BasicVariableWithVisualAttributes = BasicVariable & {
   permissions: VariablePermissions;
   visualAttributes: VariableVisualAttributes;
 }

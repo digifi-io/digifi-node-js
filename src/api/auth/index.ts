@@ -6,6 +6,8 @@ export {
   BaseAccountPhone,
   CreatePasswordValidationTokenResponseParams,
   FindAccountsParams,
+  CreateBorrowerAccountParams,
+  CreateIntermediaryAccountParams,
 } from './AccountsApi';
 export {
   default as EmailVerificationApi,

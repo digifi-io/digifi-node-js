@@ -100,7 +100,7 @@ export enum ApplicationSortField {
   SearchRelevance = 'searchRelevance',
 }
 
-export interface RangeQueryParam {
+interface RangeQueryParam {
   to?: string;
   from?: string;
 }

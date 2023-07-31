@@ -33,7 +33,7 @@ export interface DecisionResultCompiledModuleInfo {
   name: string;
 }
 
-export interface BaseModuleProcessingResult {
+interface BaseModuleProcessingResult {
   moduleId: string;
   name: string;
   passed: boolean;
