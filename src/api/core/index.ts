@@ -10,4 +10,6 @@ export {
   VariablePermissions,
   FindVariableParams,
   TableColumn,
+  StringVisualDataType,
+  NumericVisualDataType,
 } from './VariablesApi';

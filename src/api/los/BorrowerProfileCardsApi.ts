@@ -3,11 +3,11 @@ import { BorrowerType } from '../../enums';
 import { VariableConfiguration, Card } from '../../data/models';
 import getSearchParams from '../../utils/getSearchParams';
 
-export interface BorrowerVariableConfiguration extends VariableConfiguration {
+interface BorrowerVariableConfiguration extends VariableConfiguration {
   borrowerType: BorrowerType;
 }
 
-export interface BorrowerProfileCardAttributes {
+interface BorrowerProfileCardAttributes {
   borrowerType: BorrowerType;
 }
 
