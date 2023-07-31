@@ -72,13 +72,30 @@ export type StrategyModuleProcessingResult =
   | DataIntegrationModuleProcessingResult
   | DecisionModuleProcessingResult;
 
+export interface DataIntegrationProcessingErrorMetadata {
+  integrationProcessingResultId: string;
+}
+
+export type DecisionResultErrorMetadata = DataIntegrationProcessingErrorMetadata;
+
 export interface DecisionResult {
   id: string;
   name: string;
   resultType: DecisionRunResult;
   strategyId: string;
-  decision: string;
+  decisionId: string;
   strategyName: string;
+  /**
+   * @deprecated Strategy status is not used anymore. Added for backwards-compatibility.
+   */
+  strategyStatus?: 'active' | 'testing';
+  /**
+   * @deprecated Use inputs instead. Added for backwards-compatibility.
+   */
+  inputVariables: Record<string, VariableValue>;
+  /**
+   * @deprecated Use outputs instead. Added for backwards-compatibility.
+   */
   /**
    * @deprecated Available only for legacy strategies. (use strategyName for new ones)
    */
@@ -90,6 +107,7 @@ export interface DecisionResult {
   outputs: Record<string, VariableValue>;
   passed: boolean;
   errorMessages: string[];
+  errorMetadata?: DecisionResultErrorMetadata;
   declineReasons: string[];
   executionTime: number;
   testing?: boolean;
