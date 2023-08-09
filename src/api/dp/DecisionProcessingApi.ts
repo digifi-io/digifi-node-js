@@ -17,6 +17,7 @@ export interface ProcessDecisionsParams {
     inputs: Record<string, VariableValue>;
   }>;
   strict?: boolean;
+  returnDataSources?: boolean;
 }
 
 export enum StrategyModuleType {
