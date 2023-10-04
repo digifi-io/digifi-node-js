@@ -267,12 +267,12 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `update(id: string, params: object)` - [updates task](https://docs.digifi.io/reference/update-task) by `id` and `params` object.
   - `delete(id: string)` - [deletes task](https://docs.digifi.io/reference/delete-task) by `id`.
   - `bulkCreate(params: object)` - [creates many tasks](https://docs.digifi.io/reference/batch-create-of-application-tasks) by `params` object.
-- `new WebhooksApi(apiClient: ApiClient)` - api service for webhooks management.
-  - `find(params: object)` - finds webhooks by `params` object.
-  - `findById(id: string)` - finds webhook by `id`.
-  - `create(params: object)` - creates webhook by `params` object.
-  - `update(id: string, params: object)` - updates webhook by `id` and `params` object.
-  - `delete(id: string)` - deletes webhook by `id`.
+- `new WebhookEndpointsApi(apiClient: ApiClient)` - api service for webhooks management.
+  - `find(params: object)` - finds webhook endpoints by `params` object.
+  - `findById(id: string)` - finds webhook endpoints by `id`.
+  - `create(params: object)` - creates webhook endpoint by `params` object.
+  - `update(id: string, params: object)` - updates webhook endpoints by `id` and `params` object.
+  - `delete(id: string)` - deletes webhook endpoint by `id`.
 
 ## Webhook signing
 
