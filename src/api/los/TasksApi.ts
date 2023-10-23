@@ -80,6 +80,7 @@ export interface CreateTaskParams {
   autoPassCondition?: string | null;
   dueDate?: string | null;
   uniqSystemIdentifier?: string;
+  shouldSendAssignmentEmail?: boolean;
 }
 
 export interface UpdateTaskParams {
@@ -91,6 +92,7 @@ export interface UpdateTaskParams {
   autoPassCondition?: string | null;
   blockedStatusesIds?: string[] | null;
   dueDate?: string | null;
+  shouldSendAssignmentEmail?: boolean;
 }
 
 export enum TaskSortField {

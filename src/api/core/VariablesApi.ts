@@ -10,7 +10,7 @@ export interface FindVariableParams {
   ids?: string[];
   systemName?: string;
   dependsOn?: string;
-  excludeArchived?: boolean;
+  includeArchived?: boolean;
   systemNames?: string[];
   stringFormat?: StringVisualDataType;
   numberFormat?: NumericVisualDataType;
