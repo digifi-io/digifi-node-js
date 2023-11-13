@@ -122,3 +122,11 @@ export {
   BulkCreateTasksParams,
   BulkCreateTasksResponse,
 } from './TasksApi';
+export {
+  default as ApplicationNotesApi,
+  ApplicationNote,
+  CreateApplicationNoteParams,
+  UpdateApplicationNoteParams,
+  FindApplicationNotesParams,
+  ApplicationNoteSortField,
+} from './ApplicationNotesApi';
