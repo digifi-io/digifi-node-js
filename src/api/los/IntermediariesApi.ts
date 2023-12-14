@@ -47,7 +47,11 @@ export interface FindIntermediariesParams extends PaginationParams<IntermediaryS
   dueCreatedDateTo?: Date;
   dueUpdatedDateFrom?: Date;
   dueUpdatedDateTo?: Date;
+  /**
+   * @deprecated Use intermediaryTypes instead.
+   */
   borrowerTypeIds?: string[];
+  intermediaryTypes?: string[];
   teamMemberIds?: string[];
   searchBy?: string[];
 }
