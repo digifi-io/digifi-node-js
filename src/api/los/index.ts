@@ -130,3 +130,9 @@ export {
   FindApplicationNotesParams,
   ApplicationNoteSortField,
 } from './ApplicationNotesApi';
+export {
+  default as LayoutConfigurationApi,
+  LayoutConfigurationReferenceType,
+  FindLayoutConfigurationParams,
+  BaseLayout,
+} from './LayoutConfigurationApi';

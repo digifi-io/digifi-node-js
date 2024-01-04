@@ -13,6 +13,9 @@ interface BorrowerProfileCardAttributes {
 
 export type BorrowerProfileCard = Card<BorrowerVariableConfiguration> & BorrowerProfileCardAttributes;
 
+/**
+ * @deprecated Use LayoutConfigurationApi instead.
+ */
 class BorrowerProfileCardsApi {
   protected path = '/borrower-profile-cards';
 

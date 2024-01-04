@@ -13,6 +13,11 @@ import {
 } from './Variable';
 import { ApplicationStatusPermissions, PermissionGroupId } from './Permissions';
 import OrganizationMode from './OrganizationMode';
+import {
+  BaseCard,
+  BaseGroup,
+  BaseVariableConfiguration,
+} from './LayoutConfiguration';
 
 export {
   AuthResponseParams,
@@ -33,4 +38,7 @@ export {
   TableRowValue,
   BasicVariableValue,
   ComplexVariableValue,
+  BaseGroup,
+  BaseCard,
+  BaseVariableConfiguration,
 };
