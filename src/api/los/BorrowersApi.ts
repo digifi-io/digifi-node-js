@@ -1,6 +1,9 @@
 import { SystemApi } from '../SystemApi';
 import { VariableValue, UserShort, SearchHighlight, PaginationResult, PaginationParams } from '../../types';
 import { BorrowerType } from '../../enums';
+import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
+import ApiVersion from '../../enums/ApiVersion';
+import ApiVersionError from '../../errors/ApiVersionError';
 
 export enum BorrowerDefaultVariable {
   FirstName = 'borrower_first_name',
@@ -70,17 +73,39 @@ export interface FindBorrowersParams extends PaginationParams<BorrowerSortField>
   searchBy?: string[];
 }
 
+interface ListBorrowersParams extends CursorPaginationParams {
+  email?: string;
+  idNumber?: string;
+}
+
 export default class BorrowersApi extends SystemApi<
   Borrower,
   CreateBorrowerParams,
   UpdateBorrowerParams,
-  FindBorrowersParams
+  FindBorrowersParams,
+  ListBorrowersParams
 > {
   protected path = 'borrowers';
 
   public async find(params: FindBorrowersParams): Promise<PaginationResult<Borrower>> {
-    const borrowers = await super.find(params);
+    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
+      const borrowers = await super.find(params);
+  
+      return borrowers as PaginationResult<Borrower>;
+    }
+
+    const borrowers = await super.search(params);
 
     return borrowers as PaginationResult<Borrower>;
+  }
+
+  public async list(params: ListBorrowersParams): Promise<CursorPaginationResult<Borrower>> {
+    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
+      throw new ApiVersionError('Method is not supported for this API version');
+    }
+
+    const borrowers = await super.list(params);
+
+    return borrowers as CursorPaginationResult<Borrower>;
   }
 }

@@ -2,6 +2,9 @@ import { SystemApi } from '../SystemApi';
 import { VariableValue, UserShort, SearchHighlight, PaginationParams, PaginationResult } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 import { SearchParams } from '../BaseSystemApi';
+import { CursorPaginationResult, CursorPaginationParams } from '../../types/Pagination';
+import ApiVersion from '../../enums/ApiVersion';
+import ApiVersionError from '../../errors/ApiVersionError';
 
 export enum IntermediaryDefaultValue {
   Name = 'intermediary_name',
@@ -56,6 +59,11 @@ export interface FindIntermediariesParams extends PaginationParams<IntermediaryS
   searchBy?: string[];
 }
 
+export interface ListIntermediariesParams extends CursorPaginationParams {
+  email?: string;
+  idNumber?: string;
+}
+
 export enum IntermediarySuggestionsSortField {
   Name = 'name',
   PhoneNumber = 'phoneNumber',
@@ -74,14 +82,31 @@ export default class IntermediariesApi extends SystemApi<
   Intermediary,
   CreateIntermediaryParams,
   UpdateIntermediaryParams,
-  FindIntermediariesParams
+  FindIntermediariesParams,
+  ListIntermediariesParams
 > {
   protected path = 'intermediaries';
 
   public async find(params: FindIntermediariesParams): Promise<PaginationResult<Intermediary>> {
-    const intermediaries = await super.find(params);
+    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
+      const intermediaries = await super.find(params);
+
+      return intermediaries as PaginationResult<Intermediary>;
+    }
+
+    const intermediaries = await super.search(params);
 
     return intermediaries as PaginationResult<Intermediary>;
+  }
+
+  public async list(params: ListIntermediariesParams): Promise<CursorPaginationResult<Intermediary>> {
+    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
+      throw new ApiVersionError('Method is not supported for this API version');
+    }
+
+    const intermediaries = await super.list(params);
+
+    return intermediaries as CursorPaginationResult<Intermediary>;
   }
 
   public getSuggestions(params: FindIntermediarySuggestionsParams): Promise<Intermediary[]> {
