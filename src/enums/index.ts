@@ -6,6 +6,7 @@ import UserSortField from './UserSortField';
 import VariableAccessPermission from './VariableAccessPermission';
 import VariableType from './VariableType';
 import DecisionRunResult from './DecisionRunResult';
+import DigitalLendingPortalEnvironment from './DigitalLendingPortalEnvironment';
 
 export {
   BorrowerType,
@@ -16,4 +17,5 @@ export {
   VariableAccessPermission,
   VariableType,
   DecisionRunResult,
+  DigitalLendingPortalEnvironment,
 };
