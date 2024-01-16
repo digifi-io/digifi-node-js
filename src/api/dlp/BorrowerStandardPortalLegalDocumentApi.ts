@@ -29,7 +29,7 @@ class BorrowerStandardPortalLegalDocumentApi {
       environment: params?.environment || DigitalLendingPortalEnvironment.Production,
     } as Record<string, string>);
 
-    return this.apiClient.makeCall(`${this.path}/${urlSearchParams}`);
+    return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);
   }
 }
 
