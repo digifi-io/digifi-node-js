@@ -95,6 +95,8 @@ API client can be created with optional `options` parameter that has this struct
 | `enableIdempotencyHeader`        | `false`             | If `true` is provided it allows `POST` requests to be [idempotent](https://docs.digifi.io/reference/digifi-api#idempotent-requests)                                                                                                               |
 | `maxNetworkRetries`              | 0                   | The amount of times a request should be retried if error occured                                                                                                                                                                                  |
 | `logger`                         | `null`              | Logger for tracing errors and requests                                                                                                                                                                                                            |
+| `apiVersion`                         | `12/20/2023`              | [Api version](https://docs.digifi.io/reference/api-versions-changelog) to use for client.                                                                                                                                                                                                          |
+
 
 ### Idempotency
 
