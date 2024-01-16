@@ -1,5 +1,7 @@
 import { IApiClient } from '../../clients';
+import PortalEnvironment from '../../enums/PortalEnvironment';
 import { UserShort } from '../../types';
+import getSearchParams from '../../utils/getSearchParams';
 
 export interface BorrowerStandardPortalLegalDocument {
   id: string;
@@ -11,6 +13,10 @@ export interface BorrowerStandardPortalLegalDocument {
   updatedBy?: UserShort | null;
 }
 
+export interface GetLegalDocumentsParams {
+  environment: PortalEnvironment;
+}
+
 class BorrowerStandardPortalLegalDocumentApi {
   protected path = '/borrowers/standard-portals/legal-documents';
 
@@ -18,8 +24,12 @@ class BorrowerStandardPortalLegalDocumentApi {
     private apiClient: IApiClient,
   ) {}
 
-  public getLegalDocuments(): Promise<BorrowerStandardPortalLegalDocument[]> {
-    return this.apiClient.makeCall(`${this.path}`);
+  public getLegalDocuments(params: GetLegalDocumentsParams): Promise<BorrowerStandardPortalLegalDocument[]> {
+    const urlSearchParams = getSearchParams({
+      environment: params?.environment || PortalEnvironment.Production,
+    } as Record<string, string>);
+
+    return this.apiClient.makeCall(`${this.path}/${urlSearchParams}`);
   }
 }
 
