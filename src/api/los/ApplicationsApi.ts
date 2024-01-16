@@ -11,6 +11,9 @@ import {
 import { CreateIntermediaryParams } from './IntermediariesApi';
 import { BorrowerType, SortDirection } from '../../enums';
 import { ApplicationStatusType } from './ApplicationStatusesApi';
+import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
+import ApiVersion from '../../enums/ApiVersion';
+import ApiVersionError from '../../errors/ApiVersionError';
 
 export enum ApplicationDefaultVariable {
   LoanAmount = 'loan_amount',
@@ -138,6 +141,12 @@ export interface FindApplicationsParams extends PaginationParams<ApplicationSort
   borrowerIdTargets?: BorrowerIdTarget[];
 }
 
+export interface ListApplicationParams extends CursorPaginationParams {
+  borrowerId?: string;
+  statusesIds?: string[];
+  productId?: string;
+}
+
 interface DeleteCoBorrowerParams {
   coBorrowerIdToDelete: string;
 }
@@ -160,14 +169,31 @@ export default class ApplicationsApi extends SystemApi<
   Application,
   CreateApplicationParams,
   UpdateApplicationParams,
-  FindApplicationsParams
+  FindApplicationsParams,
+  ListApplicationParams
 > {
   protected path = 'applications';
 
   public async find(params: FindApplicationsParams): Promise<PaginationResult<Application>> {
-    const applications = await super.find(params);
+    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
+      const applications = await super.find(params);
+  
+      return applications as PaginationResult<Application>;
+    }
+
+    const applications = await super.search(params);
 
     return applications as PaginationResult<Application>;
+  }
+
+  public async list(params: ListApplicationParams): Promise<CursorPaginationResult<Application>> {
+    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
+      throw new ApiVersionError('Method is not supported for this API version');
+    }
+
+    const applications = await super.list(params);
+
+    return applications as CursorPaginationResult<Application>;
   }
 
   public updateCoBorrowers(applicationId: string, params: UpdateApplicationCoBorrowersParams) {
