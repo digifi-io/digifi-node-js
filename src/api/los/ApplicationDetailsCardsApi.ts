@@ -8,6 +8,9 @@ export interface ApplicationVariableConfiguration extends VariableConfiguration 
 
 export type ApplicationDetailsCard = Card<ApplicationVariableConfiguration>;
 
+/**
+ * @deprecated Use LayoutConfigurationApi instead.
+ */
 class ApplicationDetailsCardsApi {
   protected path = '/application-details-cards';
 
