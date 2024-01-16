@@ -1,6 +1,6 @@
 import { IApiClient } from '../../clients';
 import { BorrowerType } from '../../enums';
-import PortalEnvironment from '../../enums/PortalEnvironment';
+import DigitalLendingPortalEnvironment from '../../enums/DigitalLendingPortalEnvironment';
 import getSearchParams from '../../utils/getSearchParams';
 
 export interface BorrowerStandardPortalGeneralSettings {
@@ -9,7 +9,7 @@ export interface BorrowerStandardPortalGeneralSettings {
 }
 
 export interface GetGeneralSettingsParams {
-  environment: PortalEnvironment;
+  environment: DigitalLendingPortalEnvironment;
 }
 
 class BorrowerStandardPortalGeneralSettingsApi {
@@ -21,7 +21,7 @@ class BorrowerStandardPortalGeneralSettingsApi {
 
   public getGeneralSettings(params?: GetGeneralSettingsParams): Promise<BorrowerStandardPortalGeneralSettings> {
     const urlSearchParams = getSearchParams({
-      environment: params?.environment || PortalEnvironment.Production,
+      environment: params?.environment || DigitalLendingPortalEnvironment.Production,
     } as Record<string, string>);
 
     return this.apiClient.makeCall(`${this.path}?${urlSearchParams}`);

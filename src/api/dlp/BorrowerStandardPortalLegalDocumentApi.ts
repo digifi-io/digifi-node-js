@@ -1,5 +1,5 @@
 import { IApiClient } from '../../clients';
-import PortalEnvironment from '../../enums/PortalEnvironment';
+import DigitalLendingPortalEnvironment from '../../enums/DigitalLendingPortalEnvironment';
 import { UserShort } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 
@@ -14,7 +14,7 @@ export interface BorrowerStandardPortalLegalDocument {
 }
 
 export interface GetLegalDocumentsParams {
-  environment: PortalEnvironment;
+  environment: DigitalLendingPortalEnvironment;
 }
 
 class BorrowerStandardPortalLegalDocumentApi {
@@ -26,7 +26,7 @@ class BorrowerStandardPortalLegalDocumentApi {
 
   public getLegalDocuments(params: GetLegalDocumentsParams): Promise<BorrowerStandardPortalLegalDocument[]> {
     const urlSearchParams = getSearchParams({
-      environment: params?.environment || PortalEnvironment.Production,
+      environment: params?.environment || DigitalLendingPortalEnvironment.Production,
     } as Record<string, string>);
 
     return this.apiClient.makeCall(`${this.path}/${urlSearchParams}`);
