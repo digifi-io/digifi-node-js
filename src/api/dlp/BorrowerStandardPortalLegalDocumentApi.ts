@@ -24,7 +24,7 @@ class BorrowerStandardPortalLegalDocumentApi {
     private apiClient: IApiClient,
   ) {}
 
-  public getLegalDocuments(params: GetLegalDocumentsParams): Promise<BorrowerStandardPortalLegalDocument[]> {
+  public getLegalDocuments(params?: GetLegalDocumentsParams): Promise<BorrowerStandardPortalLegalDocument[]> {
     const urlSearchParams = getSearchParams({
       environment: params?.environment || DigitalLendingPortalEnvironment.Production,
     } as Record<string, string>);
