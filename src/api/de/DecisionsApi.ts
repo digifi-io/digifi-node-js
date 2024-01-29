@@ -3,6 +3,7 @@ import { IApiClient } from '../../clients';
 import { BaseSystemApi, SearchParams } from '../BaseSystemApi';
 import { DecisionRunResult, ExecutionSource } from '../../enums';
 import getSearchParams from '../../utils/getSearchParams';
+import { DecisionResult } from '../dp';
 
 export interface Decision {
   id: string;
@@ -20,6 +21,10 @@ export interface Decision {
   resultStatuses: Partial<Record<DecisionRunResult, number>>;
   createdAt: Date;
   createdBy?: UserBasic | null;
+}
+
+export interface DecisionWithResults extends Decision {
+  results: DecisionResult[];
 }
 
 export enum DecisionsSortField {
@@ -54,6 +59,10 @@ class DecisionsApi extends BaseSystemApi<Decision, FindDecisionsParams>{
     return this.apiClient.makeCall<PaginationResult<Decision>>(
       `${this.path}?${urlSearchParams}`,
     );
+  }
+
+  public findById(id: string): Promise<DecisionWithResults> {
+    return this.apiClient.makeCall<DecisionWithResults>(`/${this.path}/${id}`);
   }
 }
 
