@@ -3,9 +3,14 @@ import { BorrowerType } from '../../enums';
 import DigitalLendingPortalEnvironment from '../../enums/DigitalLendingPortalEnvironment';
 import getSearchParams from '../../utils/getSearchParams';
 
-export interface BorrowerStandardPortalGeneralSettings {
+export interface StandardBorrowerPortalConfig {
   borrowerType: BorrowerType;
   borrowerLockPeriodDays: number;
+}
+
+export interface BorrowerStandardPortalGeneralSettings {
+  config: StandardBorrowerPortalConfig;
+  accessPasswordExists: boolean;
 }
 
 export interface GetGeneralSettingsParams {
