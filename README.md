@@ -1,7 +1,7 @@
 # DigiFi Node.js Library
 
 [![Version](https://img.shields.io/npm/v/@digifi/digifi-node-js.svg)](https://www.npmjs.org/package/@digifi/digifi-node-js)
-[![Build Status](https://github.com/digifi-io/digifi-node-js/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/digifi-io/digifi-node-js/actions/workflows/npm-publish.yml)
+[![Build Status](https://github.com/digifi-io/digifi-node-js/actions/workflows/publish.yml/badge.svg)](https://github.com/digifi-io/digifi-node-js/actions/workflows/publish.yml)
 [![Downloads](https://img.shields.io/npm/dm/@digifi/digifi-node-js.svg)](https://www.npmjs.com/package/@digifi/digifi-node-js)
 
 The DigiFi Node library provides convenient access to the DigiFi API from
@@ -37,9 +37,11 @@ After `API Client` was initialized - you can create `API Service` and start comm
 ```js
 const Digifi = require('@digifi/digifi-node-js');
 
-const apiClient = new Digifi.AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-...');
+const apiClient = new Digifi.AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-...', {
+  apiVersion: '2024-02-26',
+});
 
-const applicationsApi = new Digifi.ApplicationsApi(apiClient);
+const applicationsApi = new Digifi.ApplicationsApiService(apiClient);
 
 const { items, total } = await applicationsApi.find({ productId: '63d...' });
 
@@ -51,10 +53,13 @@ console.log(items);
 DigiFi maintains types for the latest API Version.
 
 ```ts
-import { AuthorizedApiClient, CreateApplicationParams, Application } from '@digifi/digifi-node-js';
+import { AuthorizedApiClient, CreateApplicationParams, Application, ApplicationsApiService } from '@digifi/digifi-node-js';
 
-const apiClient = new AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-...');
-const applicationsApi = new ApplicationsApi(apiClient);
+const apiClient = new AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-...', {
+  apiVersion: '2024-02-26',
+});
+
+const applicationsApi = new ApplicationsApiService(apiClient);
 
 const createApplication = async () => {
   const params: CreateApplicationParams = {
@@ -75,7 +80,7 @@ createApplication();
 To initialize `API Service` you need to create API client before.
 Here is an example how to achieve that:
 
-```new AuthorizedApiClient(baseUrl: string, apiKey: string, options?: object)``` - default API client with authorization. Requires ```baseUrl``` of DigiFi Platform API endpoint as first argument and [api-key](https://docs.digifi.io/reference/digifi-api#api-authentication) as second argument. Can be initialized with optional [`options`] as third argument.
+```new AuthorizedApiClient(baseUrl: string, apiKey: string, options: object)``` - default API client with authorization. Requires ```baseUrl``` of DigiFi Platform API endpoint as first argument, [api-key](https://docs.digifi.io/reference/digifi-api#api-authentication) as second argument and [apiVersion](https://docs.digifi.io/reference/digifi-api#api-authentication) in `options` object as third argument.
 
 ```js
 import { AuthorizedApiClient } from '@digifi/digifi-node-js';
@@ -83,20 +88,21 @@ import { AuthorizedApiClient } from '@digifi/digifi-node-js';
 const baseUrl = 'https://cloud.digifi.io/api';
 const apiKey = 'digifi-cloud-...';
 
-const authorizedApiClient = new AuthorizedApiClient(baseUrl, apiKey);
+const authorizedApiClient = new AuthorizedApiClient(baseUrl, apiKey, {
+  apiVersion: '2024-02-26',
+});
 ```
 
 
 ### Options
-API client can be created with optional `options` parameter that has this structure:
+API client can be created with required `options` parameter that has this structure:
 
-| Option                           | Default             | Description                                                                                                                                                                                                                                       |
-| -------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `enableIdempotencyHeader`        | `false`             | If `true` is provided it allows `POST` requests to be [idempotent](https://docs.digifi.io/reference/digifi-api#idempotent-requests)                                                                                                               |
-| `maxNetworkRetries`              | 0                   | The amount of times a request should be retried if error occured                                                                                                                                                                                  |
-| `logger`                         | `null`              | Logger for tracing errors and requests                                                                                                                                                                                                            |
-| `apiVersion`                         | `12/20/2023`              | [Api version](https://docs.digifi.io/reference/api-versions-changelog) to use for client.                                                                                                                                                                                                          |
-
+| Option                           | Default | Required |  Description                                                                                                                       |
+| -------------------------------- |---------|----------|------------------------------------------------------------------------------------------------------------------------------------|
+| `apiVersion`                     |         | true     | [Api version](https://docs.digifi.io/reference/api-versions) to use for client.                                          |
+| `enableIdempotencyHeader`        | `false` | false    | If `true` is provided it allows `POST` requests to be [idempotent](https://docs.digifi.io/reference/digifi-api#idempotent-requests) |
+| `maxNetworkRetries`              | 0       | false    | The amount of times a request should be retried if error occured                                                                   |
+| `logger`                         | `null`  | false    | Logger for tracing errors and requests                                                                                             |
 
 ### Idempotency
 
@@ -104,6 +110,7 @@ API client can be created with optional `options` parameter that has this struct
 
 ```js
 const apiClient = new AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-cloud-...', {
+  apiVersion: '2024-02-26',
   enableIdempotencyHeader: true, // Will assign idempotency key to each POST request using UUID
 });
 ```
@@ -115,6 +122,7 @@ This will retry requests `n` times with exponential backoff if they fail due to 
 
 ```js
 const apiClient = new AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-cloud-...', {
+  apiVersion: '2024-02-26',
   maxNetworkRetries: 2, // Retry a request twice before giving up
 });
 ```
@@ -126,7 +134,7 @@ For example, if you need to create a borrower in DigiFi Platform you can use `Bo
 
 ```js
 const apiClient = new AuthorizedApiClient(...);
-const borrowersApi = new BorrowersApi(apiClient);
+const borrowersApi = new BorrowersApiService(apiClient);
 
 const borrowers = await borrowersApi.create({ ... });
 
@@ -202,8 +210,6 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `delete(id: string)` - [deletes integration result](https://docs.digifi.io/reference/delete-integration-result) by `id`.
 - `new ApplicationDecisionProcessingApi(apiClient: ApiClient)` - api service for processing application decisions.
   - `makeDecision(params: object)` - [processes application decision](https://docs.digifi.io/reference/run-application-decision) for current organization by `params` object.
-- `new ApplicationDetailsCardsApi(apiClient: ApiClient)` - api service for applications details cards management.
-  - `find(productId: string)` - [finds application details cards](/home/eugene/Pictures/Screenshot_20230127_140735.png) for current organization and mode (depends on `api-key` provided to api client) by `productId`.
 - `new ApplicationDocumentConfigurationApi(apiClient: ApiClient)` -  api service for application document configuration management.
   - `find(productId: string)` - [finds application document configurations](https://docs.digifi.io/reference/get-application-documents-configuration) for current organization and mode (depends on `api-key` provided to api client) by `productId`.
 - `new ApplicationDocumentsApi(apiClient: ApiClient)` - api service for application documents management.
@@ -221,9 +227,17 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `createToken(documentId: string)` - [creates preview token for document](https://docs.digifi.io/reference/application-documents-preview) by `documentId`. 
 - `new ApplicationIntegrationProcessingApi(apiClient: ApiClient)` - api service for processing application integrations.
   - `processIntegration(params: object)` - [processes integration for application](https://docs.digifi.io/reference/run-application-integration) by `params` object.
-- `new ApplicationsApi(apiClient: ApiClient)` - api service for applications management.
-  - `find(params: object)` - [finds applications](https://docs.digifi.io/reference/search-applications) by `params` object.
+- `new ApplicationNotesApi(apiClient: ApiClient)` - api service for application notes management.
+  - `find(params: object)` - [finds application notes](https://docs.digifi.io/reference/search-application-notes) by `params` object.
+  - `findById(id: string)` - [finds application note](https://docs.digifi.io/reference/get-application-note-by-id) by `id`.
+  - `create(params: object)` - [creates application note](https://docs.digifi.io/reference/create-application-note) by `params` object.
+  - `update(id: string, params: object)` - [updates application note](https://docs.digifi.io/reference/update-application-note) by `id` and `params` object.
+  - `delete(id: string)` - [deletes application note](https://docs.digifi.io/reference/delete-application-note) by `id`.
+- `new ApplicationsApiService(apiClient: ApiClient)` - api service for applications management.
+  - `search(params: object)` - [search applications](https://docs.digifi.io/reference/search-applications) by `params` object.
+  - `list(params: object)` - [lists applications](https://docs.digifi.io/reference/list-applications) by `params` object.
   - `findById(id: string)` - [finds application](https://docs.digifi.io/reference/get-application-1) by `id`.
+  - `findByDisplayId(displayId: string)` - [finds application](https://docs.digifi.io/reference/get-application-1) by `displayId`.
   - `create(params: object)` - [creates application](https://docs.digifi.io/reference/create-application-1) by `params` object.
   - `update(id: string, params: object)` - [updates application](https://docs.digifi.io/reference/update-application-1) by `id` and `params` object.
   - `delete(id: string)` - [deletes application](https://docs.digifi.io/reference/delete-application) by `id`.
@@ -235,10 +249,9 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `addTeamMembers(id: string, teamMembersIds: string[])` - adds team members to application by `id`.
 - `new ApplicationStatusesApi(apiClient: ApiClient)` - api service for application statuses management.
   - `find(productId: string)` - [finds application statuses](https://docs.digifi.io/reference/get-application-statuses) for current organization and mode (depends on `api-key` provided to api client) by `productId`.
-- `new BorrowerProfileCardsApi(apiClient: ApiClient)` - api service borrower profile cards management.
-  - `find(borrowerType?: 'person' | 'company')` - [finds borrower profile cards](https://docs.digifi.io/reference/get-borrower-profile-cards) for current organization and mode (depends on `api-key` provided to api client) by optional `borrowerType`. 
-- `new BorrowersApi(apiClient: ApiClient)` - api service for borrowers management.
-  - `find(params: object)` - [finds borrowers](https://docs.digifi.io/reference/search-borrowers) by `params` object.
+- `new BorrowersApiService(apiClient: ApiClient)` - api service for borrowers management.
+  - `search(params: object)` - [search borrowers](https://docs.digifi.io/reference/search-borrowers) by `params` object.
+  - `list(params: object)` - [lists borrowers](https://docs.digifi.io/reference/list-borrowers) by `params` object.
   - `findById(id: string)` - [finds borrower](https://docs.digifi.io/reference/get-borrower) by `id`.
   - `create(params: object)` - [creates borrower](https://docs.digifi.io/reference/create-borrower) by `params` object.
   - `update(id: string, params: object)` - [updates borrower](https://docs.digifi.io/reference/update-borrower) by `id` and `params` object.
@@ -249,21 +262,25 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `create(params: object)` - [creates comment](https://docs.digifi.io/reference/create-comment) by `params` object.
   - `update(id: string, params: object)` - [updates comment](https://docs.digifi.io/reference/update-comment) by `id` and `params` object.
   - `delete(id: string)` - [deletes comment](https://docs.digifi.io/reference/delete-comment) by `id`.
-- `new IntermediariesApi(apiClient: ApiClient)` - api service for intermediaries management.
-  - `find(params: object)` - [finds intermediaries](https://docs.digifi.io/reference/search-intermediaries) by `params` object.
+- `new IntermediariesApiService(apiClient: ApiClient)` - api service for intermediaries management.
+  - `search(params: object)` - [search intermediaries](https://docs.digifi.io/reference/search-intermediaries) by `params` object.
+  - `list(params: object)` - [lists intermediaries](https://docs.digifi.io/reference/list-intermediaries) by `params` object.
   - `findById(id: string)` - [finds intermediary](https://docs.digifi.io/reference/get-intermediary-1) by `id`.
   - `create(params: object)` - [creates intermediary](https://docs.digifi.io/reference/create-intermediary-1) by `params` object.
   - `update(id: string, params: object)` - [updates intermediary](https://docs.digifi.io/reference/update-intermediary-1) by `id` and `params` object.
   - `delete(id: string)` - [deletes intermediary](https://docs.digifi.io/reference/delete-intermediary) by `id`.
   - `getSuggestions(params: object)` - retrieves intermediary suggestions by `params` object.
   - `createMany(intermediaries: object[])` - creates few intermediaries.
+- `new LayoutConfigurationApi(apiClient: ApiClient)` - api service for layout configuration management.
+  - `find(params: object)` - finds layout configuration by `params` object.
 - `new ProductCalculationsApi(apiClient: ApiClient)` - api service for product calculations management.
   - `find(productId: string)` - finds product calculations for current organization and mode (depends on `api-key` provided to api client) by `productId`.
 - `new ProductsApi(apiClient: ApiClient)` - api service for products management.
   - `find(params: object)` - [finds products](https://docs.digifi.io/reference/get-products) for current organization and mode (depends on `api-key` provided to api client) by `params`.
   - `findById(id: string)` - [finds product](https://docs.digifi.io/reference/get-product) for current organization and mode (depends on `api-key` provided to api client) by `id`.
-- `new TasksApi(apiClient: ApiClient)` - api service for application tasks management.
-  - `find(params: object)` - [finds tasks](https://docs.digifi.io/reference/search-tasks) by `params` object.
+- `new TasksApiService(apiClient: ApiClient)` - api service for application tasks management.
+  - `search(params: object)` - [search tasks](https://docs.digifi.io/reference/search-tasks) by `params` object.
+  - `list(params: object)` - [lists tasks](https://docs.digifi.io/reference/list-application-tasks) by `params` object.
   - `findById(id: string)` - [finds task](https://docs.digifi.io/reference/get-task) by `id`.
   - `create(params: object)` - [creates task](https://docs.digifi.io/reference/create-task) by `params` object.
   - `update(id: string, params: object)` - [updates task](https://docs.digifi.io/reference/update-task) by `id` and `params` object.

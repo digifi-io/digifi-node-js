@@ -86,21 +86,6 @@ export interface DecisionResult {
   strategyId: string;
   decisionId: string;
   strategyName: string;
-  /**
-   * @deprecated Strategy status is not used anymore. Added for backwards-compatibility.
-   */
-  strategyStatus?: 'active' | 'testing';
-  /**
-   * @deprecated Use inputs instead. Added for backwards-compatibility.
-   */
-  inputVariables: Record<string, VariableValue>;
-  /**
-   * @deprecated Use outputs instead. Added for backwards-compatibility.
-   */
-  /**
-   * @deprecated Available only for legacy strategies. (use strategyName for new ones)
-   */
-  strategyDisplayName?: string;
   organizationId: string;
   modules: DecisionResultCompiledModuleInfo[];
   modulesProcessingResults: StrategyModuleProcessingResult[];

@@ -2,9 +2,24 @@ import { SystemApi } from '../SystemApi';
 import { VariableValue, UserShort, SearchHighlight, PaginationParams, PaginationResult } from '../../types';
 import getSearchParams from '../../utils/getSearchParams';
 import { SearchParams } from '../BaseSystemApi';
-import { CursorPaginationResult, CursorPaginationParams } from '../../types/Pagination';
-import ApiVersion from '../../enums/ApiVersion';
-import ApiVersionError from '../../errors/ApiVersionError';
+import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
+
+export enum IntermediarySortField {
+  Name = 'name',
+  PhoneNumber = 'phoneNumber',
+  Email = 'email',
+  CreatedAt = 'createdAt',
+  UpdatedAt = 'updatedAt',
+  Type = 'type',
+  IdNumber = 'idNumber',
+  SearchRelevance = 'searchRelevance',
+}
+
+export enum IntermediarySuggestionsSortField {
+  Name = 'name',
+  PhoneNumber = 'phoneNumber',
+  Email = 'email',
+}
 
 export enum IntermediaryDefaultValue {
   Name = 'intermediary_name',
@@ -34,40 +49,20 @@ export interface UpdateIntermediaryParams {
   variables?: Record<string, VariableValue>;
 }
 
-export enum IntermediarySortField {
-  Name = 'name',
-  PhoneNumber = 'phoneNumber',
-  Email = 'email',
-  CreatedAt = 'createdAt',
-  UpdatedAt = 'updatedAt',
-  Type = 'type',
-  IdNumber = 'idNumber',
-  SearchRelevance = 'searchRelevance',
-}
-
-export interface FindIntermediariesParams extends PaginationParams<IntermediarySortField> {
+export interface SearchIntermediariesParams extends PaginationParams<IntermediarySortField> {
   dueCreatedDateFrom?: Date;
   dueCreatedDateTo?: Date;
   dueUpdatedDateFrom?: Date;
   dueUpdatedDateTo?: Date;
-  /**
-   * @deprecated Use intermediaryTypes instead.
-   */
-  borrowerTypeIds?: string[];
   intermediaryTypes?: string[];
   teamMemberIds?: string[];
+  email?: string;
   searchBy?: string[];
 }
 
 export interface ListIntermediariesParams extends CursorPaginationParams {
   email?: string;
   idNumber?: string;
-}
-
-export enum IntermediarySuggestionsSortField {
-  Name = 'name',
-  PhoneNumber = 'phoneNumber',
-  Email = 'email',
 }
 
 export interface FindIntermediarySuggestionsParams {
@@ -78,36 +73,25 @@ export interface FindIntermediarySuggestionsParams {
   sortField?: IntermediarySuggestionsSortField;
 }
 
-export default class IntermediariesApi extends SystemApi<
+export interface IntermediariesApi {
+  search(params: SearchIntermediariesParams): Promise<PaginationResult<Intermediary>>;
+  list(params: ListIntermediariesParams): Promise<CursorPaginationResult<Intermediary>>;
+  findById(id: string): Promise<Intermediary>;
+  create(params: CreateIntermediaryParams): Promise<Intermediary>;
+  bulkCreate(params: CreateIntermediaryParams[]): Promise<Intermediary[]>;
+  update(id: string, params: UpdateIntermediaryParams): Promise<Intermediary>;
+  getSuggestions(params: FindIntermediarySuggestionsParams): Promise<Intermediary[]>;
+  delete(id: string): Promise<Intermediary>;
+}
+
+export class IntermediariesApiService extends SystemApi<
   Intermediary,
   CreateIntermediaryParams,
   UpdateIntermediaryParams,
-  FindIntermediariesParams,
+  SearchIntermediariesParams,
   ListIntermediariesParams
-> {
+> implements IntermediariesApi {
   protected path = 'intermediaries';
-
-  public async find(params: FindIntermediariesParams): Promise<PaginationResult<Intermediary>> {
-    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
-      const intermediaries = await super.find(params);
-
-      return intermediaries as PaginationResult<Intermediary>;
-    }
-
-    const intermediaries = await super.search(params);
-
-    return intermediaries as PaginationResult<Intermediary>;
-  }
-
-  public async list(params: ListIntermediariesParams): Promise<CursorPaginationResult<Intermediary>> {
-    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
-      throw new ApiVersionError('Method is not supported for this API version');
-    }
-
-    const intermediaries = await super.list(params);
-
-    return intermediaries as CursorPaginationResult<Intermediary>;
-  }
 
   public getSuggestions(params: FindIntermediarySuggestionsParams): Promise<Intermediary[]> {
     const queryParams = getSearchParams(params as SearchParams);
@@ -115,9 +99,9 @@ export default class IntermediariesApi extends SystemApi<
     return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/suggestions?${queryParams}`);
   }
 
-  public createMany(intermediaries: CreateIntermediaryParams[]): Promise<Intermediary[]> {
+  public bulkCreate(batches: CreateIntermediaryParams[]): Promise<Intermediary[]> {
     return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/bulk`, 'POST', {
-      intermediaries: intermediaries,
+      intermediaries: batches,
     });
   }
 }

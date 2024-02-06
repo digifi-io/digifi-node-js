@@ -1,9 +1,17 @@
 import { SystemApi } from '../SystemApi';
-import { VariableValue, UserShort, SearchHighlight, PaginationResult, PaginationParams } from '../../types';
+import { VariableValue, UserShort, SearchHighlight, PaginationParams, PaginationResult } from '../../types';
 import { BorrowerType } from '../../enums';
 import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
-import ApiVersion from '../../enums/ApiVersion';
-import ApiVersionError from '../../errors/ApiVersionError';
+
+export enum BorrowerSortField {
+  FullName = 'fullName',
+  IdNumber = 'idNumber',
+  PhoneNumber = 'phoneNumber',
+  Email = 'email',
+  UpdatedAt = 'updatedAt',
+  CreatedAt = 'createdAt',
+  SearchRelevance = 'searchRelevance',
+}
 
 export enum BorrowerDefaultVariable {
   FirstName = 'borrower_first_name',
@@ -49,17 +57,7 @@ export interface UpdateBorrowerParams {
   lockReason?: string;
 }
 
-export enum BorrowerSortField {
-  FullName = 'fullName',
-  IdNumber = 'idNumber',
-  PhoneNumber = 'phoneNumber',
-  Email = 'email',
-  UpdatedAt = 'updatedAt',
-  CreatedAt = 'createdAt',
-  SearchRelevance = 'searchRelevance',
-}
-
-export interface FindBorrowersParams extends PaginationParams<BorrowerSortField>{
+export interface SearchBorrowersParams extends PaginationParams<BorrowerSortField>{
   personalIdNumber?: string;
   companyIdNumber?: string;
   email?: string;
@@ -78,34 +76,21 @@ interface ListBorrowersParams extends CursorPaginationParams {
   idNumber?: string;
 }
 
-export default class BorrowersApi extends SystemApi<
+export interface BorrowersApi {
+  search(params: SearchBorrowersParams): Promise<PaginationResult<Borrower>>;
+  list(params: ListBorrowersParams): Promise<CursorPaginationResult<Borrower>>;
+  findById(id: string): Promise<Borrower>;
+  create(params: CreateBorrowerParams): Promise<Borrower>;
+  update(id: string, params: UpdateBorrowerParams): Promise<Borrower>;
+  delete(id: string): Promise<Borrower>;
+}
+
+export class BorrowersApiService extends SystemApi<
   Borrower,
   CreateBorrowerParams,
   UpdateBorrowerParams,
-  FindBorrowersParams,
+  SearchBorrowersParams,
   ListBorrowersParams
-> {
+> implements BorrowersApi {
   protected path = 'borrowers';
-
-  public async find(params: FindBorrowersParams): Promise<PaginationResult<Borrower>> {
-    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
-      const borrowers = await super.find(params);
-  
-      return borrowers as PaginationResult<Borrower>;
-    }
-
-    const borrowers = await super.search(params);
-
-    return borrowers as PaginationResult<Borrower>;
-  }
-
-  public async list(params: ListBorrowersParams): Promise<CursorPaginationResult<Borrower>> {
-    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
-      throw new ApiVersionError('Method is not supported for this API version');
-    }
-
-    const borrowers = await super.list(params);
-
-    return borrowers as CursorPaginationResult<Borrower>;
-  }
 }

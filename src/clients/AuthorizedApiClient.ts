@@ -4,7 +4,7 @@ class AuthorizedApiClient extends ApiClient implements IApiClient {
   constructor(
     baseUrl: string,
     protected apiKey: string,
-    options?: ApiClientOptions,
+    options: ApiClientOptions,
   ) {
     super(baseUrl, options);
   }
