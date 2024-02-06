@@ -2,13 +2,7 @@ export {
   default as ApplicationDecisionProcessingApi,
   MakeDecisionParams,
   ApplicationDecision,
-  ApplicationDecisionResult,
 } from './ApplicationDecisionProcessingApi';
-export {
-  default as ApplicationDetailsCardsApi,
-  ApplicationDetailsCard,
-  ApplicationVariableConfiguration,
-} from './ApplicationDetailsCardsApi';
 export {
   default as ApplicationDocumentConfigurationApi,
   ApplicationDocumentConfiguration,
@@ -37,40 +31,14 @@ export {
   ExternalIntegrationProcessingResult,
   ProcessApplicationIntegrationParams,
 } from './ApplicationIntegrationProcessingApi';
-export {
-  default as ApplicationsApi,
-  ApplicationDefaultVariable,
-  Application,
-  CreateApplicationParams,
-  UpdateApplicationParams,
-  FindApplicationsParams,
-  UpdateApplicationIntermediaryParams,
-  UpdateApplicationCoBorrowersParams,
-  RunApplicationCalculationsParams,
-  BorrowerIdTarget,
-  ApplicationSortField,
-  VariableFilterParams,
-  VariableFilterValueQueryParam,
-} from './ApplicationsApi';
+export * from './ApplicationsApi';
 export {
   default as ApplicationStatusesApi,
   ApplicationStatus,
   ApplicationStatusRule,
   ApplicationStatusType,
 } from './ApplicationStatusesApi';
-export {
-  default as BorrowerProfileCardsApi,
-  BorrowerProfileCard,
-} from './BorrowerProfileCardsApi';
-export {
-  default as BorrowersApi,
-  Borrower,
-  BorrowerDefaultVariable,
-  CreateBorrowerParams,
-  UpdateBorrowerParams,
-  FindBorrowersParams,
-  BorrowerSortField,
-} from './BorrowersApi';
+export * from './BorrowersApi';
 export {
   default as CommentsApi,
   Comment,
@@ -80,17 +48,7 @@ export {
   CommentAuthorType,
   CommentReferenceType,
 } from './CommentsApi';
-export {
-  default as IntermediariesApi,
-  Intermediary,
-  IntermediaryDefaultValue,
-  CreateIntermediaryParams,
-  UpdateIntermediaryParams,
-  FindIntermediariesParams,
-  IntermediarySortField,
-  FindIntermediarySuggestionsParams,
-  IntermediarySuggestionsSortField,
-} from './IntermediariesApi';
+export * from './IntermediariesApi';
 export {
   default as ProductCalculationsApi,
   ProductCalculation,
@@ -106,22 +64,7 @@ export {
   ApplicationFormPageType,
   ApplicationFormPageBehavior,
 } from './ProductsApi';
-export {
-  default as TasksApi,
-  Task,
-  TaskStatus,
-  CreateTaskParams,
-  UpdateTaskParams,
-  FindTasksParams,
-  TaskSortField,
-  TaskAssigneeType,
-  TaskAssignedBorrower,
-  TaskAssignedIntermediary,
-  TaskApplication,
-  TaskAssignee,
-  BulkCreateTasksParams,
-  BulkCreateTasksResponse,
-} from './TasksApi';
+export * from './TasksApi';
 export {
   default as ApplicationNotesApi,
   ApplicationNote,

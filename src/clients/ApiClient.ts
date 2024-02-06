@@ -4,12 +4,13 @@ import retry from 'retry';
 import FormData from 'form-data';
 import { ApiRequestError, NetworkError } from '../errors';
 import { ResponseHeader } from '../enums/ResponseHeader';
-import ApiVersion from '../enums/ApiVersion';
 
 export type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export type RequestBody = string | { [key: string]: any } | FormData;
 export type ContentType = 'application/json' | 'text/html' | null;
+
+export type LatestApiVersion = '2020-08-27';
 
 interface FetchResponse<T = any> extends Response {
   json<P = T>(): Promise<P>;
@@ -35,10 +36,10 @@ export interface ApiClientLogger {
 }
 
 export interface ApiClientOptions {
+  apiVersion: LatestApiVersion;
   enableIdempotencyHeader?: boolean;
   maxNetworkRetries?: number;
   logger?: ApiClientLogger;
-  apiVersion?: ApiVersion;
 }
 
 interface MakeFetchOptions {
@@ -54,7 +55,6 @@ export interface IApiClient {
     body?: ReqBody,
     options?: Partial<FetchOptions>,
   ): Promise<ResBody>;
-  apiVersion?: ApiVersion
 }
 
 class ApiClient implements IApiClient {
@@ -64,14 +64,12 @@ class ApiClient implements IApiClient {
   protected defaultMaxNetworkRetries = 0;
   protected defaultRetryFactor = 2;
   protected defaultRetryMinTimeout = 1000;
-  public apiVersion?: ApiVersion;
 
   constructor(
     private baseUrl: string,
-    protected options?: ApiClientOptions,
+    protected options: ApiClientOptions,
   ) {
     this.checkStatus = this.checkStatus.bind(this);
-    this.apiVersion = options?.apiVersion;
   }
 
   public async makeCall<ResBody, ReqBody extends RequestBody = RequestBody>(
@@ -181,9 +179,7 @@ class ApiClient implements IApiClient {
   ) {
     const headers = new Headers();
 
-    if (this.apiVersion) {
-      headers.set('api-version', this.apiVersion);
-    }
+    headers.set('api-version', this.options.apiVersion);
 
     if (contentType) {
       headers.set('Accept', contentType);

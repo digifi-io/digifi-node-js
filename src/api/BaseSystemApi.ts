@@ -18,7 +18,7 @@ export abstract class BaseSystemApi<Resource, FindParams = undefined, ListParams
     return this.apiClient.makeCall<PaginationResult<Resource>>(`/${this.path}?${urlSearchParams}`);
   }
 
-  public search(params: FindParams): Promise<PaginationResult<Resource> | Resource[]> {
+  public search(params: FindParams): Promise<PaginationResult<Resource>> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
     return this.apiClient.makeCall<PaginationResult<Resource>>(`/${this.path}/search?${urlSearchParams}`);

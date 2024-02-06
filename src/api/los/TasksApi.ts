@@ -1,119 +1,146 @@
 import { SystemApi } from '../SystemApi';
 import { BorrowerType } from '../../enums';
-import { PaginationParams, PaginationResult, UserShort, VariableValue } from '../../types';
+import { PaginationParams, PaginationResult } from '../../types';
 import { FormulaCondition } from '../../data/models';
+import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
 
-export enum TaskStatus {
-  Done = 'Done',
-  NotDone = 'Not Done',
-  InReview = 'In Review',
-}
-
-export enum TaskAssigneeType {
+export enum ExternalTaskAssigneeType {
   Borrower = 'borrower',
   Intermediary = 'intermediary',
-  Organization = 'organization',
 }
 
-export interface TaskAssignedBorrower {
-  id: string;
-  type: BorrowerType;
-  variables: Record<string, VariableValue>;
+export enum TaskStatus {
+  NotDone = 'Not Done',
+  InProgress = 'In Progress',
+  InReview = 'In Review',
+  Done = 'Done',
+  Cancelled = 'Cancelled',
+  Failed = 'Failed',
 }
 
-export interface TaskAssignedIntermediary {
-  id: string;
-  variables: Record<string, VariableValue>;
+export enum TaskSortField {
+  Title = 'title',
+  Status = 'status',
+  ApplicationId = 'applicationId',
+  CreatedAt = 'createdAt',
+  UpdatedAt = 'updatedAt',
+  Description = 'description',
 }
 
-export interface TaskApplication {
-  id: string;
-  displayId: string;
-  autoPassCondition?: FormulaCondition | null;
-  borrower: {
-    id: string;
-    type: BorrowerType;
-  };
-  teamMembers: string[];
-  variables: Record<string, VariableValue>;
+export interface IUpdateExternalAssigneeParams {
+  assigneeId: string;
+  assigneeType: ExternalTaskAssigneeType;
 }
+
+export interface BaseTaskExternalAssignee {
+  assigneeType: ExternalTaskAssigneeType;
+  id: string;
+}
+
+export interface BorrowerExternalAssignee extends BaseTaskExternalAssignee {
+  name: string;
+  borrowerType: BorrowerType;
+  assigneeType: ExternalTaskAssigneeType.Borrower;
+  isDeleted?: false;
+}
+
+export interface IntermediaryExternalAssignee extends BaseTaskExternalAssignee {
+  id: string;
+  name: string;
+  isDeleted?: false;
+}
+
+export interface DeletedTaskExternalAssignee extends BaseTaskExternalAssignee {
+  isDeleted: true;
+}
+
+export type TaskExternalAssignee = BorrowerExternalAssignee | IntermediaryExternalAssignee | DeletedTaskExternalAssignee;
 
 export interface Task {
   id: string;
-  description: string;
   status: TaskStatus;
-  application: TaskApplication;
   organizationId: string;
+  applicationId: string;
+  productId: string;
+  applicationDisplayId: string;
   createdAt: Date;
   updatedAt: Date;
-  assigneeType: TaskAssigneeType;
-  assignedBorrower?: TaskAssignedBorrower | null;
-  assignedIntermediary?: TaskAssignedIntermediary | null;
+  labelIds: string[];
+  assignedTeamMemberIds: string[];
+  externalAssignee?: TaskExternalAssignee | null;
+  title?: string | null;
+  internalInstructions?: string | null;
+  externalInstructions?: string | null;
   variables?: string[] | null;
   group?: string;
   autoPassCondition?: FormulaCondition | null;
-  blockedStatuses?: Array<{ id: string; name: string }>;
-  dueDate?: Date;
-  createdBy?: UserShort | null;
-  updatedBy?: UserShort | null;
+  dueDateAndTime?: Date | null;
   testing?: boolean;
-}
-
-export type TaskAssignee = {
-  assigneeType: TaskAssigneeType.Borrower;
-  assigneeId: string;
-} | {
-  assigneeType: TaskAssigneeType.Intermediary;
-  assigneeId: string;
-} | {
-  assigneeType: TaskAssigneeType.Organization;
+  blockedApplicationStatusIds?: string[] | null;
+  createdById?: string | null;
+  updatedById?: string | null;
+  sendExternalAssignmentEmail?: boolean;
 }
 
 export interface CreateTaskParams {
   applicationId: string;
-  description: string;
-  assignee: TaskAssignee;
+  title?: string;
   status?: TaskStatus;
-  group?: string | null;
-  blockedStatusesIds?: string[];
-  variables?: string[] | null;
-  autoPassCondition?: string | null;
-  dueDate?: string | null;
+  externalAssignee?: IUpdateExternalAssigneeParams;
+  internalInstructions?: string;
+  externalInstructions?: string;
+  assignedTeamMemberIds?: string[];
+  labelIds?: string[];
+  blockedApplicationStatusIds?: string[];
+  variables?: string[];
+  group?: string;
+  autoPassCondition?: string;
+  dueDateAndTime?: Date;
   uniqSystemIdentifier?: string;
-  shouldSendAssignmentEmail?: boolean;
+  sendExternalAssignmentEmail?: boolean;
+}
+
+export type UpdateTaskLabelsParams = {
+  set: string[];
+} | {
+  add?: string[];
+  remove?: string[];
 }
 
 export interface UpdateTaskParams {
-  description?: string;
   status?: TaskStatus;
-  assignee?: TaskAssignee;
+  title?: string | null;
+  internalInstructions?: string | null;
+  externalInstructions?: string | null;
+  externalAssignee?: IUpdateExternalAssigneeParams | null;
+  dueDateAndTime?: Date | null;
   group?: string | null;
   variables?: string[] | null;
   autoPassCondition?: string | null;
-  blockedStatusesIds?: string[] | null;
-  dueDate?: string | null;
-  shouldSendAssignmentEmail?: boolean;
+  blockedApplicationStatusIds?: string[] | null;
+  assignedTeamMemberIds?: string[];
+  labels?: UpdateTaskLabelsParams;
+  sendExternalAssignmentEmail?: boolean;
 }
 
-export enum TaskSortField {
-  Description = 'description',
-  Status = 'status',
-  ApplicationId = 'applicationId',
-  UpdatedAt = 'updatedAt',
-  DueDate = 'dueDate',
-}
-
-export interface FindTasksParams extends PaginationParams<TaskSortField>{
+export interface SearchTasksParams extends PaginationParams<TaskSortField> {
   statuses?: TaskStatus[];
   nonInStatus?: TaskStatus;
   groups?: string[];
   applicationId?: string;
-  assignedTeamMembersIds?: string[];
-  teamMembersIds?: string[];
-  assigneeId?: string;
-  assigneeType?: TaskAssigneeType;
-  dueUpdatedDateFrom?: Date | string;
-  dueUpdatedDateTo?: Date | string;
+  assignedTeamMemberIds?: Array<'unassigned' | string>;
+  updatedDateFrom?: Date | string;
+  updatedDateTo?: Date | string;
+  dueDateTo?: Date | string;
+  dueDateFrom?: Date | string;
+  externalAssigneeId?: string;
+  externalAssigneeType?: ExternalTaskAssigneeType;
+  labelIds?: string[];
+}
+
+export interface ListTasksParams extends CursorPaginationParams {
+  statuses?: TaskStatus[];
+  applicationId?: string;
 }
 
 export interface BulkCreateTasksParams {
@@ -126,19 +153,24 @@ export interface BulkCreateTasksResponse {
   batch: Task[];
 }
 
-export default class TasksApi extends SystemApi<
+export interface TasksApi {
+  search(params: SearchTasksParams): Promise<PaginationResult<Task>>;
+  list(params: ListTasksParams): Promise<CursorPaginationResult<Task>>;
+  findById(id: string): Promise<Task>;
+  create(params: CreateTaskParams): Promise<Task>;
+  update(id: string, params: UpdateTaskParams): Promise<Task>;
+  bulkCreate(params: BulkCreateTasksParams): Promise<BulkCreateTasksResponse>;
+  delete(id: string): Promise<Task>;
+}
+
+export class TasksApiService extends SystemApi<
   Task,
   CreateTaskParams,
   UpdateTaskParams,
-  FindTasksParams
-> {
+  SearchTasksParams,
+  ListTasksParams
+> implements TasksApi {
   protected path = 'tasks';
-
-  public async find(params: FindTasksParams): Promise<PaginationResult<Task>> {
-    const tasks = await super.find(params);
-
-    return tasks as PaginationResult<Task>;
-  }
 
   public bulkCreate(params: BulkCreateTasksParams) {
     return this.apiClient.makeCall<BulkCreateTasksResponse>(`/${this.path}/batch`, 'POST', params);
