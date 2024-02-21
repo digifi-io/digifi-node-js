@@ -81,3 +81,4 @@ export {
 } from './LayoutConfigurationApi';
 export { default as PortalPageElementsApiService } from './PortalPageElementsApi';
 export * from './PortalPageElementsApi';
+export * from './portal-page-element-types';
