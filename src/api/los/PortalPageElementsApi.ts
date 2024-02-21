@@ -133,7 +133,11 @@ export interface FindPortalPageElements {
   statusId?: string;
 }
 
-export default class PortalPageElementsApi {
+export interface PortalPageElementsApi {
+  find(params: FindPortalPageElements): Promise<PortalPageElement[]>;
+}
+
+export default class PortalPageElementsApiService implements PortalPageElementsApi{
   protected path = 'portal-page-elements';
 
   constructor(

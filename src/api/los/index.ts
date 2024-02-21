@@ -79,26 +79,5 @@ export {
   FindLayoutConfigurationParams,
   BaseLayout,
 } from './LayoutConfigurationApi';
-export {
-  default as PortalPageElementsApi,
-  PortalPageElementType,
-  ElementAlignment,
-  ImageElementAlignment,
-  PageDividerElementLength,
-  TextElementConfig,
-  PageDividerElementConfig,
-  TasksElementConfig,
-  OfferSelectionElementConfig,
-  ImageElementConfig,
-  ButtonElementConfig,
-  TextElement,
-  HeaderTextElement,
-  SubHeaderTextElement,
-  BodyTextElement,
-  PageDividerElement,
-  TasksElement,
-  OfferSelectionElement,
-  ImageElement,
-  ButtonElement,
-  PortalPageElement,
-} from './PortalPageElementsApi';
+export { default as PortalPageElementsApiService } from './PortalPageElementsApi';
+export * from './PortalPageElementsApi';
