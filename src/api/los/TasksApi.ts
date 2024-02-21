@@ -1,5 +1,4 @@
 import { SystemApi } from '../SystemApi';
-import { BorrowerType } from '../../enums';
 import { PaginationParams, PaginationResult } from '../../types';
 import { FormulaCondition } from '../../data/models';
 import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
@@ -32,33 +31,15 @@ export interface IUpdateExternalAssigneeParams {
   assigneeType: ExternalTaskAssigneeType;
 }
 
-export interface BaseTaskExternalAssignee {
+export interface TaskExternalAssignee {
   assigneeType: ExternalTaskAssigneeType;
   id: string;
 }
 
-export interface BorrowerExternalAssignee extends BaseTaskExternalAssignee {
-  name: string;
-  borrowerType: BorrowerType;
-  assigneeType: ExternalTaskAssigneeType.Borrower;
-  isDeleted?: false;
-}
-
-export interface IntermediaryExternalAssignee extends BaseTaskExternalAssignee {
-  id: string;
-  name: string;
-  isDeleted?: false;
-}
-
-export interface DeletedTaskExternalAssignee extends BaseTaskExternalAssignee {
-  isDeleted: true;
-}
-
-export type TaskExternalAssignee = BorrowerExternalAssignee | IntermediaryExternalAssignee | DeletedTaskExternalAssignee;
-
 export interface Task {
   id: string;
   status: TaskStatus;
+  title: string;
   organizationId: string;
   applicationId: string;
   productId: string;
@@ -66,9 +47,9 @@ export interface Task {
   createdAt: Date;
   updatedAt: Date;
   labelIds: string[];
+  version: number;
   assignedTeamMemberIds: string[];
   externalAssignee?: TaskExternalAssignee | null;
-  title?: string | null;
   internalInstructions?: string | null;
   externalInstructions?: string | null;
   variables?: string[] | null;
@@ -84,7 +65,7 @@ export interface Task {
 
 export interface CreateTaskParams {
   applicationId: string;
-  title?: string;
+  title: string;
   status?: TaskStatus;
   externalAssignee?: IUpdateExternalAssigneeParams;
   internalInstructions?: string;
@@ -109,7 +90,7 @@ export type UpdateTaskLabelsParams = {
 
 export interface UpdateTaskParams {
   status?: TaskStatus;
-  title?: string | null;
+  title?: string;
   internalInstructions?: string | null;
   externalInstructions?: string | null;
   externalAssignee?: IUpdateExternalAssigneeParams | null;

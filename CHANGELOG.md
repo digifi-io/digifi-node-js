@@ -1,7 +1,7 @@
 # Changelog
 
-## 5.0.0 - 2024-02-22
-* Added support for the new API Version `2024-02-22`.
+## 5.0.0 - 2024-02-26
+* Added support for the new API Version `2024-02-26`.
 * `ApiClient` now requires the `apiVersion` parameter to be passed via `options`.
 * Removed the `ApiVersion` enum.
 * Removed the `ApiVersionError`.
@@ -23,7 +23,7 @@
   * Removed `assignee` field (use `externalAssignee` and `assignedTeamMemberIds` instead).
   * Renamed `shouldSendAssignmentEmail` to `sendExternalAssignmentEmail`.
   * Added the following fields:
-    * `title` (optional `string`) for the task title.
+    * `title` (required `string`) for the task title.
     * `internalInstructions` (optional `string`) for internal guidance.
     * `externalInstructions` (optional `string`) for external guidance.
     * `dueDateAndTime` (optional `Date`) for the task's due date and time.
