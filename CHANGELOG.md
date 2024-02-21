@@ -35,5 +35,6 @@
 * Removed the `FindTasksParams` interface (use `SearchTasksParams` interface instead).
 * Renamed `TasksApi` class to `TasksApiService` and introduced the `TasksApi` interface with new methods.
 * Updated the `ApplicationsApi`, `BorrowersApi`, and `IntermediariesApi` classes and interfaces accordingly.
+* Added new `findByDisplayId` method to the `ApplicationsApi` interface.
 * Removed deprecated `WebhooksApi` class and related interfaces and enums.
 * Removed deprecated interfaces and fields related to application details, borrower profiles, decision results, and portal settings.

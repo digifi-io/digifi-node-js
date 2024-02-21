@@ -161,6 +161,7 @@ export interface ApplicationsApi {
   search(params: SearchApplicationsParams): Promise<PaginationResult<Application>>;
   list(params: ListApplicationParams): Promise<CursorPaginationResult<Application>>;
   findById(id: string): Promise<Application>;
+  findByDisplayId(displayId: string): Promise<Application>;
   create(params: CreateApplicationParams): Promise<Application>;
   update(id: string, params: UpdateApplicationParams): Promise<Application>;
   updateCoBorrowers(id: string, params: UpdateApplicationCoBorrowersParams): Promise<Application>;
@@ -180,6 +181,10 @@ export class ApplicationsApiService extends SystemApi<
   ListApplicationParams
 > implements ApplicationsApi {
   protected path = 'applications';
+
+  public findByDisplayId(displayId: string): Promise<Application> {
+    return this.apiClient.makeCall<Application>(`/${this.path}/${displayId}?identifierType=displayId`);
+  }
 
   public updateCoBorrowers(applicationId: string, params: UpdateApplicationCoBorrowersParams) {
     return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/coborrowers`, 'PUT', params);

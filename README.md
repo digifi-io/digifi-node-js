@@ -237,6 +237,7 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `search(params: object)` - [search applications](https://docs.digifi.io/reference/search-applications) by `params` object.
   - `list(params: object)` - [lists applications](https://docs.digifi.io/reference/list-applications) by `params` object.
   - `findById(id: string)` - [finds application](https://docs.digifi.io/reference/get-application-1) by `id`.
+  - `findByDisplayId(displayId: string)` - [finds application](https://docs.digifi.io/reference/get-application-1) by `displayId`.
   - `create(params: object)` - [creates application](https://docs.digifi.io/reference/create-application-1) by `params` object.
   - `update(id: string, params: object)` - [updates application](https://docs.digifi.io/reference/update-application-1) by `id` and `params` object.
   - `delete(id: string)` - [deletes application](https://docs.digifi.io/reference/delete-application) by `id`.
