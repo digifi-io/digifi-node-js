@@ -1,5 +1,4 @@
 import { IApiClient, RequestBody } from '../clients';
-import ApiVersion from '../enums/ApiVersion';
 import { BaseSystemApi } from './BaseSystemApi';
 
 export abstract class SystemApi<
@@ -9,13 +8,10 @@ export abstract class SystemApi<
   FindParams = undefined,
   ListParams = undefined
 > extends BaseSystemApi<Resource, FindParams, ListParams> {
-  protected apiVersion?: ApiVersion;
-
   constructor(
     protected apiClient: IApiClient,
   ) {
     super(apiClient);
-    this.apiVersion = apiClient.apiVersion;
   }
 
   public create(params: CreateParams): Promise<Resource> {

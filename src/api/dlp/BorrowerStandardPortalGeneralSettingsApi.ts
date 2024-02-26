@@ -11,14 +11,6 @@ export interface StandardBorrowerPortalConfig {
 export interface BorrowerStandardPortalGeneralSettings {
   config: StandardBorrowerPortalConfig;
   accessPasswordExists: boolean;
-  /**
-   * @deprecated Use config property instead.
-   */
-  borrowerType: BorrowerType;
-  /**
-   * @deprecated Use config property instead.
-   */
-  borrowerLockPeriodDays: number;
 }
 
 export interface BorrowerStandardPortalGeneralSettings {

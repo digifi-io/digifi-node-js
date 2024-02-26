@@ -9,11 +9,6 @@ export interface MakeDecisionParams {
   failureStatusId?: string;
 }
 
-/**
- * @deprecated Use DecisionResult interface instead.
- */
-export type ApplicationDecisionResult = DecisionResult;
-
 export interface ApplicationDecision {
   decisionId: string;
   decisionName: string;
@@ -24,7 +19,7 @@ export interface ApplicationDecision {
   applicationId: string;
   requestDate: Date;
   responseDate: Date;
-  result: ApplicationDecisionResult;
+  result: DecisionResult;
   runBy?: string | null;
 }
 

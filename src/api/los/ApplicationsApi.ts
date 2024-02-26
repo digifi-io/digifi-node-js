@@ -5,19 +5,39 @@ import {
   VariableValue,
   SearchHighlight,
   PaginationParams,
-  PaginationResult,
   ApplicationStatusPermissions,
+  PaginationResult,
 } from '../../types';
 import { CreateIntermediaryParams } from './IntermediariesApi';
 import { BorrowerType, SortDirection } from '../../enums';
 import { ApplicationStatusType } from './ApplicationStatusesApi';
 import { CursorPaginationParams, CursorPaginationResult } from '../../types/Pagination';
-import ApiVersion from '../../enums/ApiVersion';
-import ApiVersionError from '../../errors/ApiVersionError';
 
 export enum ApplicationDefaultVariable {
   LoanAmount = 'loan_amount',
 }
+
+export enum ApplicationSortField {
+  BorrowerFullName = 'borrowerFullName',
+  DisplayId = 'displayId',
+  CreatedAt = 'createdAt',
+  UpdatedAt = 'updatedAt',
+  BorrowerPhoneNumber = 'borrowerPhoneNumber',
+  BorrowerEmail = 'borrowerEmail',
+  LoanAmount = 'loanAmount',
+  Intermediary = 'intermediaryName',
+  SearchRelevance = 'searchRelevance',
+}
+
+export type VariableFilterValueQueryParam = string | string[] | {
+  to?: string;
+  from?: string;
+};
+
+export type VariableFilterParams = { [name: string]: VariableFilterValueQueryParam };
+
+export type BorrowerIdTarget = 'borrower' | 'coborrowers';
+
 
 export interface Application {
   id: string;
@@ -89,33 +109,7 @@ export interface UpdateApplicationParams {
   variables?: Record<string, VariableValue>;
 }
 
-export enum ApplicationSortField {
-  BorrowerFullName = 'borrowerFullName',
-  DisplayId = 'displayId',
-  CreatedAt = 'createdAt',
-  UpdatedAt = 'updatedAt',
-  Status = 'status',
-  BorrowerPhoneNumber = 'borrowerPhoneNumber',
-  BorrowerEmail = 'borrowerEmail',
-  LoanAmount = 'loanAmount',
-  Intermediary = 'intermediaryName',
-  Product = 'productName',
-  SearchRelevance = 'searchRelevance',
-}
-
-interface RangeQueryParam {
-  to?: string;
-  from?: string;
-}
-
-type VariableSimpleFilterValue = string | string[];
-
-export type VariableFilterValueQueryParam = VariableSimpleFilterValue | RangeQueryParam;
-export type VariableFilterParams = { [name: string]: VariableFilterValueQueryParam };
-
-export type BorrowerIdTarget = 'borrower' | 'coborrowers';
-
-export interface FindApplicationsParams extends PaginationParams<ApplicationSortField>{
+export interface SearchApplicationsParams extends PaginationParams<ApplicationSortField>{
   displayId?: string;
   statusIds?: string[];
   labelIds?: string[];
@@ -126,11 +120,9 @@ export interface FindApplicationsParams extends PaginationParams<ApplicationSort
   updatedAtFrom?: Date;
   updatedAtTo?: Date;
   borrowerId?: string;
-  borrowerIds?: string[];
   productId?: string;
   formattedSearch?: string;
   visibleOnBoard?: boolean;
-  originalApplication?: string;
   onlyInProgress?: boolean;
   searchByFields?: string[];
   searchByVariables?: string[];
@@ -143,7 +135,7 @@ export interface FindApplicationsParams extends PaginationParams<ApplicationSort
 
 export interface ListApplicationParams extends CursorPaginationParams {
   borrowerId?: string;
-  statusesIds?: string[];
+  statusIds?: string[];
   productId?: string;
 }
 
@@ -165,35 +157,33 @@ export interface RunApplicationCalculationsParams {
 
 export type UpdateApplicationCoBorrowersParams = DeleteCoBorrowerParams | AddCoBorrowersParams;
 
-export default class ApplicationsApi extends SystemApi<
+export interface ApplicationsApi {
+  search(params: SearchApplicationsParams): Promise<PaginationResult<Application>>;
+  list(params: ListApplicationParams): Promise<CursorPaginationResult<Application>>;
+  findById(id: string): Promise<Application>;
+  findByDisplayId(displayId: string): Promise<Application>;
+  create(params: CreateApplicationParams): Promise<Application>;
+  update(id: string, params: UpdateApplicationParams): Promise<Application>;
+  updateCoBorrowers(id: string, params: UpdateApplicationCoBorrowersParams): Promise<Application>;
+  updateIntermediary(id: string, params: UpdateApplicationIntermediaryParams): Promise<Application>;
+  getVariables(id: string, variablesToInclude?: string[]): Promise<Record<string, VariableValue>>;
+  runCalculations(id: string, params: RunApplicationCalculationsParams): Promise<Application>;
+  addLabels(id: string, labelsIds: string[]): Promise<Application>;
+  addTeamMembers(id: string, teamMembersIds: string[]): Promise<Application>;
+  delete(id: string): Promise<Application>;
+}
+
+export class ApplicationsApiService extends SystemApi<
   Application,
   CreateApplicationParams,
   UpdateApplicationParams,
-  FindApplicationsParams,
+  SearchApplicationsParams,
   ListApplicationParams
-> {
+> implements ApplicationsApi {
   protected path = 'applications';
 
-  public async find(params: FindApplicationsParams): Promise<PaginationResult<Application>> {
-    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
-      const applications = await super.find(params);
-  
-      return applications as PaginationResult<Application>;
-    }
-
-    const applications = await super.search(params);
-
-    return applications as PaginationResult<Application>;
-  }
-
-  public async list(params: ListApplicationParams): Promise<CursorPaginationResult<Application>> {
-    if (!this.apiVersion || this.apiVersion === ApiVersion.Legacy) {
-      throw new ApiVersionError('Method is not supported for this API version');
-    }
-
-    const applications = await super.list(params);
-
-    return applications as CursorPaginationResult<Application>;
+  public findByDisplayId(displayId: string): Promise<Application> {
+    return this.apiClient.makeCall<Application>(`/${this.path}/${displayId}?identifierType=displayId`);
   }
 
   public updateCoBorrowers(applicationId: string, params: UpdateApplicationCoBorrowersParams) {
