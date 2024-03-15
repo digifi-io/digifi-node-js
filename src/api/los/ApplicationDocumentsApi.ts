@@ -55,6 +55,7 @@ export interface CreateApplicationDocumentParams extends ApplicationDocumentFile
 export interface CreateManyApplicationDocumentParams {
   files: ApplicationDocumentFileUploadParams[];
   accessPermissions?: ApplicationDocumentAccessPermission[];
+  taskId?: string;
 }
 
 export interface FindApplicationDocumentsParams {
@@ -130,6 +131,10 @@ export default class ApplicationDocumentsApi extends BaseSystemApi<ApplicationDo
     });
 
     formData.append('applicationId', applicationId);
+
+    if (params.taskId) {
+      formData.append('taskId', params.taskId);
+    }
 
     if (params.accessPermissions) {
       formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
