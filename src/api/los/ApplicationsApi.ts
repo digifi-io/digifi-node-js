@@ -155,6 +155,10 @@ export interface RunApplicationCalculationsParams {
   variablesToRun?: string[];
 }
 
+export interface RunAutomationWorkflowParams {
+  automationWorkflowId: string;
+}
+
 export type UpdateApplicationCoBorrowersParams = DeleteCoBorrowerParams | AddCoBorrowersParams;
 
 export interface ApplicationsApi {
@@ -171,6 +175,7 @@ export interface ApplicationsApi {
   addLabels(id: string, labelsIds: string[]): Promise<Application>;
   addTeamMembers(id: string, teamMembersIds: string[]): Promise<Application>;
   delete(id: string): Promise<Application>;
+  runAutomation(id: string, params: RunAutomationWorkflowParams): Promise<void>;
 }
 
 export class ApplicationsApiService extends SystemApi<
@@ -220,5 +225,9 @@ export class ApplicationsApiService extends SystemApi<
     return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/team-members`, 'POST', {
       teamMembersIds,
     });
+  }
+
+  public runAutomation(applicationId: string, params: RunAutomationWorkflowParams) {
+    return this.apiClient.makeCall<void>(`/${this.path}/${applicationId}/run-automation`, 'POST', params);
   }
 }
