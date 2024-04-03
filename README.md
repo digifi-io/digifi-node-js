@@ -247,6 +247,7 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `runCalculations(id: string, params: object)` - [re-runs applications calculations](https://docs.digifi.io/reference/re-run-application-calculations) by `id` and optional `params` object (provide `variablesToRun` in `params` object to re-run only specified variables).
   - `addLabels(id: string, labelsIds: string[])` - adds labels to application by `id`.
   - `addTeamMembers(id: string, teamMembersIds: string[])` - adds team members to application by `id`.
+  - `runAutomation(id: string, params: object)` - [triggers automation workflow on application](https://docs.digifi.io/reference/run-application-automation) by `id` and `params` object.
 - `new ApplicationStatusesApi(apiClient: ApiClient)` - api service for application statuses management.
   - `find(productId: string)` - [finds application statuses](https://docs.digifi.io/reference/get-application-statuses) for current organization and mode (depends on `api-key` provided to api client) by `productId`.
 - `new BorrowersApiService(apiClient: ApiClient)` - api service for borrowers management.
