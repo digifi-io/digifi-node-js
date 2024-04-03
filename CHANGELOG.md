@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.1 - 2024-04-03
+* Added new `runAutomation` method to the `ApplicationsApi` interface.
+* Added `taskId` (optional `string`) to the `CreateManyApplicationDocumentParams` interface.
+
 ## 5.0.0 - 2024-02-26
 * Added support for the new API Version `2024-02-26`.
 * `ApiClient` now requires the `apiVersion` parameter to be passed via `options`.
