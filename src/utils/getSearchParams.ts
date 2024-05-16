@@ -1,4 +1,4 @@
-import { SearchParams } from '../api/BaseSystemApi';
+import { SearchParams } from '../api/base';
 import { stringify } from 'qs';
 
 const getSearchParams = (params: SearchParams = {}) => {
