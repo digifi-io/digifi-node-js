@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.0.0 - 2024-05-21
+* Added `DigifiApi` class that can be used to access all the APIs.
+* Renamed `BorrowerStandardPortalLegalDocumentsApi` was to `BorrowerStandardPortalLegalConsentsRestApi`.
+* Renamed all `*ApiService` classes to `*RestApi`.
+* Renamed all `*Api` classes to `*RestApi`.
+* Introduced interfaces to access API services.
+* `AccountsRestApi`, `EmailVerificationRestApi`, `InvitesRestApi`, `PhoneVerificationRestApi`, 
+  `ResetPasswordRestApi`, `SessionsRestApi` classes became abstract.
+* Introduced following classes: `BorrowerAccountsRestApi`, `BorrowerEmailVerificationRestApi`, 
+  `BorrowerInvitesRestApi`, `BorrowerPhoneVerificationRestApi`, `BorrowerResetPasswordRestApi`, 
+  `BorrowerSessionsRestApi`, `IntermediaryAccountsRestApi`, `IntermediaryEmailVerificationRestApi`, 
+  `IntermediaryInvitesRestApi`,`IntermediaryPhoneVerificationRestApi`, `IntermediaryResetPasswordRestApi`, 
+  `IntermediarySessionsRestApi`.
+
 ## 5.1.0 - 2024-04-03
 * Added new `runAutomation` method to the `ApplicationsApi` interface.
 * Added `taskId` (optional `string`) to the `CreateManyApplicationDocumentParams` interface.

@@ -31,7 +31,8 @@ This package provides `API Clients` and `API Services` to help you communicate w
 
 First, you need to create `API Client` that requires url to DigiFi platform (this url can be different if you're using dedicated platform solution) and [api-key](https://docs.digifi.io/reference/digifi-api#api-authentication).
 
-After `API Client` was initialized - you can create `API Service` and start communication with to DigiFi platform API.
+After `API Client` was initialized - you can create `DigiFi API Service` and start communication with to DigiFi platform 
+API.
 
 <!-- prettier-ignore -->
 ```js
@@ -41,9 +42,9 @@ const apiClient = new Digifi.AuthorizedApiClient('https://cloud.digifi.io/api', 
   apiVersion: '2024-02-26',
 });
 
-const applicationsApi = new Digifi.ApplicationsApiService(apiClient);
+const digifiApi = new Digifi.DigifiApi(apiClient);
 
-const { items, total } = await applicationsApi.find({ productId: '63d...' });
+const { items, total } = await digifiApi.applications.find({ productId: '63d...' });
 
 console.log(items);
 ```
@@ -53,13 +54,13 @@ console.log(items);
 DigiFi maintains types for the latest API Version.
 
 ```ts
-import { AuthorizedApiClient, CreateApplicationParams, Application, ApplicationsApiService } from '@digifi/digifi-node-js';
+import { AuthorizedApiClient, CreateApplicationParams, Application, DigifiApi } from '@digifi/digifi-node-js';
 
 const apiClient = new AuthorizedApiClient('https://cloud.digifi.io/api', 'digifi-...', {
   apiVersion: '2024-02-26',
 });
 
-const applicationsApi = new ApplicationsApiService(apiClient);
+const digifiApi = new DigifiApi(apiClient);
 
 const createApplication = async () => {
   const params: CreateApplicationParams = {
@@ -67,7 +68,7 @@ const createApplication = async () => {
     ...,
   };
 
-  const application: Application = await applicationsApi.create(params);
+  const application: Application = await digifiApi.applications.create(params);
 
   console.log(application.id);
 };
@@ -77,7 +78,7 @@ createApplication();
 
 ## Configuration
 
-To initialize `API Service` you need to create API client before.
+To initialize `DigiFi API Service` you need to create API client before.
 Here is an example how to achieve that:
 
 ```new AuthorizedApiClient(baseUrl: string, apiKey: string, options: object)``` - default API client with authorization. Requires ```baseUrl``` of DigiFi Platform API endpoint as first argument, [api-key](https://docs.digifi.io/reference/digifi-api#api-authentication) as second argument and [apiVersion](https://docs.digifi.io/reference/digifi-api#api-authentication) in `options` object as third argument.
@@ -146,40 +147,74 @@ console.log(borrower.id);
 
 Here the list of `API Services` that DigiFi Node JS Library provides:
 
-- `new AccountsApi(apiClient: ApiClient, reference: 'borrowers' | 'intermediaries')` - api service for borrower/intermediary (depends on `reference` argument) accounts.
-  - `findAccountByEmail(email: string)` - returns [borrower](https://docs.digifi.io/reference/find-borrower-user-account)/[intermediary](https://docs.digifi.io/reference/find-borrower-user-account-email) (depends on `reference` passed to the service) account.
-  - `createAccount(accountParams: object, refreshTokenExpirationTimeMinutes?: number)` - creates and returns [borrower](https://docs.digifi.io/reference/create-borrower-account)/[intermediary](https://docs.digifi.io/reference/create-intermediary-account) (depends on `reference` passed to the service) account.
-  - `getCurrentUser(accountAccessToken: string)` - returns current [borrower](https://docs.digifi.io/reference/find-borrower-user-account-token)/[intermediary](https://docs.digifi.io/reference/find-borrower-user-account-token-1) (depends on `reference` passed to the service) account by `accountAccessToken`.
-  - `sendUpdatePhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - send code that confirms phone update for [borrower](https://docs.digifi.io/reference/send-code-to-update-phone-number)/[intermediary](https://docs.digifi.io/reference/send-update-phone-number-sms-code) (depends on `reference` passed to the service) account.
-  - `updatePhoneNumber(code: string, accountAccessToken: string)` - confirms phone update for [borrower](https://docs.digifi.io/reference/verify-code-update-phone-number)/[intermediary](https://docs.digifi.io/reference/update-phone-number-by-verifying-code) (depends on `reference` passed to the service) by `code` and `accountAccessToken`.
-  - `sendAddPhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - send code that confirms phone adding for [borrower](https://docs.digifi.io/reference/send-code-to-add-phone-number)/[intermediary](https://docs.digifi.io/reference/send-code-to-add-phone-number-intermediary) (depends on `reference` passed to the service) account.
+- `new BorrowerAccountsApi(apiClient: ApiClient)` - api service for borrower accounts.
+  - `findAccountByEmail(email: string)` - returns [borrower](https://docs.digifi.io/reference/find-borrower-user-account) account.
+  - `createAccount(accountParams: object, refreshTokenExpirationTimeMinutes?: number)` - creates and returns [borrower](https://docs.digifi.io/reference/create-borrower-account) account.
+  - `getCurrentUser(accountAccessToken: string)` - returns current [borrower](https://docs.digifi.io/reference/find-borrower-user-account-token) account by `accountAccessToken`.
+  - `sendUpdatePhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - send code that confirms phone update for [borrower](https://docs.digifi.io/reference/send-code-to-update-phone-number) account.
+  - `updatePhoneNumber(code: string, accountAccessToken: string)` - confirms phone update for [borrower](https://docs.digifi.io/reference/verify-code-update-phone-number) by `code` and `accountAccessToken`.
+  - `sendAddPhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - send code that confirms phone adding for [borrower](https://docs.digifi.io/reference/send-code-to-add-phone-number) account.
   - `addPhoneNumber(code: string, accountAccessToken: string)` - confirms add phone to [borrower](https://docs.digifi.io/reference/verify-code-add-phone-number)/[intermediary](https://docs.digifi.io/reference/verify-code-add-phone-number-intermediary) (depends on `reference` passed to the service) by `code` and `accountAccessToken`.
-  - `deletePhoneNumber(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - deletes phone for [borrower](https://docs.digifi.io/reference/delete-phone-number)/[intermediary](https://docs.digifi.io/reference/delete-phone-number-1) (depends on `reference` passed to the service) by `accountAccessToken` and `accountPasswordValidationToken`.
-  - `sendUpdateEmailCode(email: string, accountAccessToken: string, accountPasswordValidationToken: string)` - sends update email code for [borrower](https://docs.digifi.io/reference/send-update-email-verification-code)/[intermediary](https://docs.digifi.io/reference/send-update-email-verification-code-1) (depends on `reference` passed to the service) to account by `accountAccessToken` and `accountPasswordValidationToken`.
-  - `updateEmailAddress(code: string, accountAccessToken: string)` - confirms email update for [borrower](https://docs.digifi.io/reference/update-email-address-by-verifying-code)/[intermediary](https://docs.digifi.io/reference/update-email-address-by-verifying-code-1) (depends on `reference` passed to the service) for account by `accountAccessToken`.
-  - `createPasswordValidationToken(password: string, accountAccessToken: string)` - creates password validation token for [borrower](https://docs.digifi.io/reference/create-password-validation-token)/[intermediary](https://docs.digifi.io/reference/create-password-validation-token-1) (depends on `reference` passed to the service) account by `password` and `accountAccessToken`.
-  - `updatePassword(oldPassword: string, newPassword: string, accountAccessToken: string)` - updates password for [borrower](https://docs.digifi.io/reference/update-password)/[intermediary](https://docs.digifi.io/reference/update-password-1) (depends on `reference` passed to the service) account.
-  - `find(params: object)` - finds [borrower](https://docs.digifi.io/reference/search-borrower-accounts)/[intermediary](https://docs.digifi.io/reference/search-intermediary-accounts) (depends on `reference` passed to the service) accounts by `params` object.
-- `new EmailVerificationApi(apiClient: ApiClient, reference: 'borrowers' | 'intermediaries')` - api service for borrower/intermediary (depends on `reference` argument) accounts email verification.
-  - `sendVerificationEmail(accountAccessToken: string)` - sends verification email for [borrower](https://docs.digifi.io/reference/send-email-verification-code)/[intermediary](https://docs.digifi.io/reference/send-email-verification-code-1) (depends on `reference` passed to the service) account by `accountAccessToken`.
-  - `verifyEmail(code: string, accountAccessToken: string)` - verifies email for [borrower](https://docs.digifi.io/reference/verify-email-verification-code)/[intermediary](https://docs.digifi.io/reference/verify-email-verification-code-1) (depends on `reference` passed to the service) account using `code` by `accountAccessToken`.
-- `new InvitesApi(apiClient: ApiClient, reference: 'borrowers' | 'intermediaries')` - api service for borrower/intermediary (depends on `reference` argument) invitation management.
-  - `acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [borrower](https://docs.digifi.io/reference/create-account-accept-invitation)/[intermediary](https://docs.digifi.io/reference/create-account-accept-invitation-1) (depends on `reference` passed to the service) account.
-  - `getInviteInfo(token: string)` - retrieves invitation information for [borrower](https://docs.digifi.io/reference/get-user-info-from-invitation-token)/[intermediary](https://docs.digifi.io/reference/get-user-info-from-invitation-token-1) (depends on `reference` passed to the service) account by `token`.
-- `new PhoneVerificationApi(apiClient: ApiClient, reference: 'borrowers' | 'intermediaries')` - api service for borrower/intermediary (depends on `reference` argument) phone verification management.
-  - `sendMfaCode(phone: string, accountAccessToken: string)` - sends mfa code for [borrower](https://docs.digifi.io/reference/borrower-send-2fa-phone-code)/[intermediary](https://docs.digifi.io/reference/send-2fa-sms-phone-code) (depends on `reference` passed to the service) account phone by `accountAccessToken`.
-  - `verifyMfaCode(code: string, accountAccessToken: string)` - verifies mfa code for [borrower](https://docs.digifi.io/reference/borrower-verify-2fa-phone-code)/[intermediary](https://docs.digifi.io/reference/verify-2fa-sms-phone-code) (depends on `reference` passed to the service) account by `accountAccessToken`.
-- `new ResetPasswordApi(apiClient: ApiClient, reference: 'borrowers' | 'intermediaries')` - api service for borrower/intermediary (depends on `reference` argument) account reset password management.
-  - `sendResetPasswordLink(email: string)` - sends reset password link to [borrower](https://docs.digifi.io/reference/send-reset-password-emaillink)/[intermediary](https://docs.digifi.io/reference/send-reset-password-link) (depends on `reference` passed to the service) account email.
-  - `resetPassword(password: string, resetPasswordToken: string)` - resets password for [borrower](https://docs.digifi.io/reference/reset-password)/[intermediary](https://docs.digifi.io/reference/reset-password-1) (depends on `reference` passed to the service) account by `resetPasswordToken`.
-  - `getResetPasswordTokenInfo(resetPasswordToken: string)` - retrieves reset password token info for [borrower](https://docs.digifi.io/reference/get-user-info-from-reset-password-token)/[intermediary](https://docs.digifi.io/reference/get-user-info-from-reset-password-token-1) (depends on `reference` passed to the service) account by `resetPasswordToken`.
-- `new SessionsApi(apiClient: ApiClient, reference: 'borrowers' | 'intermediaries')` - api service for borrower/intermediary (depends on `reference` argument) account session management.
-  - `createSession(email: string, password: string, refreshTokenExpirationTimeMinutes?: number)` - creates session for [borrower](https://docs.digifi.io/reference/sign-in-borrower-create-session)/[intermediary](https://docs.digifi.io/reference/sign-in-intermediary-create-session) (depends on `reference` passed to the service) account.
-  - `createSessionWithPhoneVerificationCode(phoneVerificationCode: string, refreshTokenExpirationTimeMinutes?: number)` - creates session for [borrower](https://docs.digifi.io/reference/sign-in-borrower-create-session)/[intermediary](https://docs.digifi.io/reference/sign-in-intermediary-create-session) (depends on `reference` passed to the service) account by `phoneVerificationCode`.
-  - `sendPhoneVerificationCode(phone: string)` - sends phone verification code for [borrower](https://docs.digifi.io/reference/sign-in-borrower-send-phone-verification-code)/[intermediary](https://docs.digifi.io/reference/sign-in-send-phone-verification-code) (depends on `reference` passed to the service) account by `phone`.
-  - `validateToken(accountAccessToken: string)` - validates access token for [borrower](https://docs.digifi.io/reference/verify-session-is-active)/[intermediary](https://docs.digifi.io/reference/verify-session-is-active-1) (depends on `reference` passed to the service) account.
-  - `logout(accountAccessToken: string)` - kills session associated with [borrower](https://docs.digifi.io/reference/logout-borrower-end-session)/[intermediary](https://docs.digifi.io/reference/logout-borrower) (depends on `reference` passed to the service) account by `accountAccessToken`.
-  - `resignAccessToken(accountRefreshToken: string)` - resign access token for [borrower](https://docs.digifi.io/reference/sign-in-borrower-create-session)/[intermediary](https://docs.digifi.io/reference/sign-in-intermediary-create-session) (depends on `reference` passed to the service) account by `accountRefreshToken`.
+  - `deletePhoneNumber(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - deletes phone for [borrower](https://docs.digifi.io/reference/delete-phone-number) by `accountAccessToken` and `accountPasswordValidationToken`.
+  - `sendUpdateEmailCode(email: string, accountAccessToken: string, accountPasswordValidationToken: string)` - sends update email code for [borrower](https://docs.digifi.io/reference/send-update-email-verification-code) to account by `accountAccessToken` and `accountPasswordValidationToken`.
+  - `updateEmailAddress(code: string, accountAccessToken: string)` - confirms email update for [borrower](https://docs.digifi.io/reference/update-email-address-by-verifying-code) for account by `accountAccessToken`.
+  - `createPasswordValidationToken(password: string, accountAccessToken: string)` - creates password validation token for [borrower](https://docs.digifi.io/reference/create-password-validation-token) account by `password` and `accountAccessToken`.
+  - `updatePassword(oldPassword: string, newPassword: string, accountAccessToken: string)` - updates password for [borrower](https://docs.digifi.io/reference/update-password)) account.
+  - `find(params: object)` - finds [borrower](https://docs.digifi.io/reference/search-borrower-accounts) accounts by `params` object.
+- `new BorrowerEmailVerificationApi(apiClient: ApiClient)` - api service for borrower accounts email verification.
+  - `sendVerificationEmail(accountAccessToken: string)` - sends verification email for [borrower](https://docs.digifi.io/reference/send-email-verification-code) account by `accountAccessToken`.
+  - `verifyEmail(code: string, accountAccessToken: string)` - verifies email for [borrower](https://docs.digifi.io/reference/verify-email-verification-code) account using `code` by `accountAccessToken`.
+- `new BorrowerInvitesApi(apiClient: ApiClient)` - api service for borrower invitation management.
+  - `acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [borrower](https://docs.digifi.io/reference/create-account-accept-invitation) account.
+  - `getInviteInfo(token: string)` - retrieves invitation information for [borrower](https://docs.digifi.io/reference/get-user-info-from-invitation-token) account by `token`.
+- `new BorrowerPhoneVerificationApi(apiClient: ApiClient)` - api service for borrower phone verification management.
+  - `sendMfaCode(phone: string, accountAccessToken: string)` - sends mfa code for [borrower](https://docs.digifi.io/reference/borrower-send-2fa-phone-code) account phone by `accountAccessToken`.
+  - `verifyMfaCode(code: string, accountAccessToken: string)` - verifies mfa code for [borrower](https://docs.digifi.io/reference/borrower-verify-2fa-phone-code) account by `accountAccessToken`.
+- `new BorrowerResetPasswordApi(apiClient: ApiClient)` - api service for borrower account reset password management.
+  - `sendResetPasswordLink(email: string)` - sends reset password link to [borrower](https://docs.digifi.io/reference/send-reset-password-emaillink) account email.
+  - `resetPassword(password: string, resetPasswordToken: string)` - resets password for [borrower](https://docs.digifi.io/reference/reset-password) account by `resetPasswordToken`.
+  - `getResetPasswordTokenInfo(resetPasswordToken: string)` - retrieves reset password token info for [borrower](https://docs.digifi.io/reference/get-user-info-from-reset-password-token) account by `resetPasswordToken`.
+- `new BorrowerSessionsApi(apiClient: ApiClient)` - api service for borrower account session management.
+  - `createSession(email: string, password: string, refreshTokenExpirationTimeMinutes?: number)` - creates session for [borrower](https://docs.digifi.io/reference/sign-in-borrower-create-session) account.
+  - `createSessionWithPhoneVerificationCode(phoneVerificationCode: string, refreshTokenExpirationTimeMinutes?: number)` - creates session for [borrower](https://docs.digifi.io/reference/sign-in-borrower-create-session) account by `phoneVerificationCode`.
+  - `sendPhoneVerificationCode(phone: string)` - sends phone verification code for [borrower](https://docs.digifi.io/reference/sign-in-borrower-send-phone-verification-code) account by `phone`.
+  - `validateToken(accountAccessToken: string)` - validates access token for [borrower](https://docs.digifi.io/reference/verify-session-is-active) account.
+  - `logout(accountAccessToken: string)` - kills session associated with [borrower](https://docs.digifi.io/reference/logout-borrower-end-session) account by `accountAccessToken`.
+  - `resignAccessToken(accountRefreshToken: string)` - resign access token for [borrower](https://docs.digifi.io/reference/sign-in-borrower-create-session) account by `accountRefreshToken`.
+- `new IntermediaryAccountsApi(apiClient: ApiClient)` - api service for intermediary accounts.
+  - `findAccountByEmail(email: string)` - returns [intermediary](https://docs.digifi.io/reference/find-borrower-user-account-email) account.
+  - `createAccount(accountParams: object, refreshTokenExpirationTimeMinutes?: number)` - creates and returns [intermediary](https://docs.digifi.io/reference/create-intermediary-account) account.
+  - `getCurrentUser(accountAccessToken: string)` - returns current [intermediary](https://docs.digifi.io/reference/find-borrower-user-account-token-1) account by `accountAccessToken`.
+  - `sendUpdatePhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - send code that confirms phone update for [intermediary](https://docs.digifi.io/reference/send-update-phone-number-sms-code) account.
+  - `updatePhoneNumber(code: string, accountAccessToken: string)` - confirms phone update for [intermediary](https://docs.digifi.io/reference/update-phone-number-by-verifying-code) by `code` and `accountAccessToken`.
+  - `sendAddPhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - send code that confirms phone adding for [intermediary](https://docs.digifi.io/reference/send-code-to-add-phone-number-intermediary) account.
+  - `addPhoneNumber(code: string, accountAccessToken: string)` - confirms add phone to [intermediary](https://docs.digifi.io/reference/verify-code-add-phone-number-intermediary) by `code` and `accountAccessToken`.
+  - `deletePhoneNumber(phone: string, accountAccessToken: string, accountPasswordValidationToken: string)` - deletes phone for [intermediary](https://docs.digifi.io/reference/delete-phone-number-1) by `accountAccessToken` and `accountPasswordValidationToken`.
+  - `sendUpdateEmailCode(email: string, accountAccessToken: string, accountPasswordValidationToken: string)` - sends update email code for [intermediary](https://docs.digifi.io/reference/send-update-email-verification-code-1) to account by `accountAccessToken` and `accountPasswordValidationToken`.
+  - `updateEmailAddress(code: string, accountAccessToken: string)` - confirms email update for [intermediary](https://docs.digifi.io/reference/update-email-address-by-verifying-code-1)for account by `accountAccessToken`.
+  - `createPasswordValidationToken(password: string, accountAccessToken: string)` - creates password validation token for [intermediary](https://docs.digifi.io/reference/create-password-validation-token-1) account by `password` and `accountAccessToken`.
+  - `updatePassword(oldPassword: string, newPassword: string, accountAccessToken: string)` - updates password for[intermediary](https://docs.digifi.io/reference/update-password-1) account.
+  - `find(params: object)` - finds [intermediary](https://docs.digifi.io/reference/search-intermediary-accounts) accounts by `params` object.
+- `new IntermediaryEmailVerificationApi(apiClient: ApiClient)` - api service for intermediary accounts email verification.
+  - `sendVerificationEmail(accountAccessToken: string)` - sends verification email for [intermediary](https://docs.digifi.io/reference/send-email-verification-code-1) account by `accountAccessToken`.
+  - `verifyEmail(code: string, accountAccessToken: string)` - verifies email for [intermediary](https://docs.digifi.io/reference/verify-email-verification-code-1) account using `code` by `accountAccessToken`.
+- `new IntermediaryInvitesApi(apiClient: ApiClient)` - api service for intermediary invitation management.
+  - `acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [intermediary](https://docs.digifi.io/reference/create-account-accept-invitation-1) account.
+  - `getInviteInfo(token: string)` - retrieves invitation information for [intermediary](https://docs.digifi.io/reference/get-user-info-from-invitation-token-1) account by `token`.
+- `new IntermediaryPhoneVerificationApi(apiClient: ApiClient)` - api service for borrower/intermediary phone verification management.
+  - `sendMfaCode(phone: string, accountAccessToken: string)` - sends mfa code for [intermediary](https://docs.digifi.io/reference/send-2fa-sms-phone-code) account phone by `accountAccessToken`.
+  - `verifyMfaCode(code: string, accountAccessToken: string)` - verifies mfa code for [intermediary](https://docs.digifi.io/reference/verify-2fa-sms-phone-code) account by `accountAccessToken`.
+- `new IntermediaryResetPasswordApi(apiClient: ApiClient)` - api service for borrower/intermediary account reset password management.
+  - `sendResetPasswordLink(email: string)` - sends reset password link to [intermediary](https://docs.digifi.io/reference/send-reset-password-link) (depends on `reference` passed to the service) account email.
+  - `resetPassword(password: string, resetPasswordToken: string)` - resets password for [intermediary](https://docs.digifi.io/reference/reset-password-1) account by `resetPasswordToken`.
+  - `getResetPasswordTokenInfo(resetPasswordToken: string)` - retrieves reset password token info for [intermediary](https://docs.digifi.io/reference/get-user-info-from-reset-password-token-1)  account by `resetPasswordToken`.
+- `new IntermediarySessionsApi(apiClient: ApiClient)` - api service for intermediary account session management.
+  - `createSession(email: string, password: string, refreshTokenExpirationTimeMinutes?: number)` - creates session for [intermediary](https://docs.digifi.io/reference/sign-in-intermediary-create-session) account.
+  - `createSessionWithPhoneVerificationCode(phoneVerificationCode: string, refreshTokenExpirationTimeMinutes?: number)` - creates session for [intermediary](https://docs.digifi.io/reference/sign-in-intermediary-create-session) account by `phoneVerificationCode`.
+  - `sendPhoneVerificationCode(phone: string)` - sends phone verification code for [intermediary](https://docs.digifi.io/reference/sign-in-send-phone-verification-code)  account by `phone`.
+  - `validateToken(accountAccessToken: string)` - validates access token for [intermediary](https://docs.digifi.io/reference/verify-session-is-active-1) account.
+  - `logout(accountAccessToken: string)` - kills session associated with [intermediary](https://docs.digifi.io/reference/logout-borrower) account by `accountAccessToken`.
+  - `resignAccessToken(accountRefreshToken: string)` - resign access token for [intermediary](https://docs.digifi.io/reference/sign-in-intermediary-create-session) account by `accountRefreshToken`. 
 - `new UsersApi(apiClient: ApiClient)` - api service for users management.
   - `find(params: object)` - [finds organization users](https://docs.digifi.io/reference/search-team-members) by `params` object.
 - `new VariablesApi(apiClient: ApiClient)` - api service for variables management.
@@ -190,8 +225,9 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `delete(id: string)` - [deletes organization decision](https://docs.digifi.io/reference/delete-decision-results) by `id`.
 - `new BorrowerStandardPortalGeneralSettingsApi(apiClient: ApiClient)` - api service for borrower standard portal settings management.
   - `getGeneralSettings()` - retrieves general settings of standard borrower portal for current organization.
-- `new BorrowerStandardPortalLegalDocumentApi(apiClient)` - api service for borrower standard portal legal documents management.
-  - `getLegalDocuments()` - retrieves borrower standard portal legal documents for current organization.
+- `new BorrowerStandardPortalLegalConsentsApi(apiClient)` - api service for borrower standard portal legal consents 
+  management.
+  - `getLegalConsents()` - retrieves borrower standard portal legal consents for current organization.
 - `new BrandingApi(apiClient: ApiClient)` - api service for organization branding management.
   - `getBranding()` - [retrieves current organization branding](https://docs.digifi.io/reference/get-branding-data).
   - `getLogo()` - [retrieves current organization logo](https://docs.digifi.io/reference/get-branding-logo).
