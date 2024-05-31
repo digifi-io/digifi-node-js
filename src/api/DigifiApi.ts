@@ -1,4 +1,4 @@
-import { IApiClient } from '../clients';
+import { AuthorizedApiClient, IApiClient, ApiClientOptions } from '../clients';
 import {
   ApplicationDecisionProcessingApi,
   ApplicationDecisionProcessingRestApi,
@@ -126,9 +126,15 @@ class DigifiApi {
   public variables: VariablesApi;
   public webhookEndpoints: WebhookEndpointsApi;
 
+  private readonly apiClient: IApiClient;
+
   constructor(
-    private apiClient: IApiClient,
+    private baseUrl: string,
+    protected apiKey: string,
+    protected options: ApiClientOptions,
   ) {
+    this.apiClient = new AuthorizedApiClient(this.baseUrl, this.apiKey, this.options);
+
     this.borrowerAccounts = new BorrowerAccountsRestApi(this.apiClient);
     this.borrowerEmailVerification = new BorrowerEmailVerificationRestApi(this.apiClient);
     this.borrowerInvites = new BorrowerInvitesRestApi(this.apiClient);

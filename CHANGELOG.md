@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.0.0 - 2024-05-21
+## 6.0.0 - 2024-06-25
 * Added `DigifiApi` class that can be used to access all the APIs.
 * Renamed `BorrowerStandardPortalLegalDocumentsApi` was to `BorrowerStandardPortalLegalConsentsRestApi`.
 * Renamed all `*ApiService` classes to `*RestApi`.
