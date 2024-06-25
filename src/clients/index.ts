@@ -1,6 +1,6 @@
 import ApiClient from './ApiClient';
 import AuthorizedApiClient from './AuthorizedApiClient';
-import { IApiClient, RequestBody, ApiClientLogger, RequestMetadata, CompatibleApiVersion } from './ApiClient';
+import { IApiClient, RequestBody, ApiClientLogger, RequestMetadata, CompatibleApiVersion, ApiClientOptions } from './ApiClient';
 
 export {
   ApiClient,
@@ -10,4 +10,5 @@ export {
   ApiClientLogger,
   RequestMetadata,
   CompatibleApiVersion,
+  ApiClientOptions,
 };
