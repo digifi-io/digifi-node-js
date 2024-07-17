@@ -1,10 +1,8 @@
 import { IApiClient } from '../clients';
-import { BorrowerType } from '../enums';
 import DigitalLendingPortalEnvironment from '../enums/DigitalLendingPortalEnvironment';
 import getSearchParams from '../utils/getSearchParams';
 
 export interface StandardBorrowerPortalConfig {
-  borrowerType: BorrowerType;
   borrowerLockPeriodDays: number;
 }
 
@@ -14,7 +12,6 @@ export interface BorrowerStandardPortalGeneralSettings {
 }
 
 export interface BorrowerStandardPortalGeneralSettings {
-  borrowerType: BorrowerType;
   borrowerLockPeriodDays: number;
 }
 
