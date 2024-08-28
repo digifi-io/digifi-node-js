@@ -131,6 +131,7 @@ export interface SearchApplicationsParams extends PaginationParams<ApplicationSo
   sortByVariables?: { [name: string]: SortDirection };
   onlyInFinalStatus?: boolean;
   borrowerIdTargets?: BorrowerIdTarget[];
+  productIds?: string[];
 }
 
 export interface ListApplicationParams extends CursorPaginationParams {
