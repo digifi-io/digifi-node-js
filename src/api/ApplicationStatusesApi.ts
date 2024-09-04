@@ -43,7 +43,7 @@ export interface ApplicationStatusesApi {
 }
 
 export class ApplicationStatusesRestApi implements ApplicationStatusesApi {
-  protected path = '/application-statuses';
+  protected path = 'application-statuses';
 
   constructor(
     private apiClient: IApiClient,
