@@ -9,7 +9,7 @@ export class IntegrationFileDownloadRestApi
   extends DownloadApi
   implements IntegrationFileDownloadApi
 {
-  protected path = '/integration-file-download';
+  protected path = 'integration-file-download';
 
   constructor(apiClient: IApiClient) {
     super(apiClient);
