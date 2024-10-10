@@ -43,7 +43,7 @@ export interface ApplicationStatusesApi {
 }
 
 export class ApplicationStatusesRestApi implements ApplicationStatusesApi {
-  protected path = 'application-statuses';
+  protected path = '/application-statuses';
 
   constructor(
     private apiClient: IApiClient,
@@ -52,6 +52,6 @@ export class ApplicationStatusesRestApi implements ApplicationStatusesApi {
   public find(productId: string): Promise<ApplicationStatus[]> {
     const urlSearchParams = getSearchParams({ productId });
 
-    return this.apiClient.makeCall<ApplicationStatus[]>(`/${this.path}?${urlSearchParams}`);
+    return this.apiClient.makeCall<ApplicationStatus[]>(`${this.path}?${urlSearchParams}`);
   }
 }

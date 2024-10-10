@@ -9,14 +9,14 @@ export class IntegrationFileDownloadRestApi
   extends DownloadApi
   implements IntegrationFileDownloadApi
 {
-  protected path = 'integration-file-download';
+  protected path = '/integration-file-download';
 
   constructor(apiClient: IApiClient) {
     super(apiClient);
   }
 
   public async downloadById(id: string): Promise<DownloadResponse> {
-    return this.download(`/${this.path}/${id}`);
+    return this.download(`${this.path}/${id}`);
   }
 }
 

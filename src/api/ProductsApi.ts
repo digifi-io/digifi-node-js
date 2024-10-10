@@ -87,7 +87,7 @@ export interface ProductsApi {
 }
 
 export class ProductsRestApi implements ProductsApi {
-  protected path = 'products';
+  protected path = '/products';
 
   constructor(
     private apiClient: IApiClient,
@@ -96,12 +96,12 @@ export class ProductsRestApi implements ProductsApi {
   public async find(params: FindProductsParams): Promise<Product[]> {
     const urlSearchParams = getSearchParams(params as SearchParams);
 
-    const products = await this.apiClient.makeCall<Product[]>(`/${this.path}?${urlSearchParams}`);
+    const products = await this.apiClient.makeCall<Product[]>(`${this.path}?${urlSearchParams}`);
 
     return products as Product[];
   }
 
   public findById(id: string): Promise<Product> {
-    return this.apiClient.makeCall<Product>(`/${this.path}/${id}`);
+    return this.apiClient.makeCall<Product>(`${this.path}/${id}`);
   }
 }

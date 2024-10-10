@@ -15,26 +15,26 @@ export abstract class BaseSystemApi<Resource, FindParams = undefined, ListParams
   public find(params: FindParams): Promise<PaginationResult<Resource> | Resource[]> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.apiClient.makeCall<PaginationResult<Resource>>(`/${this.path}?${urlSearchParams}`);
+    return this.apiClient.makeCall<PaginationResult<Resource>>(`${this.path}?${urlSearchParams}`);
   }
 
   public search(params: FindParams): Promise<PaginationResult<Resource>> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.apiClient.makeCall<PaginationResult<Resource>>(`/${this.path}/search?${urlSearchParams}`);
+    return this.apiClient.makeCall<PaginationResult<Resource>>(`${this.path}/search?${urlSearchParams}`);
   }
 
   public list(params: ListParams): Promise<CursorPaginationResult<Resource>> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.apiClient.makeCall<CursorPaginationResult<Resource>>(`/${this.path}?${urlSearchParams}`);
+    return this.apiClient.makeCall<CursorPaginationResult<Resource>>(`${this.path}?${urlSearchParams}`);
   }
 
   public findById(id: string): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.path}/${id}`);
+    return this.apiClient.makeCall<Resource>(`${this.path}/${id}`);
   }
 
   public delete(id: string): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.path}/${id}`, 'DELETE');
+    return this.apiClient.makeCall<Resource>(`${this.path}/${id}`, 'DELETE');
   }
 }

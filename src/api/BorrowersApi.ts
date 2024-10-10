@@ -92,5 +92,5 @@ export class BorrowersRestApi extends SystemApi<
   SearchBorrowersParams,
   ListBorrowersParams
 > implements BorrowersApi {
-  protected path = 'borrowers';
+  protected path = '/borrowers';
 }

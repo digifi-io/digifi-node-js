@@ -56,7 +56,7 @@ export class DecisionsRestApi
   extends BaseSystemApi<Decision, FindDecisionsParams>
   implements DecisionsApi
 {
-  protected path = 'decisions';
+  protected path = '/decisions';
 
   constructor(protected apiClient: IApiClient) {
     super(apiClient);
@@ -66,11 +66,11 @@ export class DecisionsRestApi
     const urlSearchParams = getSearchParams(params as SearchParams);
 
     return this.apiClient.makeCall<PaginationResult<Decision>>(
-      `/${this.path}?${urlSearchParams}`,
+      `${this.path}?${urlSearchParams}`,
     );
   }
 
   public findById(id: string): Promise<DecisionWithResults> {
-    return this.apiClient.makeCall<DecisionWithResults>(`/${this.path}/${id}`);
+    return this.apiClient.makeCall<DecisionWithResults>(`${this.path}/${id}`);
   }
 }

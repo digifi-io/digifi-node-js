@@ -91,16 +91,16 @@ export class IntermediariesRestApi extends SystemApi<
   SearchIntermediariesParams,
   ListIntermediariesParams
 > implements IntermediariesApi {
-  protected path = 'intermediaries';
+  protected path = '/intermediaries';
 
   public getSuggestions(params: FindIntermediarySuggestionsParams): Promise<Intermediary[]> {
     const queryParams = getSearchParams(params as SearchParams);
 
-    return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/suggestions?${queryParams}`);
+    return this.apiClient.makeCall<Intermediary[]>(`${this.path}/suggestions?${queryParams}`);
   }
 
   public bulkCreate(batches: CreateIntermediaryParams[]): Promise<Intermediary[]> {
-    return this.apiClient.makeCall<Intermediary[]>(`/${this.path}/bulk`, 'POST', {
+    return this.apiClient.makeCall<Intermediary[]>(`${this.path}/bulk`, 'POST', {
       intermediaries: batches,
     });
   }

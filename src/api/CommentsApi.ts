@@ -75,7 +75,7 @@ export class CommentsRestApi extends SystemApi<
   UpdateCommentParams,
   FindCommentsParams
 > implements CommentsApi {
-  protected path = 'comments';
+  protected path = '/comments';
 
   public async find(params: FindCommentsParams): Promise<Comment[]> {
     const comments = await super.find(params);

@@ -15,10 +15,10 @@ export abstract class SystemApi<
   }
 
   public create(params: CreateParams): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.path}`, 'POST', params as RequestBody);
+    return this.apiClient.makeCall<Resource>(`${this.path}`, 'POST', params as RequestBody);
   }
 
   public update(id: string, params: UpdateParams): Promise<Resource> {
-    return this.apiClient.makeCall<Resource>(`/${this.path}/${id}`, 'PUT', params as RequestBody);
+    return this.apiClient.makeCall<Resource>(`${this.path}/${id}`, 'PUT', params as RequestBody);
   }
 }

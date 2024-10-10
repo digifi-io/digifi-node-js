@@ -54,5 +54,5 @@ export class ApplicationNotesRestApi extends SystemApi<
   UpdateApplicationNoteParams,
   FindApplicationNotesParams
 > implements ApplicationNotesApi {
-  protected path = 'application-notes';
+  protected path = '/application-notes';
 }
