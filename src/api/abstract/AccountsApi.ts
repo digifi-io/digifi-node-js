@@ -178,6 +178,6 @@ export abstract class AccountsRestApi extends AuthApi implements AccountsApi {
   public find(params: FindAccountsParams): Promise<BaseAccountInfo[]> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.makeAuthCall(`/${this.path}/search?${urlSearchParams}`);
+    return this.makeAuthCall(`${this.path}/search?${urlSearchParams}`);
   }
 }
