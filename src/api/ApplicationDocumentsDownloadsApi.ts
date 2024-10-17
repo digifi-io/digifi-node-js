@@ -11,7 +11,7 @@ export class ApplicationDocumentsDownloadsRestApi
   extends DownloadApi
   implements ApplicationDocumentsDownloadsApi
 {
-  protected path = 'application-documents-downloads';
+  protected path = '/application-documents-downloads';
 
   constructor(apiClient: IApiClient) {
     super(apiClient);
@@ -28,6 +28,6 @@ export class ApplicationDocumentsDownloadsRestApi
     accessPermission?.entityId && params.append('accessPermissionEntityId', accessPermission.entityId);
     accessPermission?.entityType && params.append('accessPermissionEntityType', accessPermission.entityType);
 
-    return this.download(`/${this.path}?${params}`)
+    return this.download(`${this.path}?${params}`)
   }
 }

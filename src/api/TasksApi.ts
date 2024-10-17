@@ -151,9 +151,9 @@ export class TasksRestApi extends SystemApi<
   SearchTasksParams,
   ListTasksParams
 > implements TasksApi {
-  protected path = 'tasks';
+  protected path = '/tasks';
 
   public bulkCreate(params: BulkCreateTasksParams) {
-    return this.apiClient.makeCall<BulkCreateTasksResponse>(`/${this.path}/batch`, 'POST', params);
+    return this.apiClient.makeCall<BulkCreateTasksResponse>(`${this.path}/batch`, 'POST', params);
   }
 }

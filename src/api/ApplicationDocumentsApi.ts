@@ -102,7 +102,7 @@ export class ApplicationDocumentsRestApi
   extends BaseSystemApi<ApplicationDocument, FindApplicationDocumentsParams>
   implements ApplicationDocumentsApi
 {
-  protected path = 'application-documents';
+  protected path = '/application-documents';
 
   constructor(protected apiClient: IApiClient) {
     super(apiClient);
@@ -140,7 +140,7 @@ export class ApplicationDocumentsRestApi
       formData.append('labelIds', JSON.stringify(params.labelIds));
     }
 
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}`, 'POST', formData, { contentType: null });
+    return this.apiClient.makeCall<ApplicationDocument>(`${this.path}`, 'POST', formData, { contentType: null });
   }
 
   public createMany(applicationId: string, params: CreateManyApplicationDocumentParams): Promise<void> {
@@ -174,17 +174,17 @@ export class ApplicationDocumentsRestApi
       formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
-    return this.apiClient.makeCall(`/${this.path}/batch`, 'POST', formData, {
+    return this.apiClient.makeCall(`${this.path}/batch`, 'POST', formData, {
       contentType: null,
     });
   }
 
   public update(id: string, params: UpdateApplicationDocumentParams): Promise<ApplicationDocument> {
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}/${id}`, 'PUT', params);
+    return this.apiClient.makeCall<ApplicationDocument>(`${this.path}/${id}`, 'PUT', params);
   }
 
   public createFolder(params: CreateApplicationDocumentFolderParams): Promise<ApplicationDocument> {
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}/document-folders`, 'POST', {
+    return this.apiClient.makeCall<ApplicationDocument>(`${this.path}/document-folders`, 'POST', {
       ...params,
       parentId: params.parentId || null,
     });
