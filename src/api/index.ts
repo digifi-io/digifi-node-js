@@ -51,6 +51,8 @@ export * from './BrandingApi';
 export * from './DecisionProcessingApi';
 export * from './DecisionsApi';
 
+export * from './DocuSignApi';
+
 export {
   SystemApi,
   DigifiApi,

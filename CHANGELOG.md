@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.3.0 - 2024-10-24
+* Introduced DocuSign API.
+
 ## 6.2.0 - 2024-10-17
 * Added new `uploadFiles` method to the `IntegrationProcessingApi` interface.
 * Introduced interfaces to operate with files in IntegrationProcessingApi and DecisionProcessingApi.
