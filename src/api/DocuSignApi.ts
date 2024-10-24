@@ -1,0 +1,121 @@
+import { IApiClient } from '../clients';
+import getSearchParams from '../utils/getSearchParams';
+import { SearchParams } from './base';
+
+export interface DocuSignViewUrl {
+  url?: string;
+}
+
+export interface DocuSignSigner {
+  clientUserId?: string;
+  email?: string;
+  embeddedRecipientStartURL?: string;
+  firstName?: string;
+  lastName?: string;
+  name?: string;
+  recipientId?: string;
+  recipientIdGuid?: string;
+  recipientType?: string;
+  status?: string;
+  userId?: string;
+}
+
+export interface DocuSignEnvelopeRecipient {
+  signers?: DocuSignSigner[];
+}
+
+export interface DocuSignTextCustomField {
+  fieldId?: string;
+  name?: string;
+  value?: string;
+}
+
+export interface DocuSignCustomFields {
+  textCustomFields?: DocuSignTextCustomField[];
+}
+
+export interface DocuSignEnvelope {
+  envelopeId?: string;
+  status?: string;
+  recipients?: DocuSignEnvelopeRecipient;
+  customFields?: DocuSignCustomFields;
+}
+
+export interface ListEnvelopesResponse {
+  envelopes: DocuSignEnvelope[] | null;
+}
+
+export interface ListEnvelopesParams {
+  status?: string;
+  searchText?: string;
+  fromDate?: string;
+  toDate?: string;
+  orderBy?: string;
+  order?: string;
+}
+
+export interface CreateRecipientViewParams {
+  envelopeId: string;
+  userId: string;
+  returnUrl: string;
+}
+
+export enum DocuSignEnvironmentType {
+  Development = 'development',
+  Production = 'production',
+}
+
+export enum ESignIntegrationType {
+  DocuSign = 'DocuSign',
+}
+
+export interface DocuSignIntegrationViewModel {
+  id: string;
+  organizationId: string;
+  organizationVersion: number;
+  type: ESignIntegrationType;
+  settings: IDocuSignIntegrationSettings;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface IDocuSignIntegrationSettings {
+  environment: DocuSignEnvironmentType;
+  clientId: string;
+  privateKey: string;
+  userId: string;
+  accountId: string;
+  accountBaseUri: string;
+}
+
+export interface GetIntegrationSettingsResponse {
+  integration: DocuSignIntegrationViewModel;
+}
+
+export interface DocuSignApi {
+  getIntegrationSettings(): Promise<GetIntegrationSettingsResponse>;
+  listEnvelopes(params: ListEnvelopesParams): Promise<ListEnvelopesResponse>;
+  createRecipientsView(params: CreateRecipientViewParams): Promise<DocuSignViewUrl>;
+}
+
+export class DocuSignRestApi implements DocuSignApi {
+  protected path = '/docusign'
+
+  constructor(
+    private apiClient: IApiClient,
+  ) {}
+
+  public getIntegrationSettings(): Promise<GetIntegrationSettingsResponse> {
+    return this.apiClient.makeCall(`${this.path}/integrations`);
+  }
+
+  public listEnvelopes(params: ListEnvelopesParams): Promise<ListEnvelopesResponse> {
+    const urlSearchParams = getSearchParams(params as SearchParams);
+
+    return this.apiClient.makeCall(`${this.path}/envelopes/list?${urlSearchParams}`);
+  }
+
+  public createRecipientsView(params: CreateRecipientViewParams): Promise<DocuSignViewUrl> {
+    return this.apiClient.makeCall(`${this.path}/envelopes/views/recipient`, 'POST', params);
+  }
+}
