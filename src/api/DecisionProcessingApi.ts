@@ -2,6 +2,12 @@ import { UserBasic, VariableValue } from '../types';
 import { DecisionRunResult } from '../enums';
 import { IApiClient } from '../clients';
 
+interface ProcessDecisionFileParams {
+  file: string;
+  key: string;
+  moduleId: string;
+}
+
 export interface ProcessDecisionsParams {
   decisionName?: string;
   applicationId?: string;
@@ -15,6 +21,7 @@ export interface ProcessDecisionsParams {
   decisions: Array<{
     strategyId: string;
     inputs: Record<string, VariableValue>;
+    files?: ProcessDecisionFileParams[];
   }>;
   strict?: boolean;
   returnDataSources?: boolean;
