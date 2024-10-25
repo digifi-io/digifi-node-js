@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.2.0 - 2024-10-17
+* Added new `uploadFiles` method to the `IntegrationProcessingApi` interface.
+* Introduced interfaces to operate with files in IntegrationProcessingApi and DecisionProcessingApi.
+* Added `files` (optional `ProcessDecisionFileParams[]`) to the `ProcessDecisionsParams` interface.
+* Added `files` (optional `ProcessIntegrationFileParams[]`) to the `ProcessIntegrationParams` interface.
+
 ## 6.0.0 - 2024-06-25
 * Added `DigifiApi` class that can be used to access all the APIs.
 * Renamed `BorrowerStandardPortalLegalDocumentsApi` was to `BorrowerStandardPortalLegalConsentsRestApi`.
