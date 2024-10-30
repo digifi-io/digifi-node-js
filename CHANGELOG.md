@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.4.0 - 2024-10-30
+* Introduced Google Analytics API.
+
 ## 6.3.0 - 2024-10-24
 * Introduced DocuSign API.
 

@@ -52,6 +52,7 @@ export * from './DecisionProcessingApi';
 export * from './DecisionsApi';
 
 export * from './DocuSignApi';
+export * from './GoogleAnalyticsApi';
 
 export {
   SystemApi,

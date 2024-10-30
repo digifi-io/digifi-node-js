@@ -69,6 +69,7 @@ import {
   VariablesRestApi,
   WebhookEndpointsApi,
   WebhookEndpointsRestApi,
+  GoogleAnalyticsRestApi,
 } from '.';
 import {
   AccountsApi,
@@ -128,6 +129,7 @@ class DigifiApi {
   public webhookEndpoints: WebhookEndpointsApi;
 
   public docuSign: DocuSignRestApi;
+  public googleAnalytics: GoogleAnalyticsRestApi;
 
   private readonly apiClient: IApiClient;
 
@@ -186,6 +188,7 @@ class DigifiApi {
     this.webhookEndpoints = new WebhookEndpointsRestApi(this.apiClient);
 
     this.docuSign = new DocuSignRestApi(this.apiClient);
+    this.googleAnalytics = new GoogleAnalyticsRestApi(this.apiClient);
   }
 }
 
