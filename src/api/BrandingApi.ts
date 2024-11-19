@@ -29,9 +29,8 @@ export class BrandingRestApi implements BrandingApi {
     private apiClient: IApiClient,
   ) {}
 
-  public getBranding(params: GetBrandingParams): Promise<Branding> {
+  public getBranding(params?: GetBrandingParams): Promise<Branding> {
     const queryParams = getSearchParams(params as SearchParams);
-
 
     return this.apiClient.makeCall(`${this.path}?${queryParams}`);
   }
