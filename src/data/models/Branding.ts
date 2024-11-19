@@ -19,11 +19,23 @@ export interface Branding {
   brandColor: string;
   logo: ImageParams | null;
   favicon: ImageParams | null;
+  environment: BrandingEnvironment | null;
+  type: BrandingType;
   organization: {
     name: string;
     country?: string;
     legalAddress?: string;
   };
+}
+
+export enum BrandingEnvironment {
+  Production = 'production',
+  Testing = 'testing',
+}
+
+export enum BrandingType {
+  Email = 'email',
+  BorrowerPortal = 'borrowerPortal',
 }
 
 export default Branding;

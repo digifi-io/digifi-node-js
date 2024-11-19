@@ -1,4 +1,4 @@
-import Branding, { ImageParams } from './Branding';
+import Branding, { ImageParams, BrandingEnvironment, BrandingType } from './Branding';
 import Card from './Card';
 import FormulaCondition from './FormulaCondition';
 import {
@@ -16,6 +16,8 @@ import IntegrationResult, { CompactIntegrationResult } from './Integration';
 export {
   Branding,
   ImageParams,
+  BrandingEnvironment,
+  BrandingType,
   Card,
   FormulaCondition,
   VariableConfiguration,

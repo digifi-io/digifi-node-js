@@ -1,13 +1,20 @@
 import { Headers } from 'node-fetch';
 import { IApiClient } from '../clients';
-import { Branding } from '../data/models';
+import { Branding, BrandingEnvironment, BrandingType } from '../data/models';
+import getSearchParams from '../utils/getSearchParams';
+import { SearchParams } from './base';
 
 export interface BrandingApi {
-  getBranding(): Promise<Branding>;
+  getBranding(params: GetBrandingParams): Promise<Branding>;
   getLogo(logoId: string): Promise<ArrayBuffer>;
   getFavicon(faviconId: string): Promise<ArrayBuffer>;
   getLogoProxyUrl(): string;
   getFaviconProxyUrl(): string;
+}
+
+export interface GetBrandingParams {
+  environment?: BrandingEnvironment;
+  type?: BrandingType;
 }
 
 export class BrandingRestApi implements BrandingApi {
@@ -22,8 +29,11 @@ export class BrandingRestApi implements BrandingApi {
     private apiClient: IApiClient,
   ) {}
 
-  public getBranding(): Promise<Branding> {
-    return this.apiClient.makeCall(this.path);
+  public getBranding(params: GetBrandingParams): Promise<Branding> {
+    const queryParams = getSearchParams(params as SearchParams);
+
+
+    return this.apiClient.makeCall(`${this.path}?${queryParams}`);
   }
 
   public async getLogo(logoId: string): Promise<ArrayBuffer> {
