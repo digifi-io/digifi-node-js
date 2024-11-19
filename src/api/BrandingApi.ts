@@ -5,7 +5,7 @@ import getSearchParams from '../utils/getSearchParams';
 import { SearchParams } from './base';
 
 export interface BrandingApi {
-  getBranding(params: GetBrandingParams): Promise<Branding>;
+  getBranding(params?: GetBrandingParams): Promise<Branding>;
   getLogo(logoId: string): Promise<ArrayBuffer>;
   getFavicon(faviconId: string): Promise<ArrayBuffer>;
   getLogoProxyUrl(): string;
