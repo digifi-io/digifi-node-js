@@ -229,6 +229,6 @@ export class ApplicationsRestApi extends SystemApi<
   }
 
   public runAutomation(applicationId: string, params: RunAutomationWorkflowParams) {
-    return this.apiClient.makeCall<void>(`/${this.path}/${applicationId}/run-automation`, 'POST', params);
+    return this.apiClient.makeCall<void>(`${this.path}/${applicationId}/run-automation`, 'POST', params);
   }
 }
