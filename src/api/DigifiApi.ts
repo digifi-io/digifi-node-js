@@ -38,6 +38,7 @@ import {
   DecisionProcessingRestApi,
   DecisionsApi,
   DecisionsRestApi,
+  DocuSignRestApi,
   IntegrationFileDownloadApi,
   IntegrationFileDownloadRestApi,
   IntegrationProcessingApi,
@@ -126,6 +127,8 @@ class DigifiApi {
   public variables: VariablesApi;
   public webhookEndpoints: WebhookEndpointsApi;
 
+  public docuSign: DocuSignRestApi;
+
   private readonly apiClient: IApiClient;
 
   constructor(
@@ -181,6 +184,8 @@ class DigifiApi {
     this.users = new UsersRestApi(this.apiClient);
     this.variables = new VariablesRestApi(this.apiClient);
     this.webhookEndpoints = new WebhookEndpointsRestApi(this.apiClient);
+
+    this.docuSign = new DocuSignRestApi(this.apiClient);
   }
 }
 
