@@ -52,6 +52,6 @@ export class ApplicationStatusesRestApi implements ApplicationStatusesApi {
   public find(productId: string): Promise<ApplicationStatus[]> {
     const urlSearchParams = getSearchParams({ productId });
 
-    return this.apiClient.makeCall<ApplicationStatus[]>(`/${this.path}?${urlSearchParams}`);
+    return this.apiClient.makeCall<ApplicationStatus[]>(`${this.path}?${urlSearchParams}`);
   }
 }

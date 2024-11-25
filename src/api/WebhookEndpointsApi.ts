@@ -60,7 +60,7 @@ export class WebhookEndpointsRestApi extends SystemApi<
   UpdateWebhookEndpointParams,
   FindWebhookEndpointsParams
 > implements WebhookEndpointsApi {
-  protected path = 'webhook-endpoints';
+  protected path = '/webhook-endpoints';
 
   public async find(params: FindWebhookEndpointsParams): Promise<PaginationResult<WebhookEndpoint>> {
     const webhookEndpoints = await super.find(params);

@@ -71,6 +71,6 @@ export class DecisionsRestApi
   }
 
   public findById(id: string): Promise<DecisionWithResults> {
-    return this.apiClient.makeCall<DecisionWithResults>(`/${this.path}/${id}`);
+    return this.apiClient.makeCall<DecisionWithResults>(`${this.path}/${id}`);
   }
 }

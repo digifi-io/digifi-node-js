@@ -131,6 +131,7 @@ export interface SearchApplicationsParams extends PaginationParams<ApplicationSo
   sortByVariables?: { [name: string]: SortDirection };
   onlyInFinalStatus?: boolean;
   borrowerIdTargets?: BorrowerIdTarget[];
+  productIds?: string[];
 }
 
 export interface ListApplicationParams extends CursorPaginationParams {
@@ -185,18 +186,18 @@ export class ApplicationsRestApi extends SystemApi<
   SearchApplicationsParams,
   ListApplicationParams
 > implements ApplicationsApi {
-  protected path = 'applications';
+  protected path = '/applications';
 
   public findByDisplayId(displayId: string): Promise<Application> {
-    return this.apiClient.makeCall<Application>(`/${this.path}/${displayId}?identifierType=displayId`);
+    return this.apiClient.makeCall<Application>(`${this.path}/${displayId}?identifierType=displayId`);
   }
 
   public updateCoBorrowers(applicationId: string, params: UpdateApplicationCoBorrowersParams) {
-    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/coborrowers`, 'PUT', params);
+    return this.apiClient.makeCall<Application>(`${this.path}/${applicationId}/coborrowers`, 'PUT', params);
   }
 
   public updateIntermediary(applicationId: string, params: UpdateApplicationIntermediaryParams) {
-    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/intermediary`, 'PUT', params);
+    return this.apiClient.makeCall<Application>(`${this.path}/${applicationId}/intermediary`, 'PUT', params);
   }
 
   public getVariables(applicationId: string, variablesToInclude?: string[]) {
@@ -208,21 +209,21 @@ export class ApplicationsRestApi extends SystemApi<
       })
     }
 
-    return this.apiClient.makeCall<Record<string, VariableValue>>(`/${this.path}/${applicationId}/variables?${urlSearchParams}`);
+    return this.apiClient.makeCall<Record<string, VariableValue>>(`${this.path}/${applicationId}/variables?${urlSearchParams}`);
   }
 
   public runCalculations(applicationId: string, params: RunApplicationCalculationsParams) {
-    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/run-calculations`, 'POST', params);
+    return this.apiClient.makeCall<Application>(`${this.path}/${applicationId}/run-calculations`, 'POST', params);
   }
 
   public addLabels(applicationId: string, labelsIds: string[]) {
-    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/labels`, 'POST', {
+    return this.apiClient.makeCall<Application>(`${this.path}/${applicationId}/labels`, 'POST', {
       labelsIds,
     });
   }
 
   public addTeamMembers(applicationId: string, teamMembersIds: string[]) {
-    return this.apiClient.makeCall<Application>(`/${this.path}/${applicationId}/team-members`, 'POST', {
+    return this.apiClient.makeCall<Application>(`${this.path}/${applicationId}/team-members`, 'POST', {
       teamMembersIds,
     });
   }

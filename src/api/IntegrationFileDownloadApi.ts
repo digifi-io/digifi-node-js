@@ -16,7 +16,7 @@ export class IntegrationFileDownloadRestApi
   }
 
   public async downloadById(id: string): Promise<DownloadResponse> {
-    return this.download(`/${this.path}/${id}`);
+    return this.download(`${this.path}/${id}`);
   }
 }
 

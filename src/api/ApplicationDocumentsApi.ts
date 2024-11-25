@@ -29,6 +29,7 @@ export interface ApplicationDocument {
   extension: string | null;
   size: number | null;
   taskId?: string;
+  labelIds: string[];
   testing?: boolean;
   createdBy?: UserShort | null;
   updatedBy?: UserShort | null;
@@ -44,12 +45,14 @@ export interface ApplicationDocumentFileUploadParams {
   fileName: string;
   parentId?: string | null;
   anchor?: string | null;
+  labelIds?: string[];
 }
 
 export interface CreateApplicationDocumentParams extends ApplicationDocumentFileUploadParams {
   applicationId: string;
   taskId?: string;
   accessPermissions?: ApplicationDocumentAccessPermission[];
+  labelIds?: string[];
 }
 
 export interface CreateManyApplicationDocumentParams {
@@ -65,10 +68,18 @@ export interface FindApplicationDocumentsParams {
   accessPermissionEntityId?: string;
 }
 
+export type UpdateApplicationDocumentLabelsParams = {
+  set: string[];
+} | {
+  add?: string[];
+  remove?: string[];
+}
+
 export interface UpdateApplicationDocumentParams {
   name?: string;
   parentId?: string;
   accessPermissions?: ApplicationDocumentAccessPermission[];
+  labels?: UpdateApplicationDocumentLabelsParams;
 }
 
 export interface CreateApplicationDocumentFolderParams {
@@ -91,7 +102,7 @@ export class ApplicationDocumentsRestApi
   extends BaseSystemApi<ApplicationDocument, FindApplicationDocumentsParams>
   implements ApplicationDocumentsApi
 {
-  protected path = 'application-documents';
+  protected path = '/application-documents';
 
   constructor(protected apiClient: IApiClient) {
     super(apiClient);
@@ -125,7 +136,11 @@ export class ApplicationDocumentsRestApi
       formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}`, 'POST', formData, { contentType: null });
+    if (params.labelIds) {
+      formData.append('labelIds', JSON.stringify(params.labelIds));
+    }
+
+    return this.apiClient.makeCall<ApplicationDocument>(`${this.path}`, 'POST', formData, { contentType: null });
   }
 
   public createMany(applicationId: string, params: CreateManyApplicationDocumentParams): Promise<void> {
@@ -141,6 +156,12 @@ export class ApplicationDocumentsRestApi
       if (batchUploadDocumentParams.anchor) {
         formData.append(`options[${index}].anchor`, batchUploadDocumentParams.anchor);
       }
+
+      if (batchUploadDocumentParams.labelIds) {
+        batchUploadDocumentParams.labelIds.forEach((labelId) => {
+          formData.append(`options[${index}].labelIds`, labelId);
+        });
+      }
     });
 
     formData.append('applicationId', applicationId);
@@ -153,17 +174,17 @@ export class ApplicationDocumentsRestApi
       formData.append('accessPermissions', JSON.stringify(params.accessPermissions));
     }
 
-    return this.apiClient.makeCall(`/${this.path}/batch`, 'POST', formData, {
+    return this.apiClient.makeCall(`${this.path}/batch`, 'POST', formData, {
       contentType: null,
     });
   }
 
   public update(id: string, params: UpdateApplicationDocumentParams): Promise<ApplicationDocument> {
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}/${id}`, 'PUT', params);
+    return this.apiClient.makeCall<ApplicationDocument>(`${this.path}/${id}`, 'PUT', params);
   }
 
   public createFolder(params: CreateApplicationDocumentFolderParams): Promise<ApplicationDocument> {
-    return this.apiClient.makeCall<ApplicationDocument>(`/${this.path}/document-folders`, 'POST', {
+    return this.apiClient.makeCall<ApplicationDocument>(`${this.path}/document-folders`, 'POST', {
       ...params,
       parentId: params.parentId || null,
     });

@@ -55,7 +55,7 @@ export class IntegrationResultFilesRestApi implements IntegrationResultFilesApi 
   public async find(params: FindIntegrationResultFilesParams) {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
-    return this.apiClient.makeCall<PaginationResult<IntegrationFile>>(`/${this.path}?${urlSearchParams}`);
+    return this.apiClient.makeCall<PaginationResult<IntegrationFile>>(`${this.path}?${urlSearchParams}`);
   }
 
   public uploadMany(integrationResultId: string, files: IntegrationResultFileParams[]): Promise<IntegrationFile[]> {
