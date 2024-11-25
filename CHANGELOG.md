@@ -1,7 +1,8 @@
 # Changelog
 
 ## 6.3.0 - 2024-11-25
-* Introduced DocuSign API.
+* Introduced `DocuSign API`.
+* Removed borrowerType property from the `BorrowerStandardPortalGeneralSettings` interface and `StandardBorrowerPortalConfig` interface
 
 ## 6.2.0 - 2024-10-17
 * Added new `uploadFiles` method to the `IntegrationProcessingApi` interface.
