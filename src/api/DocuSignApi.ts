@@ -24,21 +24,10 @@ export interface DocuSignEnvelopeRecipient {
   signers?: DocuSignSigner[];
 }
 
-export interface DocuSignTextCustomField {
-  fieldId?: string;
-  name?: string;
-  value?: string;
-}
-
-export interface DocuSignCustomFields {
-  textCustomFields?: DocuSignTextCustomField[];
-}
-
 export interface DocuSignEnvelope {
   envelopeId?: string;
   status?: string;
   recipients?: DocuSignEnvelopeRecipient;
-  customFields?: DocuSignCustomFields;
 }
 
 export interface ListEnvelopesResponse {
