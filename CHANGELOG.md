@@ -1,8 +1,11 @@
 # Changelog
 
-## 6.3.0 - 2024-11-25
+## 6.3.2 - 2024-11-27
+* Removed customFields property from the `DocuSignEnvelope` interface.
+
+## 6.3.1 - 2024-11-25
 * Introduced `DocuSign API`.
-* Removed borrowerType property from the `BorrowerStandardPortalGeneralSettings` interface and `StandardBorrowerPortalConfig` interface
+* Removed borrowerType property from the `BorrowerStandardPortalGeneralSettings` interface and `StandardBorrowerPortalConfig` interface.
 
 ## 6.2.0 - 2024-10-17
 * Added new `uploadFiles` method to the `IntegrationProcessingApi` interface.
