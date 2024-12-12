@@ -1,6 +1,5 @@
 import { FormulaCompilationWithInputs } from './FormulaCompilation';
 
-
 interface FormulaCondition {
   formula: string;
   /**
