@@ -24,7 +24,7 @@ export interface ConditionalFormattingRule {
   /**
    * @deprecated Use formulaInputsMetadata or formula fields instead (will be removed in next major version)
    */
-  formulaCondition: FormulaCondition;
+  formulaCondition: Omit<FormulaCondition, 'formulaCompilation'>;
   color: string;
 }
 
