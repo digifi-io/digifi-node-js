@@ -23,6 +23,9 @@ export interface BorrowerStandardPortalGeneralSettingsApi {
   getGeneralSettings(params?: GetGeneralSettingsParams): Promise<BorrowerStandardPortalGeneralSettings>;
 }
 
+/**
+ * @deprecated Use StandardPortalGeneralSettingsRestApi instead
+ */
 export class BorrowerStandardPortalGeneralSettingsRestApi implements BorrowerStandardPortalGeneralSettingsApi {
   protected path = '/borrowers/standard-portals/general-settings';
 

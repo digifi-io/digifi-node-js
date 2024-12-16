@@ -53,6 +53,9 @@ export * from './DecisionsApi';
 
 export * from './DocuSignApi';
 
+export * from './StandardPortalGeneralSettingsApi';
+export * from './StandardPortalLegalConsentsApi';
+
 export {
   SystemApi,
   DigifiApi,
