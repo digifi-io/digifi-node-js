@@ -3,6 +3,9 @@ import getSearchParams from '../utils/getSearchParams';
 import { BaseCard, BaseGroup, BaseVariableConfiguration } from '../types';
 import { SearchParams } from './base';
 
+/**
+ * @deprecated This enum is deprecated and will be removed in the next major version.
+ */
 export enum LayoutConfigurationReferenceType {
   BorrowerProfile = 'borrowerProfile',
   IntermediaryProfile = 'intermediaryProfile',
@@ -10,11 +13,17 @@ export enum LayoutConfigurationReferenceType {
   ApplicationForm = 'applicationForm',
 }
 
+/**
+ * @deprecated This interface is deprecated and will be removed in the next major version.
+ */
 export interface FindLayoutConfigurationParams {
   referenceType: LayoutConfigurationReferenceType;
   reference?: string;
 }
 
+/**
+ * @deprecated This interface is deprecated and will be removed in the next major version.
+ */
 export interface BaseLayout<
   GroupType extends BaseGroup = BaseGroup,
   CardType extends BaseCard = BaseCard,
@@ -25,6 +34,9 @@ export interface BaseLayout<
   variables: VariableType[];
 }
 
+/**
+ * @deprecated This api is deprecated and will be removed in the next major version.
+ */
 export interface LayoutConfigurationApi<
   GroupType extends BaseGroup = BaseGroup,
   CardType extends BaseCard = BaseCard,
@@ -33,6 +45,9 @@ export interface LayoutConfigurationApi<
   find(params: FindLayoutConfigurationParams): Promise<BaseLayout<GroupType, CardType, VariableType>>
 }
 
+/**
+ * @deprecated This api is deprecated and will be removed in the next major version.
+ */
 export class LayoutConfigurationRestApi<
   GroupType extends BaseGroup = BaseGroup,
   CardType extends BaseCard = BaseCard,
