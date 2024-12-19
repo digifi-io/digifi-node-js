@@ -107,6 +107,9 @@ class DigifiApi {
   public integrationResults: IntegrationResultsApi;
 
   public applicationDecisionProcessing: ApplicationDecisionProcessingApi;
+  /**
+   * @deprecated This api is deprecated and will be removed in the next major version.
+   */
   public applicationDocumentConfiguration: ApplicationDocumentConfigurationApi;
   public applicationDocuments: ApplicationDocumentsApi;
   public applicationDocumentsDownloads: ApplicationDocumentsDownloadsApi;
@@ -118,6 +121,9 @@ class DigifiApi {
   public borrowers: BorrowersApi;
   public comments: CommentsApi;
   public intermediaries: IntermediariesApi;
+  /**
+   * @deprecated This api is deprecated and will be removed in the next major version.
+   */
   public layoutConfiguration: LayoutConfigurationApi;
   public productCalculations: ProductCalculationsApi;
   public products: ProductsApi;
