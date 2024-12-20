@@ -14,9 +14,28 @@ export interface ImageParams {
   canvasHeight: number;
 }
 
+export enum BrandingLanguage {
+  EN = 'en',
+  DA = 'da',
+  NL = 'nl',
+  FI = 'fi',
+  FR = 'fr',
+  DE = 'de',
+  HU = 'hu',
+  IT = 'it',
+  NB = 'nb',
+  PT = 'pt',
+  RO = 'ro',
+  RU = 'ru',
+  ES = 'es',
+  SV = 'sv',
+  TR = 'tr',
+}
+
 export interface Branding {
   accentColor: string;
   brandColor: string;
+  language: BrandingLanguage;
   logo: ImageParams | null;
   favicon: ImageParams | null;
   organization: {
