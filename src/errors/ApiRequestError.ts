@@ -9,6 +9,7 @@ class ApiRequestError extends Error {
     readonly responseStatus: number,
     readonly responseHeaders?: Headers,
     readonly code?: string,
+    readonly body?: object,
   ) {
     super(message);
 

@@ -168,9 +168,10 @@ class ApiClient implements IApiClient {
 
     const body = await this.getErrorResponseBody(response);
     const errorMessage = body.message || body.data?.error || body.error?.message || response.statusText;
-    const errorCode = body.code || body.data?.code || body.error?.code;
+    const data = body.error || body.data || body;
+    const { code: errorCode, ...errorBody } = data || {};
 
-    throw new ApiRequestError(errorMessage, response.status, response.headers, errorCode);
+    throw new ApiRequestError(errorMessage, response.status, response.headers, errorCode, errorBody);
   }
 
   protected getBasicHeaders(
