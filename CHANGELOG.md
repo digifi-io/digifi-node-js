@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.5.0 - 2025-01-08
+* `BrandingLanguage` enum was added to branding api.
+* `language` field was added to the `Branding` interface.
+* Optional `data` (`object` type) field was added to `ApiRequestError` interface.
+
 ## 6.4.0 - 2024-12-19
 * `ApplicationDocumentConfigurationApi` api and related interfaces were deprecated.
 * `LayoutConfigurationApi` api and related interfaces were deprecated.
