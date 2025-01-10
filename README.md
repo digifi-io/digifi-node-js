@@ -219,6 +219,8 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `delete(id: string)` - [deletes organization decision](https://docs.digifi.io/reference/delete-decision-results) by `id`.
 - `new DigifiApi.borrowerStandardPortalGeneralSettings(...)` - api for borrower standard portal settings management.
   - `getGeneralSettings()` - retrieves general settings of standard borrower portal for current organization.
+- `new DigifiApi.borrowerStandardPortalCustomCssConfig(...)` - api for borrower standard portal custom css configuration management.
+  - `getCustomCssConfig()` - retrieves custom css config of standard borrower portal for current organization.
 - `new DigifiApi.borrowerStandardPortalLegalConsents(apiClient)` - api for borrower standard portal legal consents management.
   - `getLegalConsents()` - retrieves borrower standard portal legal consents for current organization.
 - `new DigifiApi.branding(...)` - api for organization branding management.

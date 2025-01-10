@@ -26,6 +26,8 @@ import {
   BorrowersApi,
   BorrowersRestApi,
   BorrowerSessionsRestApi,
+  BorrowerStandardPortalCustomCssConfigApi,
+  BorrowerStandardPortalCustomCssConfigRestApi,
   BorrowerStandardPortalGeneralSettingsApi,
   BorrowerStandardPortalGeneralSettingsRestApi,
   BorrowerStandardPortalLegalConsentsApi,
@@ -94,6 +96,7 @@ class DigifiApi {
   public intermediaryResetPassword: ResetPasswordApi;
   public intermediarySessions: SessionsApi;
 
+  public borrowerStandardPortalCustomCssConfig: BorrowerStandardPortalCustomCssConfigApi;
   public borrowerStandardPortalGeneralSettings: BorrowerStandardPortalGeneralSettingsApi;
   public borrowerStandardPortalLegalConsents: BorrowerStandardPortalLegalConsentsApi;
   public branding: BrandingApi;
@@ -158,6 +161,7 @@ class DigifiApi {
     this.intermediaryResetPassword = new IntermediaryResetPasswordRestApi(this.apiClient);
     this.intermediarySessions = new IntermediarySessionsRestApi(this.apiClient);
 
+    this.borrowerStandardPortalCustomCssConfig = new BorrowerStandardPortalCustomCssConfigRestApi(this.apiClient);
     this.borrowerStandardPortalGeneralSettings = new BorrowerStandardPortalGeneralSettingsRestApi(this.apiClient);
     this.borrowerStandardPortalLegalConsents = new BorrowerStandardPortalLegalConsentsRestApi(this.apiClient);
     this.branding = new BrandingRestApi(this.apiClient);

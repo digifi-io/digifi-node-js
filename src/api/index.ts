@@ -44,6 +44,7 @@ export * from './LayoutConfigurationApi';
 
 export * from './WebhookEndpointsApi';
 
+export * from './BorrowerStandardPortalCustomCssConfigApi';
 export * from './BorrowerStandardPortalLegalConsentsApi';
 export * from './BorrowerStandardPortalGeneralSettingsApi';
 export * from './BrandingApi';
