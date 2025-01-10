@@ -11,7 +11,7 @@ export interface GetCustomCssConfigParams {
 }
 
 export interface BorrowerStandardPortalCustomCssConfigApi {
-  getCustomCssConfig(params?: GetCustomCssConfigParams): Promise<BorrowerStandardPortalCustomCssConfig[]>;
+  getCustomCssConfig(params?: GetCustomCssConfigParams): Promise<BorrowerStandardPortalCustomCssConfig>;
 }
 
 export class BorrowerStandardPortalCustomCssConfigRestApi implements BorrowerStandardPortalCustomCssConfigApi {
@@ -21,7 +21,7 @@ export class BorrowerStandardPortalCustomCssConfigRestApi implements BorrowerSta
     private apiClient: IApiClient,
   ) {}
 
-  public getCustomCssConfig(params?: GetCustomCssConfigParams): Promise<BorrowerStandardPortalCustomCssConfig[]> {
+  public getCustomCssConfig(params?: GetCustomCssConfigParams): Promise<BorrowerStandardPortalCustomCssConfig> {
     const urlSearchParams = getSearchParams({
       environment: params?.environment || DigitalLendingPortalEnvironment.Production,
     } as Record<string, string>);
