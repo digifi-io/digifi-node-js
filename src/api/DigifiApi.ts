@@ -69,6 +69,7 @@ import {
   VariablesRestApi,
   WebhookEndpointsApi,
   WebhookEndpointsRestApi,
+  IntermediaryAccountsApi,
 } from '.';
 import {
   AccountsApi,
@@ -87,7 +88,7 @@ class DigifiApi {
   public borrowerResetPassword: ResetPasswordApi;
   public borrowerSessions: SessionsApi;
 
-  public intermediaryAccounts: AccountsApi;
+  public intermediaryAccounts: IntermediaryAccountsApi;
   public intermediaryEmailVerification: EmailVerificationApi;
   public intermediaryInvites: InvitesApi;
   public intermediaryPhoneVerification: PhoneVerificationApi;

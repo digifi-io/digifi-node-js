@@ -1,4 +1,4 @@
-import { AccountsRestApi, BaseAccountInfo } from './abstract';
+import { AccountsApi, AccountsRestApi, BaseAccountInfo } from './abstract';
 import { IApiClient } from '../clients';
 import { Headers } from 'node-fetch';
 
@@ -6,7 +6,11 @@ export type IntermediaryAccountInfo = BaseAccountInfo & {
   fullName?: string;
 }
 
-export class IntermediaryAccountsRestApi extends AccountsRestApi<IntermediaryAccountInfo> {
+export interface IntermediaryAccountsApi extends AccountsApi<IntermediaryAccountInfo> {
+  updateFullName(fullName: string, accountAccessToken: string): Promise<IntermediaryAccountInfo>;
+}
+
+export class IntermediaryAccountsRestApi extends AccountsRestApi<IntermediaryAccountInfo> implements IntermediaryAccountsApi {
   constructor(apiClient: IApiClient) {
     super(apiClient, 'intermediaries');
   }
