@@ -41,6 +41,7 @@ export interface CreateBorrowerAccountParams extends BaseCreateAccountParams {
 
 export interface CreateIntermediaryAccountParams extends BaseCreateAccountParams {
   intermediaryId: string;
+  fullName?: string;
 }
 
 export type CreateAccountParams = CreateBorrowerAccountParams | CreateIntermediaryAccountParams;
@@ -57,10 +58,12 @@ export type FindAccountsParams = {
   [key in 'borrowerIds' | 'intermediaryIds']?: string[];
 }
 
-export interface AccountsApi {
-  findAccountByEmail(email: string): Promise<BaseAccountInfo>;
+export interface AccountsApi<
+  AccountInfo extends BaseAccountInfo = BaseAccountInfo
+> {
+  findAccountByEmail(email: string): Promise<AccountInfo>;
   createAccount(params: CreateAccountParams, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams>;
-  getCurrentUser(accountAccessToken: string): Promise<BaseAccountInfo>;
+  getCurrentUser(accountAccessToken: string): Promise<AccountInfo>;
   sendUpdatePhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void>;
   updatePhoneNumber(code: string, accountAccessToken: string): Promise<void>;
   sendAddPhoneNumberCode(phone: string, accountAccessToken: string, accountPasswordValidationToken: string): Promise<void>;
@@ -70,17 +73,19 @@ export interface AccountsApi {
   updateEmailAddress(code: string, accountAccessToken: string): Promise<void>;
   createPasswordValidationToken(password: string, accountAccessToken: string): Promise<CreatePasswordValidationTokenResponseParams>;
   updatePassword(oldPassword: string, newPassword: string, accountAccessToken: string): Promise<void>;
-  find(params: FindAccountsParams): Promise<BaseAccountInfo[]>;
+  find(params: FindAccountsParams): Promise<AccountInfo[]>;
 }
 
-export abstract class AccountsRestApi extends AuthApi implements AccountsApi {
+export abstract class AccountsRestApi<
+  AccountInfo extends BaseAccountInfo = BaseAccountInfo
+> extends AuthApi implements AccountsApi<AccountInfo> {
   protected path = '/accounts';
 
   protected constructor(apiClient: IApiClient, reference: AuthReference) {
     super(apiClient, reference);
   }
 
-  public findAccountByEmail(email: string): Promise<BaseAccountInfo> {
+  public findAccountByEmail(email: string): Promise<AccountInfo> {
     return this.makeAuthCall(`${this.path}/${email}`);
   }
 
@@ -88,7 +93,7 @@ export abstract class AccountsRestApi extends AuthApi implements AccountsApi {
     return this.makeAuthCall(this.path, 'POST', { ...params, refreshTokenExpirationTimeMinutes });
   }
 
-  public getCurrentUser(accountAccessToken: string): Promise<BaseAccountInfo> {
+  public getCurrentUser(accountAccessToken: string): Promise<AccountInfo> {
     return this.makeAuthCall(this.path, 'GET', undefined, {
       headers: new Headers({
         accountAccessToken,
@@ -175,7 +180,7 @@ export abstract class AccountsRestApi extends AuthApi implements AccountsApi {
     });
   }
 
-  public find(params: FindAccountsParams): Promise<BaseAccountInfo[]> {
+  public find(params: FindAccountsParams): Promise<AccountInfo[]> {
     const urlSearchParams = getSearchParams(params as unknown as SearchParams);
 
     return this.makeAuthCall(`${this.path}/search?${urlSearchParams}`);
