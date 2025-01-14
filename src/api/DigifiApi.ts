@@ -73,6 +73,7 @@ import {
   StandardPortalGeneralSettingsRestApi,
   StandardPortalLegalConsentsApi,
   StandardPortalLegalConsentsRestApi,
+  IntermediaryAccountsApi,
 } from '.';
 import {
   AccountsApi,
@@ -91,7 +92,7 @@ class DigifiApi {
   public borrowerResetPassword: ResetPasswordApi;
   public borrowerSessions: SessionsApi;
 
-  public intermediaryAccounts: AccountsApi;
+  public intermediaryAccounts: IntermediaryAccountsApi;
   public intermediaryEmailVerification: EmailVerificationApi;
   public intermediaryInvites: InvitesApi;
   public intermediaryPhoneVerification: PhoneVerificationApi;
@@ -118,6 +119,9 @@ class DigifiApi {
   public integrationResults: IntegrationResultsApi;
 
   public applicationDecisionProcessing: ApplicationDecisionProcessingApi;
+  /**
+   * @deprecated This api is deprecated and will be removed in the next major version.
+   */
   public applicationDocumentConfiguration: ApplicationDocumentConfigurationApi;
   public applicationDocuments: ApplicationDocumentsApi;
   public applicationDocumentsDownloads: ApplicationDocumentsDownloadsApi;
@@ -129,6 +133,9 @@ class DigifiApi {
   public borrowers: BorrowersApi;
   public comments: CommentsApi;
   public intermediaries: IntermediariesApi;
+  /**
+   * @deprecated This api is deprecated and will be removed in the next major version.
+   */
   public layoutConfiguration: LayoutConfigurationApi;
   public productCalculations: ProductCalculationsApi;
   public products: ProductsApi;

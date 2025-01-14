@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.5.0 - 2025-01-08
+* `BrandingLanguage` enum was added to branding api.
+* `language` field was added to the `Branding` interface.
+* Optional `data` (`object` type) field was added to `ApiRequestError` interface.
+
+## 6.4.0 - 2024-12-19
+* `ApplicationDocumentConfigurationApi` api and related interfaces were deprecated.
+* `LayoutConfigurationApi` api and related interfaces were deprecated.
+* `formulaRequiredVariables` field was deprecated in the `FormulaCondition` interface.
+* `formulaCompilation` field was added to the `FormulaCondition` interface.
+* `formulaCondition` field was deprecated in the `ConditionalFormattingRule` interface.
+* `formula` field was added `ConditionalFormattingRule` interface.
+* `formulaInputsMetadata` field was added to the `ConditionalFormattingRule` interface.
+
 ## 6.3.2 - 2024-11-27
 * Removed customFields property from the `DocuSignEnvelope` interface.
 

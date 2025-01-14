@@ -2,6 +2,9 @@ import { IApiClient } from '../clients';
 import { FormulaCondition } from '../data/models';
 import getSearchParams from '../utils/getSearchParams';
 
+/**
+ * @deprecated This interface is deprecated and will be removed in the next major version.
+ */
 export interface ApplicationDocumentConfiguration {
   id: string;
   name: string;
@@ -16,10 +19,16 @@ export interface ApplicationDocumentConfiguration {
   updatedAt?: Date;
 }
 
+/**
+ * @deprecated This api is deprecated and will be removed in the next major version.
+ */
 export interface ApplicationDocumentConfigurationApi {
   find(productId: string): Promise<ApplicationDocumentConfiguration[]>;
 }
 
+/**
+ * @deprecated This api is deprecated and will be removed in the next major version.
+ */
 export class ApplicationDocumentConfigurationRestApi implements ApplicationDocumentConfigurationApi {
   protected path = '/application-document-configurations';
 

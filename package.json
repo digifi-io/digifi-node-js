@@ -1,6 +1,6 @@
 {
   "name": "@digifi/digifi-node-js",
-  "version": "6.4.0-alpha.0",
+  "version": "6.6.0-intermediary-portal.1",
   "description": "DigiFI SDK for Node JS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
