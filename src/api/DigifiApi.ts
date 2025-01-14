@@ -69,6 +69,10 @@ import {
   VariablesRestApi,
   WebhookEndpointsApi,
   WebhookEndpointsRestApi,
+  StandardPortalGeneralSettingsApi,
+  StandardPortalGeneralSettingsRestApi,
+  StandardPortalLegalConsentsApi,
+  StandardPortalLegalConsentsRestApi,
   IntermediaryAccountsApi,
 } from '.';
 import {
@@ -95,8 +99,15 @@ class DigifiApi {
   public intermediaryResetPassword: ResetPasswordApi;
   public intermediarySessions: SessionsApi;
 
+  /**
+  * @deprecated Use standardPortalGeneralSettings instead
+  */
   public borrowerStandardPortalGeneralSettings: BorrowerStandardPortalGeneralSettingsApi;
+  /**
+  * @deprecated Use standardPortalLegalConsents instead
+  */
   public borrowerStandardPortalLegalConsents: BorrowerStandardPortalLegalConsentsApi;
+
   public branding: BrandingApi;
 
   public decisionProcessing: DecisionProcessingApi;
@@ -135,6 +146,9 @@ class DigifiApi {
   public webhookEndpoints: WebhookEndpointsApi;
 
   public docuSign: DocuSignRestApi;
+
+  public standardPortalGeneralSettings: StandardPortalGeneralSettingsApi;
+  public standardPortalLegalConsents: StandardPortalLegalConsentsApi;
 
   private readonly apiClient: IApiClient;
 
@@ -193,6 +207,9 @@ class DigifiApi {
     this.webhookEndpoints = new WebhookEndpointsRestApi(this.apiClient);
 
     this.docuSign = new DocuSignRestApi(this.apiClient);
+
+    this.standardPortalGeneralSettings = new StandardPortalGeneralSettingsRestApi(this.apiClient);
+    this.standardPortalLegalConsents = new StandardPortalLegalConsentsRestApi(this.apiClient);
   }
 }
 

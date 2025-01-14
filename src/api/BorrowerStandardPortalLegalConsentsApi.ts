@@ -21,6 +21,9 @@ export interface BorrowerStandardPortalLegalConsentsApi {
   getLegalConsents(params?: GetLegalConsentsParams): Promise<BorrowerStandardPortalLegalConsent[]>;
 }
 
+/**
+ * @deprecated Use StandardPortalLegalConsentsRestApi instead
+ */
 export class BorrowerStandardPortalLegalConsentsRestApi implements BorrowerStandardPortalLegalConsentsApi {
   protected path = '/borrowers/standard-portals/legal-documents';
 
