@@ -7,6 +7,7 @@ import VariableAccessPermission from './VariableAccessPermission';
 import VariableType from './VariableType';
 import DecisionRunResult from './DecisionRunResult';
 import DigitalLendingPortalEnvironment from './DigitalLendingPortalEnvironment';
+import PortalUserType from './PortalUserType';
 
 export {
   BorrowerType,
@@ -18,4 +19,5 @@ export {
   VariableType,
   DecisionRunResult,
   DigitalLendingPortalEnvironment,
+  PortalUserType,
 };

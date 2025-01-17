@@ -8,22 +8,31 @@ export type GetInviteInfoResponseParams = {
   [key in 'borrowerId' | 'intermediaryId']: string;
 };
 
+export interface IAcceptInviteParams {
+  token: string;
+  password: string;
+  phone: string;
+  fullName?: string;
+}
+
 export interface InvitesApi {
-  acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams>;
+  acceptInvite(params: IAcceptInviteParams, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams>;
   getInviteInfo(token: string): Promise<GetInviteInfoResponseParams>;
 }
 
 export abstract class InvitesRestApi extends AuthApi implements InvitesApi {
   protected path = '/invites'
 
-  constructor(apiClient: IApiClient, reference: AuthReference) {
+  protected constructor(apiClient: IApiClient, reference: AuthReference) {
     super(apiClient, reference);
   }
 
-  public acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number): Promise<AuthResponseParams> {
+  public acceptInvite(
+    { token, ...restParams }: IAcceptInviteParams,
+    refreshTokenExpirationTimeMinutes?: number,
+  ): Promise<AuthResponseParams> {
     return this.makeAuthCall(`${this.path}/${token}`, 'POST', {
-      password,
-      phone,
+      ...restParams,
       refreshTokenExpirationTimeMinutes,
     });
   }
