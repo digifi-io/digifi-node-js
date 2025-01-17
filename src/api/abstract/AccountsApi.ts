@@ -11,6 +11,9 @@ export enum AccountStatus {
   Pending = 'pending',
 }
 
+/**
+ * @deprecated (will be removed in next major version)
+ */
 export interface BaseAccountPhone {
   value: string;
   verified: boolean;
@@ -22,9 +25,14 @@ export type BaseAccountInfo = {
   isEmailNotVerified: true | undefined;
   isMfaIncomplete: true | undefined;
   email: string;
+  /**
+   * @deprecated Use phone and isPhoneVerified instead (will be removed in next major version)
+   */
   phones: BaseAccountPhone[];
+  isPhoneVerified: boolean;
   lastActiveAt: number | null;
   status: AccountStatus;
+  phone?: string;
 } & {
   [key in string]: string;
 }
