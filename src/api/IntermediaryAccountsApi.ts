@@ -16,7 +16,7 @@ export class IntermediaryAccountsRestApi extends AccountsRestApi<IntermediaryAcc
   }
 
   public updateFullName(fullName: string, accountAccessToken: string): Promise<IntermediaryAccountInfo> {
-    return this.makeAuthCall(`${this.path}/full-name`, 'PUT', undefined, {
+    return this.makeAuthCall(`${this.path}/full-name`, 'PUT', { fullName }, {
       headers: new Headers({
         accountAccessToken,
       }),
