@@ -18,7 +18,7 @@ export class ApplicationDocumentsDownloadsRestApi
   }
 
   public async downloadById(id: string): Promise<DownloadResponse> {
-    return this.download(`/${this.path}/${id}`);
+    return this.download(`${this.path}/${id}`);
   }
 
   public async downloadAll(applicationId: string, accessPermission?: ApplicationDocumentAccessPermission): Promise<DownloadResponse> {
