@@ -58,7 +58,6 @@ export interface UpdateBorrowerParams {
 }
 
 export interface SearchBorrowersParams extends PaginationParams<BorrowerSortField>{
-  ids?: string[];
   personalIdNumber?: string;
   companyIdNumber?: string;
   email?: string;
