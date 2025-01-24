@@ -5,6 +5,7 @@
 * `phones` param of the BaseAccountInfo type and BaseAccountPhone interface were marked as deprecated.
 * Added `phone` (optional `string`) to the `BaseAccountPhone` interface.
 * Added `isPhoneVerified` (required `boolean`) to the `BaseAccountPhone` interface.
+* Added `applicationId` (optional `string`), `recipientType` (optional `ESignTemplateRecipientEntityType`) to the `ListEnvelopesParams` interface.
 
 ## 6.5.0 - 2025-01-08
 * `BrandingLanguage` enum was added to branding api.
