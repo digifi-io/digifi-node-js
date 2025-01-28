@@ -2,10 +2,12 @@
 
 ## 6.6.0 - TBD
 * Updated signature of `acceptInvite` method in the `InvitesApi` api.
-* `phones` param of the BaseAccountInfo type and BaseAccountPhone interface were marked as deprecated.
+* `phones` param of the `BaseAccountInfo` type and `BaseAccountPhone` interface were marked as deprecated.
 * Added `phone` (optional `string`) to the `BaseAccountPhone` interface.
 * Added `isPhoneVerified` (required `boolean`) to the `BaseAccountPhone` interface.
 * Added `applicationId` (optional `string`), `recipientType` (optional `ESignTemplateRecipientEntityType`) to the `ListEnvelopesParams` interface.
+* Added `fullName` (optional `string`) to `IntermediaryAccountInfo`.
+* Added a new endpoint to `IntermediaryAccountsRestApi` - `updateFullName`.
 
 ## 6.5.0 - 2025-01-08
 * `BrandingLanguage` enum was added to branding api.
@@ -40,12 +42,12 @@
 * Renamed all `*ApiService` classes to `*RestApi`.
 * Renamed all `*Api` classes to `*RestApi`.
 * Introduced interfaces to access API services.
-* `AccountsRestApi`, `EmailVerificationRestApi`, `InvitesRestApi`, `PhoneVerificationRestApi`, 
+* `AccountsRestApi`, `EmailVerificationRestApi`, `InvitesRestApi`, `PhoneVerificationRestApi`,
   `ResetPasswordRestApi`, `SessionsRestApi` classes became abstract.
-* Introduced following classes: `BorrowerAccountsRestApi`, `BorrowerEmailVerificationRestApi`, 
-  `BorrowerInvitesRestApi`, `BorrowerPhoneVerificationRestApi`, `BorrowerResetPasswordRestApi`, 
-  `BorrowerSessionsRestApi`, `IntermediaryAccountsRestApi`, `IntermediaryEmailVerificationRestApi`, 
-  `IntermediaryInvitesRestApi`,`IntermediaryPhoneVerificationRestApi`, `IntermediaryResetPasswordRestApi`, 
+* Introduced following classes: `BorrowerAccountsRestApi`, `BorrowerEmailVerificationRestApi`,
+  `BorrowerInvitesRestApi`, `BorrowerPhoneVerificationRestApi`, `BorrowerResetPasswordRestApi`,
+  `BorrowerSessionsRestApi`, `IntermediaryAccountsRestApi`, `IntermediaryEmailVerificationRestApi`,
+  `IntermediaryInvitesRestApi`,`IntermediaryPhoneVerificationRestApi`, `IntermediaryResetPasswordRestApi`,
   `IntermediarySessionsRestApi`.
 
 ## 5.1.0 - 2024-04-03
