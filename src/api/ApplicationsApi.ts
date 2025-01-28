@@ -124,6 +124,8 @@ export interface SearchApplicationsParams extends PaginationParams<ApplicationSo
   formattedSearch?: string;
   visibleOnBoard?: boolean;
   onlyInProgress?: boolean;
+  onlyInApprovedStatus?: boolean;
+  onlyInRejectedStatus?: boolean;
   searchByFields?: string[];
   searchByVariables?: string[];
   filterByVariables?: VariableFilterParams;

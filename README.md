@@ -159,7 +159,7 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `sendVerificationEmail(accountAccessToken: string)` - sends verification email for [borrower](https://docs.digifi.io/reference/send-email-verification-code) account by `accountAccessToken`.
   - `verifyEmail(code: string, accountAccessToken: string)` - verifies email for [borrower](https://docs.digifi.io/reference/verify-email-verification-code) account using `code` by `accountAccessToken`.
 - `new DigifiApi.borrowerInvites(apiClient: ApiClient)` - api for borrower invitation management.
-  - `acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [borrower](https://docs.digifi.io/reference/create-account-accept-invitation) account.
+  - `acceptInvite(inviteParams: object, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [borrower](https://docs.digifi.io/reference/create-account-accept-invitation) account.
   - `getInviteInfo(token: string)` - retrieves invitation information for [borrower](https://docs.digifi.io/reference/get-user-info-from-invitation-token) account by `token`.
 - `new DigifiApi.borrowerPhoneVerification(...)` - api for borrower phone verification management.
   - `sendMfaCode(phone: string, accountAccessToken: string)` - sends mfa code for [borrower](https://docs.digifi.io/reference/borrower-send-2fa-phone-code) account phone by `accountAccessToken`.
@@ -193,7 +193,7 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `sendVerificationEmail(accountAccessToken: string)` - sends verification email for [intermediary](https://docs.digifi.io/reference/send-email-verification-code-1) account by `accountAccessToken`.
   - `verifyEmail(code: string, accountAccessToken: string)` - verifies email for [intermediary](https://docs.digifi.io/reference/verify-email-verification-code-1) account using `code` by `accountAccessToken`.
 - `new DigifiApi.intermediaryInvites(...)` - api for intermediary invitation management.
-  - `acceptInvite(password: string, phone: string, token: string, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [intermediary](https://docs.digifi.io/reference/create-account-accept-invitation-1) account.
+  - `acceptInvite(inviteParams: object, refreshTokenExpirationTimeMinutes?: number)` - accepts invite for [intermediary](https://docs.digifi.io/reference/create-account-accept-invitation-1) account.
   - `getInviteInfo(token: string)` - retrieves invitation information for [intermediary](https://docs.digifi.io/reference/get-user-info-from-invitation-token-1) account by `token`.
 - `new DigifiApi.intermediaryPhoneVerification(...)` - api for borrower/intermediary phone verification management.
   - `sendMfaCode(phone: string, accountAccessToken: string)` - sends mfa code for [intermediary](https://docs.digifi.io/reference/send-2fa-sms-phone-code) account phone by `accountAccessToken`.

@@ -34,6 +34,13 @@ export interface ListEnvelopesResponse {
   envelopes: DocuSignEnvelope[] | null;
 }
 
+export enum ESignTemplateRecipientEntityType {
+  Borrower = 'Borrower',
+  CoBorrower = 'Co-Borrower',
+  Intermediary = 'Intermediary',
+  Other = 'Other',
+}
+
 export interface ListEnvelopesParams {
   status?: string;
   searchText?: string;
@@ -41,6 +48,8 @@ export interface ListEnvelopesParams {
   toDate?: string;
   orderBy?: string;
   order?: string;
+  applicationId?: string;
+  recipientType?: ESignTemplateRecipientEntityType;
 }
 
 export interface CreateRecipientViewParams {
