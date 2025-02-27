@@ -1,6 +1,11 @@
 # Changelog
 
-## 6.6.0 - TBD
+## 6.7.0 - 2025-02-27
+* `getIntegrationSettings` method of `DocuSignApi` api were marked as deprecated.
+* Added new `getConnectionStatus` method to the `DocuSignApi` interface.
+* Added new `createEmbeddedSigningData` method to the `DocuSignApi` interface.
+
+## 6.6.0 - 2025-02-03
 * Updated signature of `acceptInvite` method in the `InvitesApi` api.
 * `phones` param of the `BaseAccountInfo` type and `BaseAccountPhone` interface were marked as deprecated.
 * Added `phone` (optional `string`) to the `BaseAccountPhone` interface.
