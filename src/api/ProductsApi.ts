@@ -56,6 +56,7 @@ export interface Product {
   isArchived?: boolean;
   type: ProductType;
   borrowerTypes: BorrowerType[];
+  coBorrowerTypes: BorrowerType[];
   declineReasons: string[];
   createdAt: Date;
   updatedAt: Date;
