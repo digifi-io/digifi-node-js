@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.8.0 - 2025-03-21
+* Added `coBorrowerTypes` (required `BorrowerType`) to the `Product` interface.
+* Added `coBorrowerTypes` (required `BorrowerType`) to the `Application.product` interface.
+
 ## 6.7.0 - 2025-02-27
 * `getIntegrationSettings` method of `DocuSignApi` api were marked as deprecated.
 * Added new `getConnectionStatus` method to the `DocuSignApi` interface.
