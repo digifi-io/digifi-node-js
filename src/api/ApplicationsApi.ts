@@ -162,6 +162,20 @@ export interface RunAutomationWorkflowParams {
   automationWorkflowId: string;
 }
 
+export interface CountApplicationsParams {
+  productId?: string;
+  intermediaryId?: string;
+  borrowerId?: string;
+  onlyInProgress?: boolean;
+  onlyInApprovedStatus?: boolean;
+  onlyInRejectedStatus?: boolean;
+  onlyInFinalStatus?: boolean;
+}
+
+export interface ApplicationsCount {
+  total: number;
+}
+
 export type UpdateApplicationCoBorrowersParams = DeleteCoBorrowerParams | AddCoBorrowersParams;
 
 export interface ApplicationsApi {
@@ -179,6 +193,7 @@ export interface ApplicationsApi {
   addTeamMembers(id: string, teamMembersIds: string[]): Promise<Application>;
   delete(id: string): Promise<Application>;
   runAutomation(id: string, params: RunAutomationWorkflowParams): Promise<void>;
+  countBy(params: CountApplicationsParams): Promise<ApplicationsCount>;
 }
 
 export class ApplicationsRestApi extends SystemApi<
@@ -232,5 +247,19 @@ export class ApplicationsRestApi extends SystemApi<
 
   public runAutomation(applicationId: string, params: RunAutomationWorkflowParams) {
     return this.apiClient.makeCall<void>(`${this.path}/${applicationId}/run-automation`, 'POST', params);
+  }
+
+  public countBy(params: CountApplicationsParams): Promise<ApplicationsCount> {
+    const urlParams = new URLSearchParams();
+
+    for (const param of Object.keys(params)) {
+      const paramValue = params[param as keyof CountApplicationsParams];
+
+      if (paramValue !== undefined) {
+        urlParams.append(param, paramValue.toString());
+      }
+    }
+
+    return this.apiClient.makeCall<ApplicationsCount>(`${this.path}/count?${urlParams}`, 'GET')
   }
 }
