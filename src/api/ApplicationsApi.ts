@@ -77,6 +77,7 @@ export interface Application {
     organizationId: string;
     organizationVersion: number;
     borrowerTypes: BorrowerType[];
+    coBorrowerTypes: BorrowerType[];
   };
   testing?: boolean;
   createdBy?: UserShort | null;
