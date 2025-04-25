@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.8.0 - TBD
+## 6.8.0 - 2025-04-28
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Product` interface.
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Application.product` interface.
 
