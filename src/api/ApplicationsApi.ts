@@ -49,6 +49,7 @@ export interface Application {
     name: string;
     permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
     permissionGroupsToEditApplication: ApplicationStatusPermissions;
+    permissionGroupsToViewApplication: ApplicationStatusPermissions;
     permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
     type: ApplicationStatusType;
     archivedAt?: Date;
