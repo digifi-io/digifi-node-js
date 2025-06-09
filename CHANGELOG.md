@@ -1,5 +1,8 @@
 # Changelog
 
+## 6.9.0 - 2025-06-09
+* Added `permissionGroupsToViewApplication` to the `ApplicationStatus` interface.
+
 ## 6.8.0 - 2025-04-28
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Product` interface.
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Application.product` interface.

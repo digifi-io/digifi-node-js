@@ -31,6 +31,7 @@ export interface ApplicationStatus {
   type: ApplicationStatusType;
   permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
   permissionGroupsToEditApplication: ApplicationStatusPermissions;
+  permissionGroupsToViewApplication: ApplicationStatusPermissions;
   permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
   createdAt?: Date;
   updatedAt?: Date;
