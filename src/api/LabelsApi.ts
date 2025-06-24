@@ -31,13 +31,13 @@ export interface Label {
 }
 
 export interface FindLabelsParams {
-  count: number;
-  offset: number;
-  sortField: LabelSortField;
-  sortDirection: SortDirection;
-  includeDeleted: boolean;
-  productId: string;
-  referenceType: LabelReferenceType;
+  count?: number;
+  offset?: number;
+  sortField?: LabelSortField;
+  sortDirection?: SortDirection;
+  includeDeleted?: boolean;
+  productId?: string;
+  referenceType?: LabelReferenceType;
   search?: string;
 }
 
