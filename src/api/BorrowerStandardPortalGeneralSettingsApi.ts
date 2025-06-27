@@ -1,8 +1,9 @@
 import { IApiClient } from '../clients';
 import DigitalLendingPortalEnvironment from '../enums/DigitalLendingPortalEnvironment';
 import getSearchParams from '../utils/getSearchParams';
+import { IBaseStandardPortalConfig  } from './StandardPortalGeneralSettingsApi';
 
-export interface StandardBorrowerPortalConfig {
+export interface StandardBorrowerPortalConfig extends IBaseStandardPortalConfig {
   borrowerLockPeriodDays: number;
 }
 
