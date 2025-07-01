@@ -9,8 +9,14 @@ export enum StandardPortalStatusDisplayType {
   Actual = 'actual',
 }
 
+export enum StandardPortalSearchEngineVisibility {
+  Visible = 'visible',
+  Hidden = 'hidden',
+}
+
 export interface IBaseStandardPortalConfig {
   statusDisplayType: StandardPortalStatusDisplayType;
+  searchEngineVisibility: StandardPortalSearchEngineVisibility;
 }
 
 export interface IntermediaryStandardPortalGeneralSettings {
