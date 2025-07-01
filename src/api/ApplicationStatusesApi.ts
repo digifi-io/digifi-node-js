@@ -40,7 +40,7 @@ export interface ApplicationStatus {
 }
 
 export interface ApplicationStatusesApi {
-  find(productId: string): Promise<ApplicationStatus[]>;
+  find(productId: string | string[]): Promise<ApplicationStatus[]>;
 }
 
 export class ApplicationStatusesRestApi implements ApplicationStatusesApi {
@@ -50,7 +50,7 @@ export class ApplicationStatusesRestApi implements ApplicationStatusesApi {
     private apiClient: IApiClient,
   ) {}
 
-  public find(productId: string): Promise<ApplicationStatus[]> {
+  public find(productId: string | string[]): Promise<ApplicationStatus[]> {
     const urlSearchParams = getSearchParams({ productId });
 
     return this.apiClient.makeCall<ApplicationStatus[]>(`${this.path}?${urlSearchParams}`);
