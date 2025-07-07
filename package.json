@@ -1,6 +1,6 @@
 {
   "name": "@digifi/digifi-node-js",
-  "version": "6.9.0",
+  "version": "6.10.0-labels-api.1",
   "description": "DigiFI SDK for Node JS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

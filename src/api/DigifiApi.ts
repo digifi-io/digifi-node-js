@@ -74,6 +74,8 @@ import {
   StandardPortalLegalConsentsApi,
   StandardPortalLegalConsentsRestApi,
   IntermediaryAccountsApi,
+  LabelsApi,
+  LabelsRestApi,
 } from '.';
 import {
   AccountsApi,
@@ -139,6 +141,7 @@ class DigifiApi {
   public layoutConfiguration: LayoutConfigurationApi;
   public productCalculations: ProductCalculationsApi;
   public products: ProductsApi;
+  public labels: LabelsApi;
   public tasks: TasksApi;
 
   public users: UsersApi;
@@ -200,6 +203,7 @@ class DigifiApi {
     this.layoutConfiguration = new LayoutConfigurationRestApi(this.apiClient);
     this.productCalculations = new ProductCalculationsRestApi(this.apiClient);
     this.products = new ProductsRestApi(this.apiClient);
+    this.labels = new LabelsRestApi(this.apiClient);
     this.tasks = new TasksRestApi(this.apiClient);
 
     this.users = new UsersRestApi(this.apiClient);
