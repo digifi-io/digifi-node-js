@@ -53,6 +53,8 @@ export * from './DecisionsApi';
 
 export * from './DocuSignApi';
 
+export * from './LabelsApi';
+
 export * from './StandardPortalGeneralSettingsApi';
 export * from './StandardPortalLegalConsentsApi';
 
