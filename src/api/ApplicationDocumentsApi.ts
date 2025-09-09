@@ -28,7 +28,11 @@ export interface ApplicationDocument {
   name: string;
   extension: string | null;
   size: number | null;
+  /**
+   * @deprecated Use taskIds instead
+   */
   taskId?: string;
+  taskIds?: string[];
   labelIds: string[];
   testing?: boolean;
   createdBy?: UserShort | null;
@@ -63,7 +67,11 @@ export interface CreateManyApplicationDocumentParams {
 
 export interface FindApplicationDocumentsParams {
   applicationId: string;
+  /**
+   * @deprecated Use taskIds instead
+   */
   taskId?: string;
+  taskIds?: string[];
   accessPermissionEntityType?: ApplicationDocumentAccessPermissionEntityType;
   accessPermissionEntityId?: string;
 }
@@ -88,6 +96,18 @@ export interface CreateApplicationDocumentFolderParams {
   parentId?: string | null;
 }
 
+export interface ApplicationDocumentTasksLinkParams {
+  applicationId: string;
+  documentIds: string[];
+  taskId: string;
+}
+
+export interface ApplicationDocumentTasksUnlinkParams {
+  applicationId: string;
+  documentIds: string[];
+  taskId: string;
+}
+
 export interface ApplicationDocumentsApi {
   find(params: FindApplicationDocumentsParams): Promise<ApplicationDocument[]>;
   findById(id: string): Promise<ApplicationDocument>;
@@ -96,6 +116,8 @@ export interface ApplicationDocumentsApi {
   createFolder(params: CreateApplicationDocumentFolderParams): Promise<ApplicationDocument>;
   update(id: string, params: UpdateApplicationDocumentParams): Promise<ApplicationDocument>;
   delete(id: string): Promise<ApplicationDocument>;
+  tasksLink(params: ApplicationDocumentTasksLinkParams): Promise<void>;
+  tasksUnlink(params: ApplicationDocumentTasksUnlinkParams): Promise<void>;
 }
 
 export class ApplicationDocumentsRestApi
@@ -187,6 +209,20 @@ export class ApplicationDocumentsRestApi
     return this.apiClient.makeCall<ApplicationDocument>(`${this.path}/document-folders`, 'POST', {
       ...params,
       parentId: params.parentId || null,
+    });
+  }
+
+  public tasksLink({ documentIds, ...params }: ApplicationDocumentTasksLinkParams): Promise<void> {
+    return this.apiClient.makeCall<void>(`${this.path}/tasks-link`, 'PUT', {
+      ...params,
+      ids: documentIds,
+    });
+  }
+
+  public tasksUnlink({ documentIds, ...params }: ApplicationDocumentTasksUnlinkParams): Promise<void> {
+    return this.apiClient.makeCall<void>(`${this.path}/tasks-unlink`, 'PUT', {
+      ...params,
+      ids: documentIds,
     });
   }
 }
