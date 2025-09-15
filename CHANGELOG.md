@@ -1,5 +1,16 @@
 # Changelog
 
+## 6.11.0 - 2025-09-15
+* `taskId` field was deprecated in the `FindApplicationDocumentsParams` interface.
+* Added `taskIds` (optional `string[]`) to the `FindApplicationDocumentsParams` interface.
+* `taskId` field was deprecated in the `ApplicationDocument` interface.
+* Added `taskIds` (optional `string[]`) to the `ApplicationDocument` interface.
+* Added new `tasksLink` method to the `ApplicationDocumentsRestApi` interface.
+* Added new `tasksUnlink` method to the `ApplicationDocumentsRestApi` interface.
+
+## 6.10.0 - 2025-07-07
+* Introduced `Labels API`.
+
 ## 6.9.0 - 2025-06-09
 * Added `permissionGroupsToViewApplication` to the `ApplicationStatus` interface.
 
