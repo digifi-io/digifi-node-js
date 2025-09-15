@@ -29,7 +29,8 @@ export interface ApplicationDocument {
   extension: string | null;
   size: number | null;
   /**
-   * @deprecated Use taskIds instead
+   * @deprecated
+   * @description Use taskIds instead
    */
   taskId?: string;
   taskIds?: string[];
@@ -68,7 +69,8 @@ export interface CreateManyApplicationDocumentParams {
 export interface FindApplicationDocumentsParams {
   applicationId: string;
   /**
-   * @deprecated Use taskIds instead
+   * @deprecated
+   * @description Use taskIds instead
    */
   taskId?: string;
   taskIds?: string[];
