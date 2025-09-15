@@ -52,6 +52,7 @@ export interface Application {
     permissionGroupsToViewApplication: ApplicationStatusPermissions;
     permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
     type: ApplicationStatusType;
+    color: string;
     archivedAt?: Date;
   };
   borrowerId: string;
