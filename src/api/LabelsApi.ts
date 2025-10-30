@@ -1,6 +1,6 @@
 import { IApiClient } from '../clients';
 import { SortDirection } from '../enums';
-import { UserShort } from '../types';
+import { PaginationResult, UserShort } from '../types';
 import getSearchParams from '../utils/getSearchParams';
 
 export enum LabelSortField {
@@ -42,7 +42,7 @@ export interface FindLabelsParams {
 }
 
 export interface LabelsApi {
-  find(params: FindLabelsParams): Promise<Label[]>;
+  find(params: FindLabelsParams): Promise<PaginationResult<Label>>;
 }
 
 export class LabelsRestApi implements LabelsApi {
@@ -52,9 +52,9 @@ export class LabelsRestApi implements LabelsApi {
     private apiClient: IApiClient,
   ) {}
 
-  public find(params: FindLabelsParams): Promise<Label[]> {
+  public find(params: FindLabelsParams): Promise<PaginationResult<Label>> {
     const urlSearchParams = getSearchParams(params as unknown as Record<string, string>);
 
-    return this.apiClient.makeCall<Label[]>(`${this.path}?${urlSearchParams}`);
+    return this.apiClient.makeCall<PaginationResult<Label>>(`${this.path}?${urlSearchParams}`);
   }
 }
