@@ -76,6 +76,8 @@ import {
   IntermediaryAccountsApi,
   LabelsApi,
   LabelsRestApi,
+  CommunicationsApi,
+  CommunicationsRestApi,
 } from '.';
 import {
   AccountsApi,
@@ -153,6 +155,8 @@ class DigifiApi {
   public standardPortalGeneralSettings: StandardPortalGeneralSettingsApi;
   public standardPortalLegalConsents: StandardPortalLegalConsentsApi;
 
+  public communications: CommunicationsApi;
+
   private readonly apiClient: IApiClient;
 
   constructor(
@@ -214,6 +218,8 @@ class DigifiApi {
 
     this.standardPortalGeneralSettings = new StandardPortalGeneralSettingsRestApi(this.apiClient);
     this.standardPortalLegalConsents = new StandardPortalLegalConsentsRestApi(this.apiClient);
+
+    this.communications = new CommunicationsRestApi(this.apiClient);
   }
 }
 

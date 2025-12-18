@@ -322,6 +322,12 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `create(params: object)` - creates webhook endpoint by `params` object.
   - `update(id: string, params: object)` - updates webhook endpoints by `id` and `params` object.
   - `delete(id: string)` - deletes webhook endpoint by `id`.
+- `new DigifiApi.communications(...)` - api for communications management.
+  - `search(params: object)` - [search communications](https://docs.digifi.io/reference/get-communications-search) by `params` object.
+  - `findById(id: string)` - [finds communication](https://docs.digifi.io/reference/get-communications-id) by `id`.
+  - `create(params: object)` - [creates communication](https://docs.digifi.io/reference/post-communications) by `params` object.
+  - `update(id: string, params: object)` - [updates communication](https://docs.digifi.io/reference/put-communications-id) by `id` and `params` object.
+  - `delete(id: string)` - [deletes communication](https://docs.digifi.io/reference/delete-communications-id) by `id`.
 
 ## Webhook signing
 
