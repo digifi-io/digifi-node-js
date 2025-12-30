@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.12.0 - 2025-12-30
+* Introduced `Communications API`.
+* Added `searchEngineVisibility` field to the `IBaseStandardPortalConfig` interface.
+
 ## 6.11.0 - 2025-09-15
 * `taskId` field was deprecated in the `FindApplicationDocumentsParams` interface.
 * Added `taskIds` (optional `string[]`) to the `FindApplicationDocumentsParams` interface.

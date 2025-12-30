@@ -58,6 +58,8 @@ export * from './LabelsApi';
 export * from './StandardPortalGeneralSettingsApi';
 export * from './StandardPortalLegalConsentsApi';
 
+export * from  './CommunicationsApi';
+
 export {
   SystemApi,
   DigifiApi,
