@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.12.0 - 2025-12-22
+## 6.12.0 - 2025-12-30
 * Introduced `Communications API`.
 * Added `searchEngineVisibility` field to the `IBaseStandardPortalConfig` interface.
 
