@@ -1,5 +1,8 @@
 # Changelog
 
+## TBD
+* Added `shadowMode` (optional `boolean`) to the `MakeDecisionParams` interface.
+
 ## 6.12.0 - 2025-12-30
 * Introduced `Communications API`.
 * Added `searchEngineVisibility` field to the `IBaseStandardPortalConfig` interface.

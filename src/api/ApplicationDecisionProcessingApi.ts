@@ -1,5 +1,6 @@
 import { IApiClient } from '../clients';
 import { DecisionResult } from './DecisionProcessingApi';
+import { DecisionStrategyExecutionMode } from './DecisionsApi';
 
 export interface MakeDecisionParams {
   strategyId: string;
@@ -7,6 +8,7 @@ export interface MakeDecisionParams {
   decisionName?: string;
   successStatusId?: string;
   failureStatusId?: string;
+  executionMode?: DecisionStrategyExecutionMode;
 }
 
 export interface ApplicationDecision {
