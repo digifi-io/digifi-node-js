@@ -1,6 +1,10 @@
 import { IApiClient } from '../clients';
 import { DecisionResult } from './DecisionProcessingApi';
-import { DecisionStrategyExecutionMode } from './DecisionsApi';
+
+export enum DecisionStrategyExecutionMode {
+  Default = 'default',
+  Shadow = 'shadow',
+}
 
 export interface MakeDecisionParams {
   strategyId: string;
