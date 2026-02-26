@@ -78,6 +78,8 @@ import {
   LabelsRestApi,
   CommunicationsApi,
   CommunicationsRestApi,
+  UploadRestApi,
+  UploadApi,
 } from '.';
 import {
   AccountsApi,
@@ -157,6 +159,8 @@ class DigifiApi {
 
   public communications: CommunicationsApi;
 
+  public upload: UploadApi;
+
   private readonly apiClient: IApiClient;
 
   constructor(
@@ -220,6 +224,8 @@ class DigifiApi {
     this.standardPortalLegalConsents = new StandardPortalLegalConsentsRestApi(this.apiClient);
 
     this.communications = new CommunicationsRestApi(this.apiClient);
+
+    this.upload = new UploadRestApi(this.apiClient);
   }
 }
 
