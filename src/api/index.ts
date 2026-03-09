@@ -60,6 +60,8 @@ export * from './StandardPortalLegalConsentsApi';
 
 export * from  './CommunicationsApi';
 
+export * from './UploadApi';
+
 export {
   SystemApi,
   DigifiApi,
