@@ -19,8 +19,12 @@ export interface IBaseStandardPortalConfig {
   searchEngineVisibility: StandardPortalSearchEngineVisibility;
 }
 
+export interface IntermediaryStandardPortalConfig extends IBaseStandardPortalConfig {
+  allowInviteBorrowers: boolean;
+}
+
 export interface IntermediaryStandardPortalGeneralSettings {
-  config: IBaseStandardPortalConfig;
+  config: IntermediaryStandardPortalConfig;
   accessPasswordExists: boolean;
 }
 
