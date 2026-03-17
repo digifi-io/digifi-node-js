@@ -18,6 +18,9 @@ import {
   BaseGroup,
   BaseVariableConfiguration,
 } from './LayoutConfiguration';
+import { IFinalizeUploadItem, IPreparedUploadItem, IUploadItem } from './UploadItem';
+import { IFinalizeUploadParams, IPrepareUploadParams, IUploadFinalizationResult } from './Upload';
+import { UploadMetadataMapping, IApplicationDocumentUploadMetadata } from './UploadMetadata';
 
 export {
   AuthResponseParams,
@@ -41,4 +44,12 @@ export {
   BaseGroup,
   BaseCard,
   BaseVariableConfiguration,
+  IUploadItem,
+  IPreparedUploadItem,
+  IFinalizeUploadItem,
+  IPrepareUploadParams,
+  IFinalizeUploadParams,
+  IUploadFinalizationResult,
+  UploadMetadataMapping,
+  IApplicationDocumentUploadMetadata,
 };
