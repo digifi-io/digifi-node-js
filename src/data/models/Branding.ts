@@ -42,7 +42,9 @@ export interface Branding {
   favicon: ImageParams | null;
   organization: {
     name: string;
+    /* @deprecated use countries instead */
     country?: string;
+    countries?: string[];
     legalAddress?: string;
   };
 }
