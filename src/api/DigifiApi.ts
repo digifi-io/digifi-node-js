@@ -39,6 +39,7 @@ import {
   DecisionsApi,
   DecisionsRestApi,
   DocuSignRestApi,
+  PandaDocRestApi,
   IntegrationFileDownloadApi,
   IntegrationFileDownloadRestApi,
   IntegrationProcessingApi,
@@ -153,6 +154,7 @@ class DigifiApi {
   public webhookEndpoints: WebhookEndpointsApi;
 
   public docuSign: DocuSignRestApi;
+  public pandaDoc: PandaDocRestApi;
 
   public standardPortalGeneralSettings: StandardPortalGeneralSettingsApi;
   public standardPortalLegalConsents: StandardPortalLegalConsentsApi;
@@ -219,6 +221,7 @@ class DigifiApi {
     this.webhookEndpoints = new WebhookEndpointsRestApi(this.apiClient);
 
     this.docuSign = new DocuSignRestApi(this.apiClient);
+    this.pandaDoc = new PandaDocRestApi(this.apiClient);
 
     this.standardPortalGeneralSettings = new StandardPortalGeneralSettingsRestApi(this.apiClient);
     this.standardPortalLegalConsents = new StandardPortalLegalConsentsRestApi(this.apiClient);
