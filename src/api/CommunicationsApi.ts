@@ -1,16 +1,21 @@
 import { SystemApi } from './base/SystemApi';
-import { PaginationParams, PaginationResult, UserBasic } from '../types';
+import { PaginationParams, PaginationResult, AnyObject } from '../types';
 
 export enum CommunicationType {
-  Email = 'Email',
-  TextMessage = 'TextMessage',
-  PhoneCall = 'PhoneCall',
+  Email = 'email',
+  TextMessage = 'text-message',
+  PhoneCall = 'phone-call',
 }
 
-export enum CommunicationMessageStatus {
-  Queued = 'queued',
-  Sent = 'sent',
-  SentManually = 'sentManually',
+export enum CommunicationContentBodyType {
+  Text = 'text',
+  Html = 'html',
+  JsonMarkdown = 'json-markdown',
+}
+
+export enum CommunicationDeliveryStatus {
+  Succeeded = 'succeeded',
+  Failed = 'failed',
 }
 
 export enum CommunicationSortField {
@@ -20,6 +25,49 @@ export enum CommunicationSortField {
   Subject = 'subject',
 }
 
+export interface CommunicationContentTextBody {
+  type: CommunicationContentBodyType.Text;
+  text: string;
+}
+
+export interface CommunicationContentJsonMarkdownBody {
+  type: CommunicationContentBodyType.JsonMarkdown;
+  textSource: AnyObject;
+  text: string;
+}
+
+export interface CommunicationContentHtmlBody {
+  type: CommunicationContentBodyType.Html;
+}
+
+export type CommunicationContentTextBodyInput = CommunicationContentTextBody;
+export type CommunicationContentJsonMarkdownBodyInput = Omit<CommunicationContentJsonMarkdownBody, 'text'>;
+export type CommunicationContentHtmlBodyInput = CommunicationContentHtmlBody & { html: string };
+
+export type EmailCommunicationContentBody =
+  | CommunicationContentTextBody
+  | CommunicationContentJsonMarkdownBody
+  | CommunicationContentHtmlBody;
+
+export type EmailCommunicationContentBodyInput =
+  | CommunicationContentTextBodyInput
+  | CommunicationContentJsonMarkdownBodyInput
+  | CommunicationContentHtmlBodyInput;
+
+export type PhoneCallCommunicationContentBody =
+  | CommunicationContentTextBody
+  | CommunicationContentJsonMarkdownBody;
+
+export type PhoneCallCommunicationContentBodyInput =
+  | CommunicationContentTextBodyInput
+  | CommunicationContentJsonMarkdownBodyInput;
+
+export type TextMessageCommunicationContentBody =
+  | CommunicationContentTextBody;
+
+export type TextMessageCommunicationContentBodyInput =
+  | CommunicationContentTextBodyInput;
+
 interface BaseCommunication {
   id: string;
   productId: string;
@@ -28,14 +76,14 @@ interface BaseCommunication {
   applicationDisplayId: string;
   borrowerIds: string[] | null;
   intermediaryId: string | null;
-  communicationType: CommunicationType;
-  messageStatus: CommunicationMessageStatus;
+  type: CommunicationType;
+  deliveryStatus: CommunicationDeliveryStatus;
   testing: boolean;
   recordDate: Date;
   createdAt: Date;
   updatedAt: Date;
-  createdBy?: UserBasic | null;
-  updatedBy?: string;
+  createdById?: string | null;
+  updatedById?: string | null;
 }
 
 export interface EmailCommunicationContent {
@@ -44,83 +92,110 @@ export interface EmailCommunicationContent {
   bcc: string[];
   from: string;
   subject: string;
-  body?: string | null;
-  attachmentsCount?: number;
+  body: EmailCommunicationContentBody;
 }
 
 export interface TextMessageCommunicationContent {
   to: string;
   from: string;
-  message: string;
+  body: TextMessageCommunicationContentBody;
 }
 
 export interface PhoneCallCommunicationContent {
   to: string;
   from: string;
-  message?: string | null;
+  body: PhoneCallCommunicationContentBody;
 }
 
 export interface EmailCommunication extends BaseCommunication {
-  communicationType: CommunicationType.Email;
+  type: CommunicationType.Email;
   content: EmailCommunicationContent;
 }
 
 export interface TextMessageCommunication extends BaseCommunication {
-  communicationType: CommunicationType.TextMessage;
+  type: CommunicationType.TextMessage;
   content: TextMessageCommunicationContent;
 }
 
 export interface PhoneCallCommunication extends BaseCommunication {
-  communicationType: CommunicationType.PhoneCall;
+  type: CommunicationType.PhoneCall;
   content: PhoneCallCommunicationContent;
 }
 
 export type Communication = EmailCommunication | TextMessageCommunication | PhoneCallCommunication;
 
-export interface CreateEmailCommunicationContentParams {
+export interface EmailCommunicationContentInput {
   to: string[];
   cc: string[];
   bcc: string[];
   from: string;
   subject?: string;
-  body?: string | null;
-  bodyHtml?: string | null;
-  attachmentsCount?: number;
-  organizationId: string;
+  body: EmailCommunicationContentBodyInput
 }
 
-export interface CreateTextMessageCommunicationContentParams {
+export interface TextMessageCommunicationContentInput {
   to: string;
   from: string;
-  message: string;
+  body: TextMessageCommunicationContentBodyInput;
 }
 
-export interface CreatePhoneCallCommunicationContentParams {
+export interface PhoneCallCommunicationContentInput {
   to: string;
   from: string;
-  message?: string | null;
+  body: PhoneCallCommunicationContentBodyInput;
 }
 
-export type CreateCommunicationContentParams =
-  | CreateEmailCommunicationContentParams
-  | CreateTextMessageCommunicationContentParams
-  | CreatePhoneCallCommunicationContentParams;
+export type AnyCommunicationContentInput =
+  | EmailCommunicationContentInput
+  | TextMessageCommunicationContentInput
+  | PhoneCallCommunicationContentInput;
 
-export interface CreateCommunicationParams {
+export interface BaseCreateCommunicationParams {
   applicationId: string;
-  communicationType: CommunicationType;
-  content: CreateCommunicationContentParams;
+  type: CommunicationType;
+  content: unknown;
   borrowerIds?: string[] | null;
   intermediaryId?: string | null;
   recordDate: Date;
 }
 
-export interface UpdateCommunicationParams {
-  content?: Partial<CreateCommunicationContentParams>;
+export interface CreateEmailCommunicationParams extends BaseCreateCommunicationParams{
+  type: CommunicationType.Email;
+  content: EmailCommunicationContentInput;
+}
+
+export interface CreateTextMessageCommunicationParams extends BaseCreateCommunicationParams {
+  type: CommunicationType.Email;
+  content: TextMessageCommunicationContentInput;
+}
+
+export interface CreatePhoneCallCommunicationParams extends BaseCreateCommunicationParams {
+  type: CommunicationType.Email;
+  content: PhoneCallCommunicationContentInput;
+}
+
+export type CreateCommunicationParams =
+  | CreateEmailCommunicationParams
+  | CreateTextMessageCommunicationParams
+  | CreatePhoneCallCommunicationParams;
+
+export interface BaseUpdateCommunicationParams {
   borrowerIds?: string[] | null;
   intermediaryId?: string | null;
   recordDate?: Date;
 }
+
+export interface WithContentUpdateCommunicationParams extends BaseUpdateCommunicationParams {
+  contentPatchCommunicationType: CommunicationType;
+  content: AnyCommunicationContentInput;
+}
+
+export interface WithoutContentUpdateCommunicationParams extends BaseUpdateCommunicationParams {
+  content?: undefined;
+  contentPatchCommunicationType?: undefined;
+}
+
+export type UpdateCommunicationParams = WithContentUpdateCommunicationParams | WithoutContentUpdateCommunicationParams;
 
 export interface SearchCommunicationsParams extends PaginationParams<CommunicationSortField> {
   communicationType?: CommunicationType[];
