@@ -12,6 +12,11 @@ import { CreateIntermediaryParams } from './IntermediariesApi';
 import { BorrowerType, SortDirection } from '../enums';
 import { ApplicationStatusType } from './ApplicationStatusesApi';
 import { CursorPaginationParams, CursorPaginationResult } from '../types/Pagination';
+import {
+  WithOptionalResourceMetadata,
+  WithResourceMetadata,
+  WithResourceMetadataPatch,
+} from '../types/ResourceMetadata';
 
 export enum ApplicationDefaultVariable {
   LoanAmount = 'loan_amount',
@@ -39,7 +44,7 @@ export type VariableFilterParams = { [name: string]: VariableFilterValueQueryPar
 export type BorrowerIdTarget = 'borrower' | 'coborrowers';
 
 
-export interface Application {
+export interface Application extends WithResourceMetadata {
   id: string;
   organizationId: string;
   displayId: string;
@@ -91,7 +96,7 @@ export interface Application {
   highlights?: SearchHighlight[];
 }
 
-export interface CreateApplicationParams {
+export interface CreateApplicationParams extends WithOptionalResourceMetadata {
   productId: string;
   statusId?: string;
   borrower: string | CreateBorrowerParams;
@@ -102,7 +107,7 @@ export interface CreateApplicationParams {
   variables: Record<string, VariableValue>;
 }
 
-export interface UpdateApplicationParams {
+export interface UpdateApplicationParams extends WithResourceMetadataPatch {
   statusId?: string;
   declineReasons?: string[];
   teamMembers?: string[];

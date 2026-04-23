@@ -1,5 +1,28 @@
 # Changelog
 
+6.14.0 - 2026-04-23
+
+Added support for metadata to the following resources and their respective API methods:
+Application – create, update
+Borrower – create, update
+Intermediary – create, update, bulkCreate
+Task – create, update, bulkCreate
+ApplicationDocument – create, update, createMany, createFolder
+Added metadata field to the following request interfaces:
+CreateApplicationParams
+CreateBorrowerParams
+CreateIntermediaryParams
+CreateTaskParams
+CreateApplicationDocumentParams
+CreateApplicationDocumentFolderParams
+ApplicationDocumentFileUploadParams
+Added metadata patch support to the following update interfaces:
+UpdateApplicationParams
+UpdateBorrowerParams
+UpdateIntermediaryParams
+UpdateTaskParams
+UpdateApplicationDocumentParams
+
 ## 6.8.0 - 2025-04-28
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Product` interface.
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Application.product` interface.

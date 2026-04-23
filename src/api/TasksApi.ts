@@ -2,6 +2,11 @@ import { SystemApi } from './base/SystemApi';
 import { PaginationParams, PaginationResult } from '../types';
 import { FormulaCondition } from '../data/models';
 import { CursorPaginationParams, CursorPaginationResult } from '../types/Pagination';
+import {
+  WithOptionalResourceMetadata,
+  WithResourceMetadata,
+  WithResourceMetadataPatch,
+} from '../types/ResourceMetadata';
 
 export enum ExternalTaskAssigneeType {
   Borrower = 'borrower',
@@ -36,7 +41,7 @@ export interface TaskExternalAssignee {
   id: string;
 }
 
-export interface Task {
+export interface Task extends WithResourceMetadata {
   id: string;
   status: TaskStatus;
   title: string;
@@ -63,7 +68,7 @@ export interface Task {
   sendExternalAssignmentEmail?: boolean;
 }
 
-export interface CreateTaskParams {
+export interface CreateTaskParams extends WithOptionalResourceMetadata {
   applicationId: string;
   title: string;
   status?: TaskStatus;
@@ -88,7 +93,7 @@ export type UpdateTaskLabelsParams = {
   remove?: string[];
 }
 
-export interface UpdateTaskParams {
+export interface UpdateTaskParams extends WithResourceMetadataPatch {
   status?: TaskStatus;
   title?: string;
   internalInstructions?: string | null;
