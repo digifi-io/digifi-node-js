@@ -74,6 +74,12 @@ import {
   StandardPortalLegalConsentsApi,
   StandardPortalLegalConsentsRestApi,
   IntermediaryAccountsApi,
+  LabelsApi,
+  LabelsRestApi,
+  CommunicationsApi,
+  CommunicationsRestApi,
+  UploadRestApi,
+  UploadApi,
 } from '.';
 import {
   AccountsApi,
@@ -139,6 +145,7 @@ class DigifiApi {
   public layoutConfiguration: LayoutConfigurationApi;
   public productCalculations: ProductCalculationsApi;
   public products: ProductsApi;
+  public labels: LabelsApi;
   public tasks: TasksApi;
 
   public users: UsersApi;
@@ -149,6 +156,10 @@ class DigifiApi {
 
   public standardPortalGeneralSettings: StandardPortalGeneralSettingsApi;
   public standardPortalLegalConsents: StandardPortalLegalConsentsApi;
+
+  public communications: CommunicationsApi;
+
+  public upload: UploadApi;
 
   private readonly apiClient: IApiClient;
 
@@ -200,6 +211,7 @@ class DigifiApi {
     this.layoutConfiguration = new LayoutConfigurationRestApi(this.apiClient);
     this.productCalculations = new ProductCalculationsRestApi(this.apiClient);
     this.products = new ProductsRestApi(this.apiClient);
+    this.labels = new LabelsRestApi(this.apiClient);
     this.tasks = new TasksRestApi(this.apiClient);
 
     this.users = new UsersRestApi(this.apiClient);
@@ -210,6 +222,10 @@ class DigifiApi {
 
     this.standardPortalGeneralSettings = new StandardPortalGeneralSettingsRestApi(this.apiClient);
     this.standardPortalLegalConsents = new StandardPortalLegalConsentsRestApi(this.apiClient);
+
+    this.communications = new CommunicationsRestApi(this.apiClient);
+
+    this.upload = new UploadRestApi(this.apiClient);
   }
 }
 

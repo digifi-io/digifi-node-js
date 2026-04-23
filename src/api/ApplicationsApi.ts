@@ -54,8 +54,10 @@ export interface Application extends WithResourceMetadata {
     name: string;
     permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
     permissionGroupsToEditApplication: ApplicationStatusPermissions;
+    permissionGroupsToViewApplication: ApplicationStatusPermissions;
     permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
     type: ApplicationStatusType;
+    color: string;
     archivedAt?: Date;
   };
   borrowerId: string;

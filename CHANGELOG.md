@@ -1,27 +1,48 @@
 # Changelog
 
-6.14.0 - 2026-04-23
+## 6.14.0 - 2026-04-23
 
 Added support for metadata to the following resources and their respective API methods:
-Application – create, update
-Borrower – create, update
-Intermediary – create, update, bulkCreate
-Task – create, update, bulkCreate
-ApplicationDocument – create, update, createMany, createFolder
+* `Application` – `create`, `update`
+* `Borrower` – `create`, `update`
+* `Intermediary` – `create`, `update`, `bulkCreate`
+* `Task` – `create`, `update`, `bulkCreate`
+* `ApplicationDocument` – `create`, `update`, `createMany`, `createFolder`
+
 Added metadata field to the following request interfaces:
-CreateApplicationParams
-CreateBorrowerParams
-CreateIntermediaryParams
-CreateTaskParams
-CreateApplicationDocumentParams
-CreateApplicationDocumentFolderParams
-ApplicationDocumentFileUploadParams
+* `CreateApplicationParams`
+* `CreateBorrowerParams`
+* `CreateIntermediaryParams`
+* `CreateTaskParams`
+* `CreateApplicationDocumentParams`
+* `CreateApplicationDocumentFolderParams`
+* `ApplicationDocumentFileUploadParams`
+
 Added metadata patch support to the following update interfaces:
-UpdateApplicationParams
-UpdateBorrowerParams
-UpdateIntermediaryParams
-UpdateTaskParams
-UpdateApplicationDocumentParams
+* `UpdateApplicationParams`
+* `UpdateBorrowerParams`
+* `UpdateIntermediaryParams`
+* `UpdateTaskParams`
+* `UpdateApplicationDocumentParams`
+
+
+## 6.12.0 - 2025-12-30
+* Introduced `Communications API`.
+* Added `searchEngineVisibility` field to the `IBaseStandardPortalConfig` interface.
+
+## 6.11.0 - 2025-09-15
+* `taskId` field was deprecated in the `FindApplicationDocumentsParams` interface.
+* Added `taskIds` (optional `string[]`) to the `FindApplicationDocumentsParams` interface.
+* `taskId` field was deprecated in the `ApplicationDocument` interface.
+* Added `taskIds` (optional `string[]`) to the `ApplicationDocument` interface.
+* Added new `tasksLink` method to the `ApplicationDocumentsRestApi` interface.
+* Added new `tasksUnlink` method to the `ApplicationDocumentsRestApi` interface.
+
+## 6.10.0 - 2025-07-07
+* Introduced `Labels API`.
+
+## 6.9.0 - 2025-06-09
+* Added `permissionGroupsToViewApplication` to the `ApplicationStatus` interface.
 
 ## 6.8.0 - 2025-04-28
 * Added `coBorrowerTypes` (required `BorrowerType`) to the `Product` interface.
