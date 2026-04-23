@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.14.0 - 2026-04-23
+## 6.15.0 - 2026-04-23
 
 Added support for metadata to the following resources and their respective API methods:
 * `Application` – `create`, `update`
