@@ -10,7 +10,7 @@ export type HTTP_METHOD = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type RequestBody = string | { [key: string]: any } | FormData;
 export type ContentType = 'application/json' | 'text/html' | null;
 
-export type CompatibleApiVersion = '2024-02-26';
+export type CompatibleApiVersion = '2026-04-22';
 
 interface FetchResponse<T = any> extends Response {
   json<P = T>(): Promise<P>;

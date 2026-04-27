@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.0.0 - 2026-04-27
+* Added support for the new API Version `2026-04-22`.
+* Updated `Communications` models and API contracts:
+  * Updated `CommunicationType` values to API values: `email`, `text-message`, `phone-call`.
+  * Replaced communication status typing with `CommunicationDeliveryStatus`.
+  * Added `CommunicationContentBodyType` and typed body payloads (`text`, `html`, `json-markdown`) for email, text message, and phone call content.
+  * Updated communication model fields (`type`, `deliveryStatus`, `createdById`, `updatedById`).
+  * Updated create/update payload contracts for communication content patching and typed inputs.
+
 ## 6.15.0 - 2026-04-23
 
 Added support for metadata to the following resources and their respective API methods:
