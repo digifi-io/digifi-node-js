@@ -130,7 +130,7 @@ export interface EmailCommunicationContentInput {
   bcc: string[];
   from: string;
   subject?: string;
-  body: EmailCommunicationContentBodyInput
+  body: EmailCommunicationContentBodyInput;
 }
 
 export interface TextMessageCommunicationContentInput {

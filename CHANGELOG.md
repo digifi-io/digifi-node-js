@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.0 - 2026-04-24
+## 7.0.0 - 2026-04-27
 * Added support for the new API Version `2026-04-22`.
 * Updated `Communications` models and API contracts:
   * Updated `CommunicationType` values to API values: `email`, `text-message`, `phone-call`.
