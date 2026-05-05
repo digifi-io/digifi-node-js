@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.1.0 - 2026-05-04
+* Introduced `PandaDoc API`.
+* Added new `getConnectionStatus` method to the `PandaDocApi` interface.
+* Added new `createEmbeddedSigningData` method to the `PandaDocApi` interface.
+* Added `countries` (optional `string[]`) to the `Branding.organization` interface. Deprecated `country` in favor of `countries`.
+* Added `allowInviteBorrowers` (required `boolean`) to the `IntermediaryStandardPortalGeneralSettings` config via new `IntermediaryStandardPortalConfig` interface.
+
 ## 7.0.0 - 2026-04-27
 * Added support for the new API Version `2026-04-22`.
 * Updated `Communications` models and API contracts:
@@ -34,6 +41,10 @@ Added metadata patch support to the following update interfaces:
 * `UpdateTaskParams`
 * `UpdateApplicationDocumentParams`
 
+## 6.13.0 - 2026-03-17
+* Introduced `Upload API` with `prepare` and `finalize` methods.
+* Added `accentFontColor` (required `string`) to the `Branding` interface.
+* Added `brandFontColor` (required `string`) to the `Branding` interface.
 
 ## 6.12.0 - 2025-12-30
 * Introduced `Communications API`.
