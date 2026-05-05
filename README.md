@@ -37,7 +37,7 @@ url to the DigiFi platform (this url can be different if you're using dedicated 
 const Digifi = require('@digifi/digifi-node-js');
 
 const digifiApi = new Digifi.DigifiApi('https://cloud.digifi.io/api', 'digifi-...', {
-  apiVersion: '2024-02-26',
+  apiVersion: '2026-04-22',
 });
 
 const { items, total } = await digifiApi.applications.find({ productId: '63d...' });
@@ -53,7 +53,7 @@ DigiFi maintains types for the latest API Version.
 import { CreateApplicationParams, Application, DigifiApi } from '@digifi/digifi-node-js';
 
 const digifiApi = new DigifiApi('https://cloud.digifi.io/api', 'digifi-...', {
-  apiVersion: '2024-02-26',
+  apiVersion: '2026-04-22',
 });
 
 const createApplication = async () => {
@@ -85,7 +85,7 @@ const baseUrl = 'https://cloud.digifi.io/api';
 const apiKey = 'digifi-cloud-...';
 
 const digifiApi = new DigifiApi(baseUrl, apiKey, {
-  apiVersion: '2024-02-26',
+  apiVersion: '2026-04-22',
 });
 ```
 
@@ -106,7 +106,7 @@ API client can be created with required `options` parameter that has this struct
 
 ```js
 const digifiApi = new DigifiApi('https://cloud.digifi.io/api', 'digifi-cloud-...', {
-  apiVersion: '2024-02-26',
+  apiVersion: '2026-04-22',
   enableIdempotencyHeader: true, // Will assign idempotency key to each POST request using UUID
 });
 ```
@@ -118,7 +118,7 @@ This will retry requests `n` times with exponential backoff if they fail due to 
 
 ```js
 const digifiApi = new DigifiApi('https://cloud.digifi.io/api', 'digifi-cloud-...', {
-  apiVersion: '2024-02-26',
+  apiVersion: '2026-04-22',
   maxNetworkRetries: 2, // Retry a request twice before giving up
 });
 ```

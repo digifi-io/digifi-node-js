@@ -2,6 +2,11 @@ import { SystemApi } from './base/SystemApi';
 import { VariableValue, UserShort, SearchHighlight, PaginationParams, PaginationResult } from '../types';
 import { BorrowerType } from '../enums';
 import { CursorPaginationParams, CursorPaginationResult } from '../types/Pagination';
+import {
+  WithOptionalResourceMetadata,
+  WithResourceMetadata,
+  WithResourceMetadataPatch,
+} from '../types/ResourceMetadata';
 
 export enum BorrowerSortField {
   FullName = 'fullName',
@@ -25,7 +30,7 @@ export enum BorrowerDefaultVariable {
   HomeAddress = 'borrower_home_address',
 }
 
-export interface Borrower {
+export interface Borrower extends WithResourceMetadata {
   id: string;
   type: BorrowerType;
   organizationId: string;
@@ -43,14 +48,14 @@ export interface Borrower {
   highlights?: SearchHighlight[];
 }
 
-export interface CreateBorrowerParams {
+export interface CreateBorrowerParams extends WithOptionalResourceMetadata {
   type: BorrowerType;
   variables: Record<string, VariableValue>;
   lockEndDate?: string | null;
   lockReason?: string;
 }
 
-export interface UpdateBorrowerParams {
+export interface UpdateBorrowerParams extends WithResourceMetadataPatch {
   type?: BorrowerType;
   variables?: Record<string, VariableValue>;
   lockEndDate?: string | null;

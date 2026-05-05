@@ -2,6 +2,11 @@ import { IApiClient } from '../clients';
 import FormData from 'form-data';
 import { UserShort } from '../types';
 import { BaseSystemApi } from './base';
+import {
+  WithOptionalResourceMetadata,
+  WithResourceMetadata,
+  WithResourceMetadataPatch,
+} from '../types/ResourceMetadata';
 
 export enum ApplicationDocumentType {
   File = 'file',
@@ -19,7 +24,7 @@ export interface ApplicationDocumentAccessPermission {
   accessGranted: boolean;
 }
 
-export interface ApplicationDocument {
+export interface ApplicationDocument extends WithResourceMetadata {
   id: string;
   type: ApplicationDocumentType;
   parentId: string | null;
@@ -45,7 +50,7 @@ export interface ApplicationDocument {
   accessPermissions: ApplicationDocumentAccessPermission[] | null;
 }
 
-export interface ApplicationDocumentFileUploadParams {
+export interface ApplicationDocumentFileUploadParams extends WithOptionalResourceMetadata {
   file: Buffer;
   fileName: string;
   parentId?: string | null;
@@ -85,14 +90,14 @@ export type UpdateApplicationDocumentLabelsParams = {
   remove?: string[];
 }
 
-export interface UpdateApplicationDocumentParams {
+export interface UpdateApplicationDocumentParams extends WithResourceMetadataPatch {
   name?: string;
   parentId?: string;
   accessPermissions?: ApplicationDocumentAccessPermission[];
   labels?: UpdateApplicationDocumentLabelsParams;
 }
 
-export interface CreateApplicationDocumentFolderParams {
+export interface CreateApplicationDocumentFolderParams extends WithOptionalResourceMetadata {
   applicationId: string;
   name: string;
   parentId?: string | null;
@@ -164,6 +169,10 @@ export class ApplicationDocumentsRestApi
       formData.append('labelIds', JSON.stringify(params.labelIds));
     }
 
+    if (params.metadata) {
+      formData.append('metadata', JSON.stringify(params.metadata));
+    }
+
     return this.apiClient.makeCall<ApplicationDocument>(`${this.path}`, 'POST', formData, { contentType: null });
   }
 
@@ -185,6 +194,10 @@ export class ApplicationDocumentsRestApi
         batchUploadDocumentParams.labelIds.forEach((labelId) => {
           formData.append(`options[${index}].labelIds`, labelId);
         });
+      }
+
+      if (batchUploadDocumentParams.metadata) {
+        formData.append(`options[${index}].metadata`, JSON.stringify(batchUploadDocumentParams.metadata));
       }
     });
 
