@@ -4,6 +4,8 @@
 * Introduced `PandaDoc API`.
 * Added new `getConnectionStatus` method to the `PandaDocApi` interface.
 * Added new `createEmbeddedSigningData` method to the `PandaDocApi` interface.
+* Added `countries` (optional `string[]`) to the `Branding.organization` interface. Deprecated `country` in favor of `countries`.
+* Added `allowInviteBorrowers` (required `boolean`) to the `IntermediaryStandardPortalGeneralSettings` config via new `IntermediaryStandardPortalConfig` interface.
 
 ## 7.0.0 - 2026-04-27
 * Added support for the new API Version `2026-04-22`.
