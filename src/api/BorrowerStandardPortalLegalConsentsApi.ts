@@ -7,10 +7,10 @@ export interface BorrowerStandardPortalLegalConsent {
   id: string;
   name: string;
   body: string;
-  bodySource: AnyObject;
+  bodySource: AnyObject | null;
   showInFooter: boolean;
   showOnSubmitApplication: boolean;
-  externalConsentUrl: string | null;
+  externalConsentUrl?: string | null;
   updatedAt: Date;
   updatedBy?: UserShort | null;
 }
