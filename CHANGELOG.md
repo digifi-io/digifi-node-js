@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.2.0 - 
+* Added `bodySource` (`object` or `null`) and `externalConsentUrl` (optional `string` or `null`) to the `BorrowerStandardPortalLegalConsent` interface.
+
 ## 7.1.0 - 2026-05-04
 * Introduced `PandaDoc API`.
 * Added new `getConnectionStatus` method to the `PandaDocApi` interface.
