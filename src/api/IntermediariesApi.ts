@@ -3,6 +3,11 @@ import { VariableValue, UserShort, SearchHighlight, PaginationParams, Pagination
 import getSearchParams from '../utils/getSearchParams';
 import { SearchParams } from './base';
 import { CursorPaginationParams, CursorPaginationResult } from '../types/Pagination';
+import {
+  WithOptionalResourceMetadata,
+  WithResourceMetadata,
+  WithResourceMetadataPatch,
+} from '../types/ResourceMetadata';
 
 export enum IntermediarySortField {
   Name = 'name',
@@ -29,7 +34,7 @@ export enum IntermediaryDefaultValue {
   Type = 'intermediary_type',
 }
 
-export interface Intermediary {
+export interface Intermediary extends WithResourceMetadata {
   id: string;
   organizationId: string;
   testing?: boolean;
@@ -41,11 +46,11 @@ export interface Intermediary {
   highlights?: SearchHighlight[];
 }
 
-export interface CreateIntermediaryParams {
+export interface CreateIntermediaryParams extends WithOptionalResourceMetadata {
   variables: Record<string, VariableValue>;
 }
 
-export interface UpdateIntermediaryParams {
+export interface UpdateIntermediaryParams extends WithResourceMetadataPatch {
   variables?: Record<string, VariableValue>;
 }
 

@@ -1,14 +1,16 @@
 import { IApiClient } from '../clients';
 import DigitalLendingPortalEnvironment from '../enums/DigitalLendingPortalEnvironment';
-import { UserShort } from '../types';
+import { AnyObject, UserShort } from '../types';
 import getSearchParams from '../utils/getSearchParams';
 
 export interface BorrowerStandardPortalLegalConsent {
   id: string;
   name: string;
   body: string;
+  bodySource: AnyObject | null;
   showInFooter: boolean;
   showOnSubmitApplication: boolean;
+  externalConsentUrl?: string | null;
   updatedAt: Date;
   updatedBy?: UserShort | null;
 }

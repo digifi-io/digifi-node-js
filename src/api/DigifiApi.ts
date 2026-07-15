@@ -39,6 +39,7 @@ import {
   DecisionsApi,
   DecisionsRestApi,
   DocuSignRestApi,
+  PandaDocRestApi,
   IntegrationFileDownloadApi,
   IntegrationFileDownloadRestApi,
   IntegrationProcessingApi,
@@ -78,6 +79,8 @@ import {
   LabelsRestApi,
   CommunicationsApi,
   CommunicationsRestApi,
+  UploadRestApi,
+  UploadApi,
 } from '.';
 import {
   AccountsApi,
@@ -151,11 +154,14 @@ class DigifiApi {
   public webhookEndpoints: WebhookEndpointsApi;
 
   public docuSign: DocuSignRestApi;
+  public pandaDoc: PandaDocRestApi;
 
   public standardPortalGeneralSettings: StandardPortalGeneralSettingsApi;
   public standardPortalLegalConsents: StandardPortalLegalConsentsApi;
 
   public communications: CommunicationsApi;
+
+  public upload: UploadApi;
 
   private readonly apiClient: IApiClient;
 
@@ -215,11 +221,14 @@ class DigifiApi {
     this.webhookEndpoints = new WebhookEndpointsRestApi(this.apiClient);
 
     this.docuSign = new DocuSignRestApi(this.apiClient);
+    this.pandaDoc = new PandaDocRestApi(this.apiClient);
 
     this.standardPortalGeneralSettings = new StandardPortalGeneralSettingsRestApi(this.apiClient);
     this.standardPortalLegalConsents = new StandardPortalLegalConsentsRestApi(this.apiClient);
 
     this.communications = new CommunicationsRestApi(this.apiClient);
+
+    this.upload = new UploadRestApi(this.apiClient);
   }
 }
 

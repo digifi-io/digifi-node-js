@@ -1,8 +1,57 @@
 # Changelog
 
-## TBD
+## 7.3.0 - 2026-07-15
 * Introduced `DecisionStrategyExecutionMode` enum.
 * Added `executionMode` (optional `DecisionStrategyExecutionMode`) to the `MakeDecisionParams` interface.
+
+## 7.2.0 - 2026-06-24
+* Added `bodySource` (`object` or `null`) and `externalConsentUrl` (optional `string` or `null`) to the `BorrowerStandardPortalLegalConsent` interface.
+
+## 7.1.0 - 2026-05-04
+* Introduced `PandaDoc API`.
+* Added new `getConnectionStatus` method to the `PandaDocApi` interface.
+* Added new `createEmbeddedSigningData` method to the `PandaDocApi` interface.
+* Added `countries` (optional `string[]`) to the `Branding.organization` interface. Deprecated `country` in favor of `countries`.
+* Added `allowInviteBorrowers` (required `boolean`) to the `IntermediaryStandardPortalGeneralSettings` config via new `IntermediaryStandardPortalConfig` interface.
+
+## 7.0.0 - 2026-04-27
+* Added support for the new API Version `2026-04-22`.
+* Updated `Communications` models and API contracts:
+  * Updated `CommunicationType` values to API values: `email`, `text-message`, `phone-call`.
+  * Replaced communication status typing with `CommunicationDeliveryStatus`.
+  * Added `CommunicationContentBodyType` and typed body payloads (`text`, `html`, `json-markdown`) for email, text message, and phone call content.
+  * Updated communication model fields (`type`, `deliveryStatus`, `createdById`, `updatedById`).
+  * Updated create/update payload contracts for communication content patching and typed inputs.
+
+## 6.15.0 - 2026-04-23
+
+Added support for metadata to the following resources and their respective API methods:
+* `Application` – `create`, `update`
+* `Borrower` – `create`, `update`
+* `Intermediary` – `create`, `update`, `bulkCreate`
+* `Task` – `create`, `update`, `bulkCreate`
+* `ApplicationDocument` – `create`, `update`, `createMany`, `createFolder`
+
+Added metadata field to the following request interfaces:
+* `CreateApplicationParams`
+* `CreateBorrowerParams`
+* `CreateIntermediaryParams`
+* `CreateTaskParams`
+* `CreateApplicationDocumentParams`
+* `CreateApplicationDocumentFolderParams`
+* `ApplicationDocumentFileUploadParams`
+
+Added metadata patch support to the following update interfaces:
+* `UpdateApplicationParams`
+* `UpdateBorrowerParams`
+* `UpdateIntermediaryParams`
+* `UpdateTaskParams`
+* `UpdateApplicationDocumentParams`
+
+## 6.13.0 - 2026-03-17
+* Introduced `Upload API` with `prepare` and `finalize` methods.
+* Added `accentFontColor` (required `string`) to the `Branding` interface.
+* Added `brandFontColor` (required `string`) to the `Branding` interface.
 
 ## 6.12.0 - 2025-12-30
 * Introduced `Communications API`.

@@ -52,6 +52,7 @@ export * from './DecisionProcessingApi';
 export * from './DecisionsApi';
 
 export * from './DocuSignApi';
+export * from './PandaDocApi';
 
 export * from './LabelsApi';
 
@@ -59,6 +60,8 @@ export * from './StandardPortalGeneralSettingsApi';
 export * from './StandardPortalLegalConsentsApi';
 
 export * from  './CommunicationsApi';
+
+export * from './UploadApi';
 
 export {
   SystemApi,

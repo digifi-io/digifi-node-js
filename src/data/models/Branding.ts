@@ -35,12 +35,16 @@ export enum BrandingLanguage {
 export interface Branding {
   accentColor: string;
   brandColor: string;
+  accentFontColor: string;
+  brandFontColor: string;
   language: BrandingLanguage;
   logo: ImageParams | null;
   favicon: ImageParams | null;
   organization: {
     name: string;
+    /* @deprecated use countries instead */
     country?: string;
+    countries?: string[];
     legalAddress?: string;
   };
 }
