@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.3.0 - 2026-07-15
+* Introduced `DecisionStrategyExecutionMode` enum.
+* Added `executionMode` (optional `DecisionStrategyExecutionMode`) to the `MakeDecisionParams` interface.
+
 ## 7.2.0 - 2026-06-24
 * Added `bodySource` (`object` or `null`) and `externalConsentUrl` (optional `string` or `null`) to the `BorrowerStandardPortalLegalConsent` interface.
 
