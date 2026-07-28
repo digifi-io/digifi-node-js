@@ -39,6 +39,7 @@ export * from './IntermediariesApi';
 export * from './ProductCalculationsApi';
 export * from './ProductsApi';
 export * from './TasksApi';
+export * from './TaskTemplatesApi';
 export * from './ApplicationNotesApi';
 export * from './LayoutConfigurationApi';
 
