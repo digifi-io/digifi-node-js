@@ -1,5 +1,4 @@
-import { FormulaCondition } from '../data/models';
-import { FormulaInputsMetadata } from "../data/models/FormulaCompilation";
+import { FormulaCondition, ConditionalFormattingRule } from '../data/models';
 
 export interface BaseGroup {
   id: string;
@@ -16,16 +15,6 @@ export interface BaseCard {
   organizationVersion: number | null;
   group: string;
   description?: string | null;
-}
-
-export interface ConditionalFormattingRule {
-  formula: string;
-  formulaInputsMetadata: FormulaInputsMetadata;
-  /**
-   * @deprecated Use formulaInputsMetadata or formula fields instead (will be removed in next major version)
-   */
-  formulaCondition: Omit<FormulaCondition, 'formulaCompilation'>;
-  color: string;
 }
 
 export interface BaseVariableConfiguration {

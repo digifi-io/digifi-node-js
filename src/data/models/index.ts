@@ -29,3 +29,13 @@ export {
   IntegrationResult,
   CompactIntegrationResult,
 };
+export {
+  ConditionalFormattingRule,
+} from './ConditionalFormattingRule';
+export {
+  FormulaBasedRule,
+} from './FormulaBasedRule';
+export {
+  FormulaBasedValidationRule,
+} from './FormulaBasedValidationRule';
+

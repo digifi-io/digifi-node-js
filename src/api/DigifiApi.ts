@@ -64,6 +64,8 @@ import {
   ProductsRestApi,
   TasksApi,
   TasksRestApi,
+  TaskTemplatesApi,
+  TaskTemplatesRestApi,
   UsersApi,
   UsersRestApi,
   VariablesApi,
@@ -148,6 +150,7 @@ class DigifiApi {
   public products: ProductsApi;
   public labels: LabelsApi;
   public tasks: TasksApi;
+  public taskTemplates: TaskTemplatesApi;
 
   public users: UsersApi;
   public variables: VariablesApi;
@@ -215,6 +218,7 @@ class DigifiApi {
     this.products = new ProductsRestApi(this.apiClient);
     this.labels = new LabelsRestApi(this.apiClient);
     this.tasks = new TasksRestApi(this.apiClient);
+    this.taskTemplates = new TaskTemplatesRestApi(this.apiClient);
 
     this.users = new UsersRestApi(this.apiClient);
     this.variables = new VariablesRestApi(this.apiClient);
