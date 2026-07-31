@@ -56,5 +56,3 @@ export class TaskTemplatesRestApi implements TaskTemplatesApi {
     return this.apiClient.makeCall<TaskTemplate>(`${this.path}/${id}`);
   }
 }
-
-
