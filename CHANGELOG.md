@@ -11,6 +11,10 @@
 * Introduced `ListValue` (`{ type: 'list', items: string[] }`) as a new variable value type.
 * Removed `stringFormat` and `numberFormat` from `FindVariableParams` in favor of `visualDataType`.
 
+## 7.4.0 - 2026-07-31
+* Introduced `TaskTemplates API`.
+* `variables` field was deprecated in the `Task` interface.
+
 ## 7.3.0 - 2026-07-15
 * Introduced `DecisionStrategyExecutionMode` enum.
 * Added `executionMode` (optional `DecisionStrategyExecutionMode`) to the `MakeDecisionParams` interface.
