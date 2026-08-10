@@ -4,7 +4,7 @@ import ExternalIntegrationResultType from './ExternalIntegrationResultType';
 import SortDirection from './SortDirection';
 import UserSortField from './UserSortField';
 import VariableAccessPermission from './VariableAccessPermission';
-import VariableType from './VariableType';
+import VariableDataType from './VariableDataType';
 import DecisionRunResult from './DecisionRunResult';
 import DigitalLendingPortalEnvironment from './DigitalLendingPortalEnvironment';
 import PortalUserType from './PortalUserType';
@@ -16,7 +16,7 @@ export {
   SortDirection,
   UserSortField,
   VariableAccessPermission,
-  VariableType,
+  VariableDataType,
   DecisionRunResult,
   DigitalLendingPortalEnvironment,
   PortalUserType,

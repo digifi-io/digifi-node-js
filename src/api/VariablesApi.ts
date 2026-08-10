@@ -1,6 +1,6 @@
 import { IApiClient } from '../clients';
-import { VariableAccessPermission, VariableType } from '../enums';
-import { NumericVisualDataType, StringVisualDataType, VisualDataType } from '../data/models';
+import { VariableAccessPermission, VariableDataType } from '../enums';
+import { VisualDataType } from '../data/models';
 import { PermissionGroupId, UserShortInfo, PaginationResult } from '../types';
 
 export interface FindVariableParams {
@@ -12,9 +12,7 @@ export interface FindVariableParams {
   dependsOn?: string;
   includeArchived?: boolean;
   systemNames?: string[];
-  stringFormat?: StringVisualDataType;
-  numberFormat?: NumericVisualDataType;
-  dataType?: VariableType | VariableType[];
+  dataType?: VariableDataType | VariableDataType[];
   excludeDataTypes?: string[];
   visualDataType?: VisualDataType;
   dueCreatedDateFrom?: Date | string;
@@ -31,7 +29,7 @@ interface BasicVariable {
   organizationId: string;
   organizationVersion: number;
   isArchived: boolean;
-  dataType: VariableType;
+  dataType: VariableDataType;
   visualDataType: VisualDataType;
 }
 
@@ -39,7 +37,7 @@ export interface TableColumn {
   id: string;
   name: string;
   systemName: string;
-  dataType: VariableType;
+  dataType: VariableDataType;
   visualDataType: VisualDataType;
   visualAttributes: VariableVisualAttributes;
   required?: boolean;

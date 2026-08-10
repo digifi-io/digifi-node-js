@@ -1,5 +1,16 @@
 # Changelog
 
+## 8.0.0 - 2026-08-10
+* Added support for the new API Version `2026-08-10`.
+* Added `List` (`list`) and `Table` (`table`) values to `VariableDataType` (formerly `VariableType`).
+* Renamed `VariableType` to `VariableDataType`.
+* Updated `VariableDataType` and `VisualDataType` values to lowercase / kebab-case (e.g. `string`, `phone-number`, `email-address`).
+* Replaced separate visual data type enums (`StringVisualDataType`, `NumericVisualDataType`, `BooleanVisualDataType`, `DateVisualDataType`, `AddressVisualDataType`, `TableVisualDataType`) with a single `VisualDataType` enum.
+* Renamed `List` to `Select` (`select`) in `VisualDataType`.
+* Added `MultiSelect` (`multi-select`) to `VisualDataType` for list variables.
+* Introduced `ListValue` (`{ type: 'list', items: string[] }`) as a new variable value type.
+* Removed `stringFormat` and `numberFormat` from `FindVariableParams` in favor of `visualDataType`.
+
 ## 7.4.0 - 2026-07-31
 * Introduced `TaskTemplates API`.
 * `variables` field was deprecated in the `Task` interface.
