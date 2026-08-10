@@ -8,6 +8,7 @@
 * Replaced separate visual data type enums (`StringVisualDataType`, `NumericVisualDataType`, `BooleanVisualDataType`, `DateVisualDataType`, `AddressVisualDataType`, `TableVisualDataType`) with a single `VisualDataType` enum.
 * Renamed `List` to `Select` (`select`) in `VisualDataType`.
 * Added `MultiSelect` (`multi-select`) to `VisualDataType` for list variables.
+* Introduced `ListValue` (`{ type: 'list', items: string[] }`) as a new variable value type.
 * Removed `stringFormat` and `numberFormat` from `FindVariableParams` in favor of `visualDataType`.
 
 ## 7.3.0 - 2026-07-15
