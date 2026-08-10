@@ -1,5 +1,13 @@
 # Changelog
 
+## 8.0.0 - 2026-08-10
+* Added support for the new API Version `2026-08-10`.
+* Added `List` and `Table` values to `VariableDataType` (formerly `VariableType`).
+* Renamed `VariableType` to `VariableDataType`.
+* Replaced separate visual data type enums (`StringVisualDataType`, `NumericVisualDataType`, `BooleanVisualDataType`, `DateVisualDataType`, `AddressVisualDataType`, `TableVisualDataType`) with a single `VisualDataType` enum using API values.
+* Added `MultiSelect` (`multi-select`) to `VisualDataType` for list variables.
+* Removed `stringFormat` and `numberFormat` from `FindVariableParams` in favor of `visualDataType`.
+
 ## 7.3.0 - 2026-07-15
 * Introduced `DecisionStrategyExecutionMode` enum.
 * Added `executionMode` (optional `DecisionStrategyExecutionMode`) to the `MakeDecisionParams` interface.

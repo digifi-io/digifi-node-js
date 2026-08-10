@@ -1,38 +1,15 @@
-export enum StringVisualDataType {
-  List = 'List',
-  Text = 'Text',
-  LargeText = 'LargeText',
-  PhoneNumber = 'PhoneNumber',
-  EmailAddress = 'EmailAddress',
-  IdentificationNumber = 'IdentificationNumber',
+export enum VisualDataType {
+  Select = 'select',
+  Text = 'text',
+  PhoneNumber = 'phone-number',
+  EmailAddress = 'email-address',
+  IdentificationNumber = 'identification-number',
+  Date = 'date',
+  Number = 'number',
+  Monetary = 'monetary',
+  Percentage = 'percentage',
+  Boolean = 'boolean',
+  Address = 'address',
+  MultiSelect = 'multi-select',
+  Table = 'table',
 }
-
-export enum DateVisualDataType {
-  Date = 'Date',
-}
-
-export enum NumericVisualDataType {
-  Number = 'Number',
-  Monetary = 'Monetary',
-  Percentage = 'Percentage',
-}
-
-export enum BooleanVisualDataType {
-  Boolean = 'Boolean',
-}
-
-export enum AddressVisualDataType {
-  Address = 'Address',
-}
-
-export enum TableVisualDataType {
-  Table = 'Table',
-}
-
-export type VisualDataType =
-  | NumericVisualDataType
-  | StringVisualDataType
-  | BooleanVisualDataType
-  | DateVisualDataType
-  | AddressVisualDataType
-  | TableVisualDataType;
