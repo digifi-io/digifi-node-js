@@ -66,6 +66,8 @@ import {
   TasksRestApi,
   TaskTemplatesApi,
   TaskTemplatesRestApi,
+  TaskAiAgentsApi,
+  TaskAiAgentsRestApi,
   UsersApi,
   UsersRestApi,
   VariablesApi,
@@ -151,6 +153,7 @@ class DigifiApi {
   public labels: LabelsApi;
   public tasks: TasksApi;
   public taskTemplates: TaskTemplatesApi;
+  public taskAiAgents: TaskAiAgentsApi;
 
   public users: UsersApi;
   public variables: VariablesApi;
@@ -219,6 +222,7 @@ class DigifiApi {
     this.labels = new LabelsRestApi(this.apiClient);
     this.tasks = new TasksRestApi(this.apiClient);
     this.taskTemplates = new TaskTemplatesRestApi(this.apiClient);
+    this.taskAiAgents = new TaskAiAgentsRestApi(this.apiClient);
 
     this.users = new UsersRestApi(this.apiClient);
     this.variables = new VariablesRestApi(this.apiClient);

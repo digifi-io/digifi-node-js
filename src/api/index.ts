@@ -40,6 +40,7 @@ export * from './ProductCalculationsApi';
 export * from './ProductsApi';
 export * from './TasksApi';
 export * from './TaskTemplatesApi';
+export * from './TaskAiAgents';
 export * from './ApplicationNotesApi';
 export * from './LayoutConfigurationApi';
 
