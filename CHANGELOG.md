@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.1.0 - 2026-08-24
+* Added new `createFromTemplate` method to the `TasksApi` interface.
+
 ## 8.0.0 - 2026-08-10
 * Added support for the new API Version `2026-08-10`.
 * Added `List` (`list`) and `Table` (`table`) values to `VariableDataType` (formerly `VariableType`).

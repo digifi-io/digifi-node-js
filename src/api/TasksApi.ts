@@ -89,6 +89,14 @@ export interface CreateTaskParams extends WithOptionalResourceMetadata {
   sendExternalAssignmentEmail?: boolean;
 }
 
+export interface CreateTaskFromTemplateParams extends WithOptionalResourceMetadata {
+  applicationId: string;
+  templateId: string;
+  assignedTeamMemberIds?: string[];
+  externalAssignee?: IUpdateExternalAssigneeParams;
+  sendExternalAssignmentEmail?: boolean;
+}
+
 export type UpdateTaskLabelsParams = {
   set: string[];
 } | {
@@ -147,6 +155,7 @@ export interface TasksApi {
   list(params: ListTasksParams): Promise<CursorPaginationResult<Task>>;
   findById(id: string): Promise<Task>;
   create(params: CreateTaskParams): Promise<Task>;
+  createFromTemplate(params: CreateTaskFromTemplateParams): Promise<Task>;
   update(id: string, params: UpdateTaskParams): Promise<Task>;
   bulkCreate(params: BulkCreateTasksParams): Promise<BulkCreateTasksResponse>;
   delete(id: string): Promise<Task>;
@@ -163,5 +172,9 @@ export class TasksRestApi extends SystemApi<
 
   public bulkCreate(params: BulkCreateTasksParams) {
     return this.apiClient.makeCall<BulkCreateTasksResponse>(`${this.path}/batch`, 'POST', params);
+  }
+
+  public createFromTemplate(params: CreateTaskFromTemplateParams) {
+    return this.apiClient.makeCall<Task>(`${this.path}/from-template`, 'POST', params);
   }
 }
