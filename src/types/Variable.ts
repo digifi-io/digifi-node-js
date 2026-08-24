@@ -20,12 +20,17 @@ export interface AddressValue {
   [AddressValueKey.Country]?: string;
 }
 
+export interface ListValue {
+  type: 'list';
+  items: string[];
+}
+
 export type TableRowValue = Record<string, BasicVariableValue> & {
   _id: string;
 };
 export type TableValue = TableRowValue[];
 
 
-export type BasicVariableValue = number | string | boolean | AddressValue | null | undefined;
+export type BasicVariableValue = number | string | boolean | AddressValue | ListValue | null | undefined;
 export type ComplexVariableValue = TableValue;
 export type VariableValue = BasicVariableValue | ComplexVariableValue;

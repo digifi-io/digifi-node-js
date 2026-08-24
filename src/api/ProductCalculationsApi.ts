@@ -1,6 +1,6 @@
 import { IApiClient } from '../clients';
 import getSearchParams from '../utils/getSearchParams';
-import { VariableType } from '../enums';
+import { VariableDataType } from '../enums';
 
 export interface ProductCalculation {
   id: string;
@@ -16,7 +16,7 @@ export interface ProductCalculation {
   updatedAt?: Date;
   variable: {
     id: string;
-    dataType: VariableType;
+    dataType: VariableDataType;
     systemName: string;
     name: string;
   };

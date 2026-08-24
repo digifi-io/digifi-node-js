@@ -1,15 +1,7 @@
 import Branding, { ImageParams } from './Branding';
 import Card from './Card';
 import FormulaCondition from './FormulaCondition';
-import {
-  StringVisualDataType,
-  NumericVisualDataType,
-  BooleanVisualDataType,
-  DateVisualDataType,
-  VisualDataType,
-  AddressVisualDataType,
-  TableVisualDataType,
-} from './Variable';
+import { VisualDataType } from './Variable';
 import VariableConfiguration from './VariableConfiguration';
 import IntegrationResult, { CompactIntegrationResult } from './Integration';
 
@@ -19,13 +11,17 @@ export {
   Card,
   FormulaCondition,
   VariableConfiguration,
-  StringVisualDataType,
-  NumericVisualDataType,
-  BooleanVisualDataType,
-  DateVisualDataType,
   VisualDataType,
-  AddressVisualDataType,
-  TableVisualDataType,
   IntegrationResult,
   CompactIntegrationResult,
 };
+export {
+  ConditionalFormattingRule,
+} from './ConditionalFormattingRule';
+export {
+  FormulaBasedRule,
+} from './FormulaBasedRule';
+export {
+  FormulaBasedValidationRule,
+} from './FormulaBasedValidationRule';
+

@@ -57,7 +57,6 @@ export interface Task extends WithResourceMetadata {
   externalAssignee?: TaskExternalAssignee | null;
   internalInstructions?: string | null;
   externalInstructions?: string | null;
-  variables?: string[] | null;
   group?: string;
   autoPassCondition?: FormulaCondition | null;
   dueDateAndTime?: Date | null;
@@ -66,6 +65,10 @@ export interface Task extends WithResourceMetadata {
   createdById?: string | null;
   updatedById?: string | null;
   sendExternalAssignmentEmail?: boolean;
+  /**
+   * @deprecated Use TaskTemplatesRestApi to retrieve related variables
+   */
+  variables?: string[] | null;
 }
 
 export interface CreateTaskParams extends WithOptionalResourceMetadata {
