@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.5.0 - 2026-08-24
+* Added new `createFromTemplate` method to the `TasksApi` interface.
+
+## 7.4.0 - 2026-07-31
+* Introduced `TaskTemplates API`.
+* `variables` field was deprecated in the `Task` interface.
+
 ## 7.3.0 - 2026-07-15
 * Introduced `DecisionStrategyExecutionMode` enum.
 * Added `executionMode` (optional `DecisionStrategyExecutionMode`) to the `MakeDecisionParams` interface.
