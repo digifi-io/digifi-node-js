@@ -4,18 +4,12 @@ import PortalUserType from '../enums/PortalUserType';
 import getSearchParams from '../utils/getSearchParams';
 import { BorrowerStandardPortalGeneralSettings } from './BorrowerStandardPortalGeneralSettingsApi';
 
-export enum StandardPortalStatusDisplayType {
-  Summary = 'summary',
-  Actual = 'actual',
-}
-
 export enum StandardPortalSearchEngineVisibility {
   Visible = 'visible',
   Hidden = 'hidden',
 }
 
 export interface IBaseStandardPortalConfig {
-  statusDisplayType: StandardPortalStatusDisplayType;
   searchEngineVisibility: StandardPortalSearchEngineVisibility;
 }
 
