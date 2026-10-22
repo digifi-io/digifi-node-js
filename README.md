@@ -308,6 +308,7 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `list(params: object)` - [lists tasks](https://docs.digifi.io/reference/get-tasks) by `params` object.
   - `findById(id: string)` - [finds task](https://docs.digifi.io/reference/get-tasks-id) by `id`.
   - `create(params: object)` - [creates task](https://docs.digifi.io/reference/post-tasks) by `params` object.
+  - `createFromTemplate(params: object)` - [creates task from template](https://docs.digifi.io/reference/post-tasks-from-template) by `params` object.
   - `update(id: string, params: object)` - [updates task](https://docs.digifi.io/reference/put-tasks-id) by `id` and `params` object.
   - `delete(id: string)` - [deletes task](https://docs.digifi.io/reference/delete-tasks-id) by `id`.
   - `bulkCreate(params: object)` - [creates many tasks](https://docs.digifi.io/reference/post-tasks-batch) by `params` object.
