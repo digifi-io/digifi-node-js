@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.2.0 - 2026-10-22
+* Introduced `PermissionGroups API`.
+* Added new `findById` method to the `PermissionGroupsApi` interface.
+
 ## 8.1.0 - 2026-08-24
 * Added new `createFromTemplate` method to the `TasksApi` interface.
 

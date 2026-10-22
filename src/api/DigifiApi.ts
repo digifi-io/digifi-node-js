@@ -66,6 +66,8 @@ import {
   TasksRestApi,
   TaskTemplatesApi,
   TaskTemplatesRestApi,
+  PermissionGroupsApi,
+  PermissionGroupsRestApi,
   UsersApi,
   UsersRestApi,
   VariablesApi,
@@ -152,6 +154,7 @@ class DigifiApi {
   public tasks: TasksApi;
   public taskTemplates: TaskTemplatesApi;
 
+  public permissionGroups: PermissionGroupsApi;
   public users: UsersApi;
   public variables: VariablesApi;
   public webhookEndpoints: WebhookEndpointsApi;
@@ -220,6 +223,7 @@ class DigifiApi {
     this.tasks = new TasksRestApi(this.apiClient);
     this.taskTemplates = new TaskTemplatesRestApi(this.apiClient);
 
+    this.permissionGroups = new PermissionGroupsRestApi(this.apiClient);
     this.users = new UsersRestApi(this.apiClient);
     this.variables = new VariablesRestApi(this.apiClient);
     this.webhookEndpoints = new WebhookEndpointsRestApi(this.apiClient);
