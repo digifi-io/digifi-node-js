@@ -4,12 +4,24 @@ import PortalUserType from '../enums/PortalUserType';
 import getSearchParams from '../utils/getSearchParams';
 import { BorrowerStandardPortalGeneralSettings } from './BorrowerStandardPortalGeneralSettingsApi';
 
+/**
+ * @deprecated This enum is deprecated and will be removed in the next major version.
+ */
+export enum StandardPortalStatusDisplayType {
+  Summary = 'summary',
+  Actual = 'actual',
+}
+
 export enum StandardPortalSearchEngineVisibility {
   Visible = 'visible',
   Hidden = 'hidden',
 }
 
 export interface IBaseStandardPortalConfig {
+  /**
+   * @deprecated This field is deprecated and will be removed in the next major version.
+   */
+  statusDisplayType: StandardPortalStatusDisplayType;
   searchEngineVisibility: StandardPortalSearchEngineVisibility;
 }
 
