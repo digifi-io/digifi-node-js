@@ -56,6 +56,8 @@ export interface Application extends WithResourceMetadata {
     permissionGroupsToEditApplication: ApplicationStatusPermissions;
     permissionGroupsToViewApplication: ApplicationStatusPermissions;
     permissionGroupsToMoveApplicationIntoStatus: ApplicationStatusPermissions;
+    applicantPortalAlternateStatusName?: string;
+    intermediaryPortalAlternateStatusName?: string;
     type: ApplicationStatusType;
     color: string;
     archivedAt?: Date;

@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.3.0 - 
+* Added `applicantPortalAlternateStatusName` (optional `string`) and `intermediaryPortalAlternateStatusName` (optional `string`) to the `Application` and `ApplicationStatus` interfaces.
+* Deprecated `statusDisplayType` in the `IBaseStandardPortalConfig`.
+* Deprecated `StandardPortalStatusDisplayType` enum.
+
 ## 8.1.0 - 2026-08-24
 * Added new `createFromTemplate` method to the `TasksApi` interface.
 

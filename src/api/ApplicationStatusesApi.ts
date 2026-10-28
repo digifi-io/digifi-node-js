@@ -33,6 +33,8 @@ export interface ApplicationStatus {
   permissionGroupsToEditApplication: ApplicationStatusPermissions;
   permissionGroupsToViewApplication: ApplicationStatusPermissions;
   permissionGroupsAbleToViewApplicationOnBoard: ApplicationStatusPermissions;
+  applicantPortalAlternateStatusName?: string;
+  intermediaryPortalAlternateStatusName?: string;
   createdAt?: Date;
   updatedAt?: Date;
   archivedAt?: Date;
