@@ -209,6 +209,8 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `validateToken(accountAccessToken: string)` - validates access token for [intermediary](https://docs.digifi.io/reference/put-intermediaries-sessions-token-status) account.
   - `logout(accountAccessToken: string)` - kills session associated with [intermediary](https://docs.digifi.io/reference/delete-intermediaries-sessions) account by `accountAccessToken`.
   - `resignAccessToken(accountRefreshToken: string)` - resign access token for [intermediary](https://docs.digifi.io/reference/post-intermediaries-sessions) account by `accountRefreshToken`. 
+- `new DigifiApi.permissionGroups(...)` - api for permission groups management.
+  - `findById(id: string)` - [finds permission group](https://docs.digifi.io/reference/get-permission-groups-id) by `id`.
 - `new DigifiApi.users(...)` - api for users management.
   - `find(params: object)` - [finds organization users](https://docs.digifi.io/reference/post-applications-id-team-members) by `params` object.
 - `new DigifiApi.variables(...)` - api for variables management.

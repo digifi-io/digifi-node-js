@@ -17,6 +17,7 @@ export * from './IntermediaryPhoneVerificationApi';
 export * from './IntermediaryResetPasswordApi';
 export * from './IntermediarySessionsApi';
 
+export * from './PermissionGroupsApi';
 export * from './UsersApi';
 export * from './VariablesApi';
 
