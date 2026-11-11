@@ -1,6 +1,6 @@
 # Changelog
 
-## 8.4.0 - 2026-11-11
+## 8.4.0 - 
 * Introduced `BorrowerConsentType` enum and `BorrowerConsents`, `BorrowerConsentChange`, `ChangeBorrowerConsentsParams` interfaces.
 * Added `consents` (required `BorrowerConsents`) to the `Borrower` interface.
 * Added new `changeConsents` method to the `BorrowersApi` interface. Every opt-in is recorded in the consent history of the borrower, even for an already active consent.
