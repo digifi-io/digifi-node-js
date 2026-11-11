@@ -1,6 +1,16 @@
 import { SystemApi } from './base/SystemApi';
-import { VariableValue, UserShort, SearchHighlight, PaginationParams, PaginationResult } from '../types';
-import { BorrowerType } from '../enums';
+import { SearchParams } from './base';
+import {
+  VariableValue,
+  UserShort,
+  UserBasic,
+  SearchHighlight,
+  PaginationParams,
+  PaginationResult,
+  PaginationLimitParams,
+} from '../types';
+import { BorrowerType, SortDirection } from '../enums';
+import getSearchParams from '../utils/getSearchParams';
 import { CursorPaginationParams, CursorPaginationResult } from '../types/Pagination';
 import {
   WithOptionalResourceMetadata,
@@ -30,6 +40,18 @@ export enum BorrowerDefaultVariable {
   HomeAddress = 'borrower_home_address',
 }
 
+export enum BorrowerConsentType {
+  SmsTransactional = 'smsTransactional',
+  EmailTransactional = 'emailTransactional',
+  EmailMarketing = 'emailMarketing',
+}
+
+export interface BorrowerConsents {
+  smsTransactional: boolean;
+  emailTransactional: boolean;
+  emailMarketing: boolean;
+}
+
 export interface Borrower extends WithResourceMetadata {
   id: string;
   type: BorrowerType;
@@ -41,6 +63,7 @@ export interface Borrower extends WithResourceMetadata {
   lockEndDate?: Date | null;
   lockedBy?: UserShort | null;
   lockReason?: string | null;
+  consents: BorrowerConsents;
   createdBy?: UserShort | null;
   updatedBy?: UserShort | null;
   createdAt: Date;
@@ -60,6 +83,66 @@ export interface UpdateBorrowerParams extends WithResourceMetadataPatch {
   variables?: Record<string, VariableValue>;
   lockEndDate?: string | null;
   lockReason?: string;
+}
+
+export interface BorrowerConsentChange {
+  consentType: BorrowerConsentType;
+  isActive: boolean;
+  disclosureCopy?: string | null;
+}
+
+export interface ChangeBorrowerConsentsParams {
+  changes: BorrowerConsentChange[];
+  source: string;
+  recordedBy: string;
+  ipAddress?: string | null;
+  device?: string | null;
+}
+
+export enum BorrowerConsentChangeType {
+  OptedIn = 'optedIn',
+  OptedOut = 'optedOut',
+}
+
+export enum BorrowerConsentChangeSource {
+  Platform = 'platform',
+  BorrowerPortalSignUp = 'borrowerPortalSignUp',
+  BorrowerPortalMyAccount = 'borrowerPortalMyAccount',
+  Api = 'api',
+}
+
+export enum BorrowerConsentHistorySortField {
+  CreatedAt = 'createdAt',
+  ConsentType = 'consentType',
+  ChangeType = 'changeType',
+}
+
+export interface BorrowerConsentHistoryRecord {
+  id: string;
+  organizationId: string;
+  testing: boolean;
+  borrowerId: string;
+  consentType: BorrowerConsentType;
+  changeType: BorrowerConsentChangeType;
+  contact: string | null;
+  sourceType: BorrowerConsentChangeSource;
+  changeReason: string | null;
+  createdBy: UserBasic | null;
+  ipAddress: string | null;
+  device: string | null;
+  disclosureCopy: string | null;
+  source: string | null;
+  recordedBy: string | null;
+  createdAt: Date;
+}
+
+/**
+ * `count` is an integer from 1 to 100 (20 by default), `offset` an integer from 0.
+ * The records are sorted by `createdAt` from the newest by default.
+ */
+export interface GetBorrowerConsentHistoryParams extends PaginationLimitParams {
+  sortField?: BorrowerConsentHistorySortField;
+  sortDirection?: SortDirection;
 }
 
 export interface SearchBorrowersParams extends PaginationParams<BorrowerSortField>{
@@ -88,6 +171,11 @@ export interface BorrowersApi {
   create(params: CreateBorrowerParams): Promise<Borrower>;
   update(id: string, params: UpdateBorrowerParams): Promise<Borrower>;
   delete(id: string): Promise<Borrower>;
+  changeConsents(id: string, params: ChangeBorrowerConsentsParams): Promise<Borrower>;
+  getConsentHistory(
+    id: string,
+    params?: GetBorrowerConsentHistoryParams,
+  ): Promise<PaginationResult<BorrowerConsentHistoryRecord>>;
 }
 
 export class BorrowersRestApi extends SystemApi<
@@ -98,4 +186,16 @@ export class BorrowersRestApi extends SystemApi<
   ListBorrowersParams
 > implements BorrowersApi {
   protected path = '/borrowers';
+
+  public changeConsents(id: string, params: ChangeBorrowerConsentsParams) {
+    return this.apiClient.makeCall<Borrower>(`${this.path}/${id}/consents`, 'PUT', params);
+  }
+
+  public getConsentHistory(id: string, params: GetBorrowerConsentHistoryParams = {}) {
+    const urlSearchParams = getSearchParams(params as unknown as SearchParams);
+
+    return this.apiClient.makeCall<PaginationResult<BorrowerConsentHistoryRecord>>(
+      `${this.path}/${id}/consent-history?${urlSearchParams}`,
+    );
+  }
 }
