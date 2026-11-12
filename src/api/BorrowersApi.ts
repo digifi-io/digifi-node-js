@@ -111,6 +111,25 @@ export enum BorrowerConsentChangeSource {
   Api = 'api',
 }
 
+export type BorrowerPortalConsentType = BorrowerConsentType.SmsTransactional | BorrowerConsentType.EmailMarketing;
+
+export type BorrowerPortalConsentChangeSource =
+  | BorrowerConsentChangeSource.BorrowerPortalSignUp
+  | BorrowerConsentChangeSource.BorrowerPortalMyAccount;
+
+export interface BorrowerPortalConsentChange {
+  consentType: BorrowerPortalConsentType;
+  isActive: boolean;
+  disclosureCopy?: string | null;
+}
+
+export interface ChangeBorrowerPortalConsentsParams {
+  sourceType: BorrowerPortalConsentChangeSource;
+  changes: BorrowerPortalConsentChange[];
+  ipAddress: string;
+  device: string;
+}
+
 export enum BorrowerConsentHistorySortField {
   CreatedAt = 'createdAt',
   ConsentType = 'consentType',
@@ -172,6 +191,7 @@ export interface BorrowersApi {
   update(id: string, params: UpdateBorrowerParams): Promise<Borrower>;
   delete(id: string): Promise<Borrower>;
   changeConsents(id: string, params: ChangeBorrowerConsentsParams): Promise<Borrower>;
+  changePortalConsents(id: string, params: ChangeBorrowerPortalConsentsParams): Promise<Borrower>;
   getConsentHistory(
     id: string,
     params?: GetBorrowerConsentHistoryParams,
@@ -189,6 +209,10 @@ export class BorrowersRestApi extends SystemApi<
 
   public changeConsents(id: string, params: ChangeBorrowerConsentsParams) {
     return this.apiClient.makeCall<Borrower>(`${this.path}/${id}/consents`, 'PUT', params);
+  }
+
+  public changePortalConsents(id: string, params: ChangeBorrowerPortalConsentsParams) {
+    return this.apiClient.makeCall<Borrower>(`${this.path}/${id}/portal-consents`, 'PUT', params);
   }
 
   public getConsentHistory(id: string, params: GetBorrowerConsentHistoryParams = {}) {
