@@ -284,6 +284,8 @@ Here the list of `API Services` that DigiFi Node JS Library provides:
   - `create(params: object)` - [creates borrower](https://docs.digifi.io/reference/post-borrowers) by `params` object.
   - `update(id: string, params: object)` - [updates borrower](https://docs.digifi.io/reference/put-borrowers-id) by `id` and `params` object.
   - `delete(id: string)` - [deletes borrower](https://docs.digifi.io/reference/delete-borrower) by `id`.
+  - `changeConsents(id: string, params: object)` - [changes borrower consents](https://docs.digifi.io/reference/put-borrowers-id-consents) by `id` and `params` object.
+  - `getConsentHistory(id: string, params?: object)` - [finds borrower consent history](https://docs.digifi.io/reference/get-borrowers-id-consent-history) by `id` and optional `params` object.
 - `new DigifiApi.comments(...)` - api for comments management.
   - `find(params: object)` - [finds comments](https://docs.digifi.io/reference/get-comments-1) by `params` object.
   - `create(params: object)` - [creates comment](https://docs.digifi.io/reference/post-comments) by `params` object.
