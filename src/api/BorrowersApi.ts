@@ -95,7 +95,6 @@ export interface ChangeBorrowerConsentsParams {
   changes: BorrowerConsentChange[];
   source: string;
   recordedBy: string;
-  ipAddress?: string | null;
   device?: string | null;
 }
 
@@ -128,7 +127,6 @@ export interface BorrowerConsentHistoryRecord {
   sourceType: BorrowerConsentChangeSource;
   changeReason: string | null;
   createdBy: UserBasic | null;
-  ipAddress: string | null;
   device: string | null;
   disclosureCopy: string | null;
   source: string | null;
