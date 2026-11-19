@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+* Fixed `ApiRequestError` for error bodies where `error` or `data` is a string (for example NestJS errors like `{ "statusCode": 400, "message": [...], "error": "Bad Request" }`). `data` is no longer the string split into characters (`{ "0": "B", "1": "a", ... }`), and `message` is now the API's message instead of the HTTP status text.
+* `ApiRequestError.code` and `message` are now read from the top level of a `{ message, code, data }` error body.
+* A `null` or plain string JSON error body now throws `ApiRequestError` instead of a `NetworkError`.
+
 ## 8.3.0 - 
 * Added `applicantPortalAlternateStatusName` (optional `string`) and `intermediaryPortalAlternateStatusName` (optional `string`) to the `Application` and `ApplicationStatus` interfaces.
 * Deprecated `statusDisplayType` in the `IBaseStandardPortalConfig`.
