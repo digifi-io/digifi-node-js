@@ -8,8 +8,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm run build`: compile `src/` to `lib/` with `tsc` (also runs on `npm install` via `prepare`). This is the only check available; there is no test suite and no linter configured.
-- Publishing is done by GitHub Actions (`.github/workflows/`): `publish.yml` runs `npm publish` when a GitHub release is published, and `publish-on-tag.yml` is a manual dispatch with a custom npm tag.
+```bash
+npm run build                 # tsc: src/ -> lib/ (also runs on npm install via prepare); *.test.ts excluded
+npm test                      # unit tests (jest + @swc/jest), needs Node 18+
+npx jest <path> -t '<name>'   # single file / single test
+npm run typecheck:test        # type-check source and tests (swc does not type-check)
+```
+
+After changes, verify with `npm test` + `npm run typecheck:test` + `npm run build`. No linter is configured.
+
+Publishing is done by GitHub Actions (`.github/workflows/`): `publish.yml` runs `npm publish` when a GitHub release is published, and `publish-on-tag.yml` is a manual dispatch with a custom npm tag.
 
 ## Architecture
 
@@ -44,3 +52,10 @@ Each feature change (see commits like `ND-8890 ...`) also:
 - when public methods change, updates the method list under "API Services" in `README.md`.
 
 To deprecate a field or service, add a `@deprecated` JSDoc tag instead of removing it. Removals happen only in major versions.
+
+## Tests
+
+- Tests next to source: `*.test.ts`.
+- Mock with `jest-mock-extended`; Arrange-Act-Assert.
+- Mock modules with `jest.mock` + `jest.requireActual` and `jest.mocked`; HTTP tests mock the `node-fetch` default export and keep its real `Response`/`Headers` (see `src/clients/ApiClient.test.ts`).
+- Retries: fake timers, pinned `Math.random`, `jest.runAllTimersAsync()` (`runToSettlement` helper).
