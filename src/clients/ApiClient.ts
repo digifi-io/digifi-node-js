@@ -57,6 +57,21 @@ export interface IApiClient {
   ): Promise<ResBody>;
 }
 
+const isObject = (value: unknown): value is { [key: string]: any } => {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+};
+
+// NestJS validation errors send `message` as an array of strings.
+const getErrorMessage = (value: unknown): string | undefined => {
+  const message = Array.isArray(value) ? value[0] : value;
+
+  return typeof message === 'string' && message ? message : undefined;
+};
+
+const getErrorCode = (value: unknown): string | number | undefined => {
+  return typeof value === 'string' || typeof value === 'number' ? value : undefined;
+};
+
 class ApiClient implements IApiClient {
   protected defaultContentType: ContentType = 'application/json';
   protected idempotencyKeyHeader = 'idempotency-key';
@@ -167,9 +182,17 @@ class ApiClient implements IApiClient {
     }
 
     const body = await this.getErrorResponseBody(response);
-    const data = body.error || body.data || body;
-    const { code: errorCode, message, ...errorData } = data || {};
-    const errorMessage = message || body.data?.error || response.statusText;
+
+    // Only objects are destructured: NestJS errors send `error` as a string
+    // (e.g. "Bad Request"), and spreading a string gives { 0: 'B', 1: 'a', ... }.
+    const data = [body?.error, body?.data, body].find(isObject) || {};
+    const { code, message, ...errorData } = data;
+    const errorCode = getErrorCode(code) ?? getErrorCode(body?.code);
+    const errorMessage = getErrorMessage(message)
+      || getErrorMessage(body?.message)
+      || getErrorMessage(body?.data?.error)
+      || getErrorMessage(body?.error)
+      || response.statusText;
 
     throw new ApiRequestError(errorMessage, response.status, response.headers, errorCode, errorData);
   }

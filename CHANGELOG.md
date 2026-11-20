@@ -1,5 +1,12 @@
 # Changelog
 
+## 8.3.0 - 2026-11-20
+* Fixed `ApiRequestError` for error bodies where `error` or `data` is a string (for example NestJS errors like `{ "statusCode": 400, "message": [...], "error": "Bad Request" }`). `data` is no longer the string split into characters (`{ "0": "B", "1": "a", ... }`), and `message` is now the API's message instead of the HTTP status text.
+* `ApiRequestError.code` and `message` are now read from the top level of a `{ message, code, data }` error body.
+* A `null` or plain string JSON error body now throws `ApiRequestError` instead of a `NetworkError`.
+* `ApiRequestError.code` is now typed `string | number`: numeric error codes from the API are kept as numbers.
+* Fixed `AuthorizedApiClient` ignoring the `idempotencyKey` passed to `makeCall`: the key was not sent when `enableIdempotencyHeader` was off, and a generated key replaced it when the option was on.
+
 ## 8.2.0 - 2026-10-22
 * Introduced `PermissionGroups API`.
 * Added new `findById` method to the `PermissionGroupsApi` interface.

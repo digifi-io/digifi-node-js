@@ -1,6 +1,6 @@
 {
   "name": "@digifi/digifi-node-js",
-  "version": "8.2.0",
+  "version": "8.3.0",
   "description": "DigiFI SDK for Node JS",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "build": "tsc",
+    "test": "jest",
+    "typecheck:test": "tsc -p tsconfig.spec.json",
     "prepare": "npm run build"
   },
   "repository": {
@@ -25,11 +27,16 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@swc/core": "~1.15.5",
+    "@swc/jest": "^0.2.39",
+    "@types/jest": "^29.5.14",
     "@types/node": "^16.11.64",
     "@types/node-fetch": "^2.6.2",
     "@types/qs": "^6.9.7",
     "@types/retry": "^0.12.2",
     "@types/uuid": "^8.3.4",
+    "jest": "^30.5.2",
+    "jest-mock-extended": "^4.0.2",
     "typescript": "^4.8.4"
   }
 }
