@@ -1,5 +1,14 @@
 # Changelog
 
+## 8.4.0 - 
+* Introduced `BorrowerConsentType` enum and `BorrowerConsents`, `BorrowerConsentChange`, `ChangeBorrowerConsentsParams` interfaces.
+* Added `consents` (required `BorrowerConsents`) to the `Borrower` interface.
+* Added new `changeConsents` method to the `BorrowersApi` interface. Every opt-in is recorded in the consent history of the borrower, even for an already active consent.
+* Introduced `BorrowerConsentChangeType`, `BorrowerConsentChangeSource`, `BorrowerConsentHistorySortField` enums and `BorrowerConsentHistoryRecord`, `GetBorrowerConsentHistoryParams` interfaces.
+* Added new `getConsentHistory` method to the `BorrowersApi` interface.
+* Introduced `BorrowerPortalConsentType`, `BorrowerPortalConsentChangeSource` types and `BorrowerPortalConsentChange`, `ChangeBorrowerPortalConsentsParams` interfaces.
+* Added new `changePortalConsents` method to the `BorrowersApi` interface. It changes borrower consents on behalf of the borrower and works only with the borrower portal API key.
+
 ## 8.3.0 - 
 * Added `applicantPortalAlternateStatusName` (optional `string`) and `intermediaryPortalAlternateStatusName` (optional `string`) to the `Application` and `ApplicationStatus` interfaces.
 * Deprecated `statusDisplayType` in the `IBaseStandardPortalConfig`.
